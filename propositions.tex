@@ -3,9 +3,9 @@ The transmitted power in an optimal solution in non-decreasing with time wheneve
 \label{increasing_power}
 \end{lemma}
 \begin{proof}
-We prove this by contradiction. Assume that the transmit power is $p_1$ for some duration $t_1$ and then $p_2$ for some duration $t_2$ with $p_1>p_2$. So this boils down to two cases-
+We prove this by contradiction. Assume that the transmit power is $p_1$ form time $A$ to $B$ and then $p_2$ for from $B$ to $C$ with $p_1>p_2$. So this boils down to two cases-
 
-$case-1:$ The receiver is on throughout time $t_1$ to $t_2$ as shown in figure. In this case suppose we transmit at a power $p'=\dfrac{p_1t_1+p_2t_2}{t_1+t_2}$ then the number of bits transmitted would be more over the same time duration due to concavity of $g(p)$ as shown below.
+$case-1:$ The receiver is on throughout time $A$ to $C$ as shown in figure. In this case suppose we transmit at a power $p'=\dfrac{p_1t_1+p_2t_2}{t_1+t_2}$ then the number of bits transmitted would be more over the same time duration due to concavity of $g(p)$ as shown below.
 \begin{align}
 &g(p_1)\frac{t_1}{t_1+t_2}+g(p_2)\frac{t_2}{t_1+t_2} \le g(\frac{p_1t_1+p_2t_2}{t_1+t_2})
 \\
