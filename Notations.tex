@@ -1,1 +1,12 @@
-The Transmitter energy arrival instants are marked by $t_i$'s with energy $E^{T}_i$ while the receiver energy arrivals are marked by $r_i$'s with energy $E^{R}_i$ for $i \in \{0,1..\}$. The receiver spends $p$ amount of power to be \textit{on} and no power when it is \textit{off}. Hence each energy arrival $E^{R}_i$ can be viewed as it adds $T^{R}_i=\dfrac{E^{R}_i}{p}$ amount of time for which the receiver can be \textit{on}. The maximum amount of time for which the receiver (and hence the Transmitter) can be \textit{on} till time '.' is given by function $T^{R}(.)$. It can be easily seen that $T^{R}(t)=\sum_{i=0}^{r_i<t}T^{R}_i$. Similarly the maximum energy harvested at the transmitter till time '$t$' is given by function $E^{T}(t)=\sum_{i=0}^{t_i<t}E^{T}_i$.
+The Transmitter energy arrival instants are marked by $t_i$'s with energy $E^{T}_i$ while the receiver energy arrivals are marked by $r_i$'s with energy $E^{R}_i$ for $i \in \{0,1..\}$. The receiver spends $P$ amount of power to be \textit{on} and no power when it is \textit{off}. Hence each energy arrival $E^{R}_i$ can be viewed as it adds $T^{R}_i=\dfrac{E^{R}_i}{P}$ amount of time for which the receiver can be \textit{on}. The maximum amount of time for which the receiver (and hence the Transmitter) can be \textit{on} till time '.' is given by function $T^{R}(.)$. It can be easily seen that $T^{R}(t)=\sum_{i=0}^{r_i<t}T^{R}_i$. Similarly the maximum energy harvested at the transmitter till time '$t$' is given by function $E^{T}(t)=\sum_{i=0}^{t_i<t}E^{T}_i$. The rate of bits transmition with power '.', given by function $g(.)$ is assumed to follow the following properties as proposed in \cite{Yang} 
+\begin{align}
+&P1) g(0)=0\text{ and }\lim_{x\rightarrow \infty} g(x)\rightarrow \infty.
+\\
+&P2) g(x)\text{ is concave in nature with } x.
+\\
+&P3) g(x)\text{ is increasing with } x.
+\\ 
+&P4) g(x)/(x) \text{ is monotonically decreasing with } x.
+\end{align}
+
+For convenience of presentation, we also follow the following convention : we use the notation $\stackrel{L1}{=}$ or $\stackrel{(1)}{=}$ or $\stackrel{P1}{=}$ or $\stackrel{T1}{=}$ to indicate that the equality "$=$" follows from Lemma 1 / Equation (1) / Property 1 / Theorem 1 respectively (same for inequalities).
