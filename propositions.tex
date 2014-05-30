@@ -1,5 +1,5 @@
 \begin{lemma}
-The transmitted power in a optimal solution in non-decreasing with time whenever the receiver is \textit{on}.
+The transmitted power in an optimal solution in non-decreasing with time whenever the receiver is \textit{on}.
 \label{increasing_power}
 \end{lemma}
 \begin{proof}
@@ -17,7 +17,7 @@ $case-2:$ The receiver is \textit{off} for certain duration (say $t$) of time du
 \end{proof}
 
 \begin{lemma}
-In a optimal solution once transmition has started the receiver is never \textit{off} until transmition is complete. \label{nobreaks}
+In an optimal solution once transmition has started the receiver is never \textit{off} until transmition is complete. \label{nobreaks}
 \end{lemma}
 \begin{proof}
 This is equivalent to saying there is no-breaks during transmition in optimal solution. We again prove this by contradiction. Keeping intact Lemma \ref{increasing_power} the only case in which this can occur is the transmitter transmits with power $p_1$ from time $A$ to $B$ and then the receiver is \textit{off} from $B$ to $C$, again the transmitter is \textit{on} with power $p_2$ from time $C$ to $D$ with $p_1<p_2$ as shown in figure . Consider the case where we keep the receiver \textit{on} for time $C-B$ from $A$. This makes the scenario as shown in figure . Now, a new energy arrival can occur at the transmitter anywhere between $A$ to $D$. 
@@ -35,5 +35,5 @@ Applying the above scenarios iteratively we could shift the receiver \textit{off
 In the optimal solution we consider transmit power can only change at energy arrival of transmitter once transmission has started. 
 \end{lemma}
 \begin{proof}
-Keeping in mind Lemma \ref{increasing_power} and \ref{nobreaks} its proof becomes same as the one for Lemma 2,[]. 
-\end{proof}
+Keeping in mind Lemma \ref{increasing_power} and \ref{nobreaks} its proof becomes same as the one for Lemma 2,\cite{Yang}. 
+\end{proof}	
