@@ -1,0 +1,39 @@
+\begin{lemma}
+The transmitted power in a optimal solution in non-decreasing with time whenever the receiver is \textit{on}.
+\label{increasing_power}
+\end{lemma}
+\begin{proof}
+We prove this by contradiction. Assume that the transmit power is $p_1$ for some duration $t_1$ and then $p_2$ for some duration $t_2$ with $p_1>p_2$. So this boils down to two cases-
+
+$case-1:$ The receiver is on throughout time $t_1$ to $t_2$ as shown in figure. In this case suppose we transmit at a power $p'=\dfrac{p_1t_1+p_2t_2}{t_1+t_2}$ then the number of bits transmitted would be more over the same time duration due to concavity of $g(p)$ as shown below.
+\begin{align}
+&g(p_1)\frac{t_1}{t_1+t_2}+g(p_2)\frac{t_2}{t_1+t_2} \le g(\frac{p_1t_1+p_2t_2}{t_1+t_2})
+\\
+&\implies g(p')(t_1+t_2)\ge g(p_1)t_1+g(p_2)t_2  
+\end{align}
+As we can transmit more number of bits during duration $t_1+t_2$ we could save total transmition time since we would have lesser number of bits left to transmit. Hence this case cannot be optimal.
+
+$case-2:$ The receiver is \textit{off} for certain duration (say $t$) of time during $t_1+t_2$ as shown in figure. Now consider the case where keeping everything else intact we put the receiver \textit{off} from instant $A$ to $A+t$ and keep transmition from $A+t$ to $A+t_1+t_2$. This would always be feasible from the receiver point as energy with the receiver can only be non-decreasing with time. This scenario now boils down to $case-1$ from time $A+t$ to $A+t_1+t_2$ and hence cannot be optimal.
+\end{proof}
+
+\begin{lemma}
+In a optimal solution once transmition has started the receiver is never \textit{off} until transmition is complete. \label{nobreaks}
+\end{lemma}
+\begin{proof}
+This is equivalent to saying there is no-breaks during transmition in optimal solution. We again prove this by contradiction. Keeping intact Lemma \ref{increasing_power} the only case in which this can occur is the transmitter transmits with power $p_1$ from time $A$ to $B$ and then the receiver is \textit{off} from $B$ to $C$, again the transmitter is \textit{on} with power $p_2$ from time $C$ to $D$ with $p_1<p_2$ as shown in figure . Consider the case where we keep the receiver \textit{on} for time $C-B$ from $A$. This makes the scenario as shown in figure . Now, a new energy arrival can occur at the transmitter anywhere between $A$ to $D$. 
+
+$case-1:$If the arrival is between $A$ and $B'$, then it can be easily seen that transmitting at a constant rate from $B'$ to $D$ would be better due to concavity of $g(p)$.
+
+$case-2:$If the arrival is between $B'$ and $C$ (say $C'$), then it can be easily seen that transmitting at a same rate $p_1$ from $B'$ to $C'$ and  at a constant rate from $C'$ to $D$ would deliver more number of bits.(At worst case energy arrival occurring at $C$ would make this scenario transmit equal number of bits as the original scenario).
+
+$case-3:$If there is an energy arrival from $C$ to $D$ (say $D'$), then transmitting at a constant power form $B'$ to $D'$ and at same rate $p_2$ would fetch more number of bits at the receiver.
+
+Applying the above scenarios iteratively we could shift the receiver \textit{off} duration $C-B$ to the beginning of transmition and still at worst case transmit equal number of bits in same time duration. Hence having a break in-between transmition is always discouraged. We can also see that the optimal solution may not be unique.
+\end{proof}
+
+\begin{lemma}
+In the optimal solution we consider transmit power can only change at energy arrival of transmitter once transmission has started. 
+\end{lemma}
+\begin{proof}
+Keeping in mind Lemma \ref{increasing_power} and \ref{nobreaks} its proof becomes same as the one for Lemma 2,[]. 
+\end{proof}
