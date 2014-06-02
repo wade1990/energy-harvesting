@@ -1,0 +1,10 @@
+\begin{lemma}
+If the reciever has enough energy to stay on for T time, then either the transmitter will transmit for the entire duration T or the transmitter will begin transmission at t=0.
+\label{transimission_duration}
+\end{lemma}
+\begin{proof}
+We will prove this by contradiction. Suppose the optimal transmission policy does not begin transmitting at time T and transmits for a duration T'<T.\\
+Let $p_1$ be the first power of transmission in this policy. If we reduce this slightly to $p_1-\delta p$, we will have transmitted more bits by time $s_{i_{n-1}}$, where $s_{i_{n-1}}$ is the last energy arrival epoch when the transmission power changes. \\
+Therefore at the end we can transmit with a power $p'_n > p_n$ (see figure) and complete our transmission at an earlier time.\\
+Thus optimally we can keep lowering our first transmission power until we either exhaust our transmission duration T or we hit the origin.
+\end{proof}
