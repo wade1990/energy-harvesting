@@ -3,8 +3,47 @@ If the reciever has enough energy to stay on for T time, then either the transmi
 \label{transimission_duration}
 \end{lemma}
 \begin{proof}
-We will prove this by contradiction. Suppose the optimal transmission policy does not begin transmitting at time T and transmits for a duration T'<T.\\
+We will prove this by contradiction. Suppose the optimal transmission policy does not begin transmitting at time T and transmits for a duration $T' < T$.\\
 Let $p_1$ be the first power of transmission in this policy. If we reduce this slightly to $p_1-\delta p$, we will have transmitted more bits by time $s_{i_{n-1}}$, where $s_{i_{n-1}}$ is the last energy arrival epoch when the transmission power changes. \\
 Therefore at the end we can transmit with a power $p'_n > p_n$ (see figure) and complete our transmission at an earlier time.\\
 Thus optimally we can keep lowering our first transmission power until we either exhaust our transmission duration T or we hit the origin.
 \end{proof}
+
+Suppose we are given a transmission duration T. Our goal is to find a transmission policy so we can minimise the time at which the transmission is completed. First, we find the minimum energy required by the transmitter so that the transmission can be completed. That is, the first $n$ such that \\\\
+$Tg(\frac{\sum_{i=0}^n E_i}{T})\geq B_0$\\\\
+Let $\tilde{T}$ be the time duration such that\\\\
+$\tilde{T}g(\frac{\sum_{i=0}^n E_i}{\tilde{T}})=B_0$\\\\
+Let $p_1=\frac{\sum_{i=0}^n E_i}{\tilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\tilde{T}$ time.\\
+If not, we try to start the transmission as early as possible, such that the transmission is feasible. This transmission curve, will intersect the total energy arrival curve at at least one epoch.\\
+
+\begin{table}
+\begin{minipage}[b]{8cm}
+\caption{Offline Algrithm for finding optimal transmission policy, given transmission duration}
+\begin{tabular}{p{7cm}}
+\hline \textbf{Input}: Bits to transmit $B_0$, transmission duration $T_0$.\\
+\hline
+\\
+\textbf{Initialize:}$B = B_0$, $T = T_0$, n=0
+\\
+\textbf{While} $Tg(\sum_{j=0}^n E_j) < B_0$
+\\
+\hspace{4mm} $j = j+1$
+\\
+Solve for $\tilde{T}: \tilde{T}g(\dfrac{\sum_{j=0}^n E_j}{\tilde{T}})$
+\\
+$p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
+\\
+\textbf{for} i=0,1,2,...n \textbf{do}
+\\
+\hspace{4mm}flag=1
+\\
+\hspace{4mm}\textbf{for} j=i,i+1,i+2,...,n \textbf{do}
+\\
+\hspace{7mm}\textbf{if} $p_0s_j + (\sum_{k=0}^i E_k - p_0s_i) > \sum_{k=0}^j E_k$
+\\
+\hspace{10mm}t=0
+\\
+\hspace{10mm}break
+\end{tabular}
+\end{minipage}
+\end{table}
