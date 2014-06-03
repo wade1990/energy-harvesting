@@ -27,23 +27,135 @@ If not, we try to start the transmission as early as possible, such that the tra
 \\
 \textbf{While} $Tg(\sum_{j=0}^n E_j) < B_0$
 \\
-\hspace{4mm} $j = j+1$
+\hspace{4mm} $n = n+1$
 \\
 Solve for $\tilde{T}: \tilde{T}g(\dfrac{\sum_{j=0}^n E_j}{\tilde{T}})$
 \\
 $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
-\textbf{for} i=0,1,2,...n \textbf{do}
+\textbf{for} $i=0,1,2,...n$ \textbf{do}
 \\
 \hspace{4mm}flag=1
 \\
-\hspace{4mm}\textbf{for} j=i,i+1,i+2,...,n \textbf{do}
+\hspace{4mm}\textbf{for} $j=i,i+1,i+2,...,n$ \textbf{do}
 \\
 \hspace{7mm}\textbf{if} $p_0s_j + (\sum_{k=0}^i E_k - p_0s_i) > \sum_{k=0}^j E_k$
 \\
-\hspace{10mm}t=0
+\hspace{10mm}$t=0$
 \\
 \hspace{10mm}break
+\\
+\hspace{7mm}\textbf{end if}
+\\
+\hspace{4mm}\textbf{end for}
+\\
+\hspace{4mm}\textbf{if} $flag=1$
+\\
+\hspace{7mm}$s_{lt} = s_{rt} = s_i$
+\\
+\hspace{7mm}break
+\\
+\hspace{4mm}\textbf{end if}
+\\
+\textbf{end for}
+\\
+\textbf{while} $B>0$
+\\
+\hspace{4mm}\textbf{Solve}: $xg(\dfrac{E^T(s_{lt})}{x})+(T-x)g(\dfrac{E^T(n)-E^T(s_{rt})}{T-x})$
+\\
+\hspace{4mm}$p_{lt} = \dfrac{E^T(s_{lt})}{x}$
+\\
+\hspace{4mm}$p_{rt} = \dfrac{E^T(n)-E^T(s_{rt})}{T-x}$
+\\
+\hspace{4mm}$S_{lt} = \{s_0,s_1,s_2,...s_{lt}\}$
+\\
+\hspace{4mm}$t=0$
+\\
+\hspace{4mm}\textbf{For} $s_i \in S_{lt}\setminus s_{lt}$
+\\
+\hspace{7mm}\textbf{If} $p_{lt}s_i + (E^T(s_{lt}) - p_{lt}s_{lt}) > E^T(s_{i-1})$
+\\
+\hspace{10mm}$s'_{lt} = s_{lt}$
+\\
+\hspace{10mm}$s_{lt} = \displaystyle \max_{j\in(S_{lt}\setminus{s_{lt}})}(\dfrac{E^T(s_{lt}) - E^T(j)}{s_{lt}-j}})$
+\\
+\hspace{10mm}$t=1$
+\\
+\hspace{10mm}\textbf{break}
+\\
+% \hspace{7mm}\textbf{else}
+% \\
+% \hspace{10mm} $s_{lt} = max(s_{lt} - \dfrac{E^T(s_lt)}{p_{lt}} , 0)$
+% \\
+\hspace{7mm}\textbf{end if}
+\\
+\hspace{4mm}\textbf{End For}
+\\
+\hspace{4mm}\textbf{if} $t=0$
+\\
+\hspace{7mm}$s_{lt} = max(s_{lt} - \dfrac{E^T(s_lt)}{p_{lt}} , 0)$
+\\
+\hspace{4mm}\textbf{end if}
+\\
+\hspace{4mm}$S_{rt} = \{s_{rt},s_{rt}+1,s_{rt}+2,...s_{n-1}\}$
+\\
+\hspace{4mm}$u=0$
+\\
+\hspace{4mm}\textbf{For} $s_i \in S_{rt}$
+\\
+\hspace{7mm}\textbf{If} $p_{rt}s_i + (E^T(s_{rt}) - p_{rt}s_{rt}) > E^T(s_i)$
+\\
+\hspace{10mm}$s'_{rt} = s_{rt}$
+\\
+\hspace{10mm}$s_{rt} = \displaystyle \min_{j\in(S_{rt})}(\dfrac{E^T(j)-E^T(s_{lt})}{j-s_{lt}})$
+\\
+\hspace{10mm}$t=1$
+\\
+\hspace{10mm}\textbf{break}
+\\
+% \hspace{7mm}\textbf{else}
+% \\
+% \hspace{10mm} $s_{rt} = s_{rt} + \dfrac{E^T(s_n)-E^T(s_rt)}{p_{rt}}$
+% \\
+% \hspace{10mm}\textbf{If} $s_{rt}>s_{n}$
+% \\
+% \hspace{13mm}\textbf{While} $s_n < s_{rt}$
+% \\
+% \hspace{16mm} $n=n+1$
+% \\
+% \hspace{13mm} \textbf{end while}
+% \\
+% \hspace{13mm} $s_{rt} = s'_{rt}$
+% \\
+% \hspace{10mm}\textbf{end for}
+% \\
+\hspace{7mm}\textbf{end if}
+\\
+\hspace{4mm}\textbf{End For}
+\\
+\hspace{4mm}\textbf{if}
+\\
+\hspace{7mm} $s_{rt} = s_{rt} + \dfrac{E^T(s_n)-E^T(s_rt)}{p_{rt}}$
+\\
+\hspace{7mm}\textbf{If} $s_{rt}>s_{n}$
+\\
+\hspace{10mm}\textbf{While} $s_n < s_{rt}$
+\\
+\hspace{13mm} $n=n+1$
+\\
+\hspace{10mm} \textbf{end while}
+\\
+\hspace{7mm} $s_{rt} = s'_{rt}$
+\\
+\hspace{7mm}\textbf{end for}
+\\
+\hspace{4mm}\textbf{end if}
+\\
+\hspace{4mm} $T = T - (s_{rt}-s'_{lt}) - (s'_{lt} - s_{lt})$
+\\
+\hspace{4mm}$B = B -  (s'_{lt}-s_{lt})g(\dfrac{E^T(s'_{lt})-E^T(s_{lt})}{s'_{lt}-s_{lt}}) - (s_{rt}-s'_{rt})g(\dfrac{E^T(s_{rt})-E^T(s'_{rt})}{s_{rt}-s'_{rt}})$
+\\
+\textbf{end while}
 \end{tabular}
 \end{minipage}
 \end{table}
