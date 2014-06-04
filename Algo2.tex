@@ -1,1 +1,53 @@
 % !TEX root = OptimalOffline.tex
+\begin{table}
+\begin{minipage}[b]{8cm}
+\caption {Offline algorithm for energy arrival in receiver after time t=0}
+\begin{tabular}{p{7cm}}
+\hline \textbf{Input}: Bits to transmit $B_0$; $E^T_i$, $E^R_i$ or $T^R_i$ for all $i$
+\\
+\hline
+\\
+\textbf{Initialize:} 
+$u_{min}=\min u_i$ s.t. $T^R(u_i)g\Bigg{(} \dfrac{E^T(u_i)}{T^R(u_i)}\Bigg{)}\ge B_0$
+\\
+for all $i$, $O_i=\min$ $t$
+\\ 
+s.t. receiver is \textit{on} from $t$ to $t+T^R(r_i)$ 
+\\
+\hspace{4mm}$p_{rcv}(x-t) \le E^R(x)$ ,  $t \le x\le (t+T^R(r_i))$ 
+\\
+\textbf{if} $u_{min}=r_j$ for some $j$  \textbf{then}
+\\
+\hspace{4mm}$O_{iter}=O_{j}$, $T=T^R(r_j)$
+\\
+\textbf{else}
+\\
+\hspace{4mm}Let $u_{min}=t_j$ for some $j$
+\\
+\hspace{4mm}$u_{j'}=\min r_i$ s.t. $T^R(r_i)g\Bigg{(} \dfrac{E^T(t_j)}{T^R(r_i)}\Bigg{)}\ge B_0$
+\\
+\hspace{4mm}$O_{iter}=O_{j'}$, $T=T^R(r_{j'})$
+\\
+\textbf{end if}
+\\
+\textbf{while} $O_{iter}\le O_{final}$
+\\
+\hspace{4mm}Apply $Algo1(O_{iter} ,T)\rightarrow T_{opt}$
+\\
+\hspace{4mm}$r_k=\max_i r_i $ s.t. $r_i<T_{opt}$ 
+\\
+\hspace{4mm}\textbf{if} $O_{final} > O_{k}$
+\\
+\hspace{7mm}$O_{final} = O_{k}$
+\\
+\hspace{4mm}\textbf{end if}
+\\
+\hspace{4mm}$iter=iter+1$
+\\
+\textbf{end while}
+\\
+\hline
+\label{online}
+\end{tabular}
+\end{minipage}
+\end{table}
