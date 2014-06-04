@@ -1,40 +1,52 @@
-\textit{Notation:} The starting time of the transmission is denoted by $T_{start}$ and the present time is denoted by $t$. The number of bits and energy left to transmit at any Transmitter energy epoch is represented by $B_{left}$ and $E_{left}$ receptively.
+\textit{Notation:} The starting time of the transmission is denoted by $T_{start}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any Transmitter energy epoch is represented by $B_{rem}$ and $E_{rem}$ receptively.
 The on-line algorithm that we propose is presented in table \ref{online}.
 \begin{table}
 \begin{minipage}[b]{8cm}
 \caption {On-line Algorithm for energy harvesting transmitter and receiver}
 \begin{tabular}{p{7cm}}
-\hline \textbf{Input}: Bits to transmit $B_0$; $E^T_i$, $E^R_i$ for $t_i,r_i<t$ where $t$ is the present time instant\\
+\hline \textbf{Input}: Bits to transmit $B_0$; $E^T_i$, $E^R_i$ for $t_i,r_i<t$ where $t$ is the present time instant which increments parallely with this algorithm. 
+\\
 \hline
 \\
-\textbf{Initialize:} $T_{start}=\underset{T^R(t)g\Bigg{(} \dfrac{E^T(t)}{T^R(t)}\Bigg{)}\ge B_0}\min t$
+\textbf{Initialize:} $T_{start}=\min t$ s.t. $T^R(t)g\Bigg{(} \dfrac{E^T(t)}{T^R(t)}\Bigg{)}\ge B_0$
 \\
-\hspace{12mm}$B_{left}=B_0$, $E_{left}=E^T(T_{start})$
+\hspace{12mm}$B_{rem}=B_0$, $E_{rem}=E^T(T_{start})$, $T=T_{start}$
 \\
-\textbf{While} $B_{left} \ge 0$
+\textbf{do}
 \\
-\hspace{4mm} Transmit at power $\dfrac{E_{left}}{T}$ s.t. $Tg\Big{(}\dfrac{E_{left}}{T}\Big{)}=B_{left}$ 
+\hspace{4mm} Transmit at power $p$ such that $\dfrac{E_{rem}}{p} g(p)= B_{rem}$
 \\
-\hspace{4mm} \textbf{if} $t=t_i$ for any $i$ 
+\hspace{4mm} \textbf{if} $t=t_i$ for some $i$ 
 \\
-\hspace{7mm} $B_{left}=B_{left}-(t-\max (t_{i-1},T_{start}))g \Big{(}\dfrac{E_{left}}{T}\Big{)}$
+\hspace{7mm} $B_{rem}=B_{rem}-(t-\max (t_{i-1},T_{start}))g(p)$
 \\
-\hspace{7mm}$E_{left}=E_{left}-(t-\max (t_{i-1},T_{start}))\dfrac{E_{left}}{T}$
+\hspace{7mm} $E_{rem}=E_{rem}+E^T_i-(t-\max (t_{i-1},T_{start}))p$
 \\
-\hspace{4mm}\textbf{end}
+\hspace{7mm} $T=t_i$
 \\
-\textbf{end}
+\hspace{4mm} \textbf{end if}
+\\
+\textbf{while} $t\le \Big{(}T+\dfrac{E_{rem}}{p}\Big{)}$
 \\
 \hline
 \label{online}
 \end{tabular}
 \end{minipage}
 \end{table}
-The following lemma can be easily concluded from the definition of the on-line algorithm and hence stated without proof.
+
 \begin{lemma}
 The transmit power in the online algorithm is non-decreasing with time after $T_{start}$.
 \label{online_power}
 \end{lemma}
+\begin{proof}
+From the definition of the algorithm the transmit power only changes when there is a new energy arrival after $T_{start}$. So, if there is no energy arrival the transmit power is same i.e. non decreasing. Suppose there are energy arrivals after $T_{start}$ and for any energy arrival(say $E_{new}$) the power changes from $p_i$ to $p_{i+1}$. Let the energy remaining at start of transmition with power $p_i$ be $E_{rem}$ and bits remaining be $B_{rem}$. The transmition continues for time $l_i$ with power $p_i$. Now, we need to show that $p_i<p_{i+1}$. Form the algorithm we get the following equations. 
+\begin{align}
+&\frac{g(p_i)}{p_i}=\frac{B_{rem}}{E_{rem}} \label{power_increasing_eq1}
+\\
+&\frac{g(p_{i+1})}{p_{i+1}}=\frac{B_{rem}-g(p_i) l_i}{E_{rem}+E_{new}-p_i l_i}\label{power_increasing_eq2}
+\end{align}
+Substituting $g(p_i)$ from (\ref{power_increasing_eq1}) into RHS of (\ref{power_increasing_eq2}) we can see that $\frac{g(p_i)}{p_i}>\frac{g(p_{i+1})}{p_{i+1}}$. Hence by property $P4$ we know that $p_i<p_{i+1}$.
+\end{proof}
 \begin{theorem}
 The competitive ratio of the on-line algorithm presented in Table \ref{online} is 2.
 \end{theorem}
@@ -43,33 +55,36 @@ This is equivalent to saying that the time taken by the on-line algorithm can at
 
 We now show that 
 \begin{align}
-T_{off}\ge T_{start}
+T_{off} > T_{start}
 \label{online_time}
 \end{align}
-This proof follows from contradiction. Let $T_{off}<T_{start}$ and the optimal off-line algorithm transmits with energy in sequence $\{e_1,e_2,..,e_k\}$ for time $\{l_1,l_2..,l_k\} $. Now the number of bits transmitted can be bounded as
+This proof follows from contradiction. Let $T_{off}\le T_{start}$ and the optimal off-line algorithm transmits with energy in sequence $\{e_1,e_2,..,e_k\}$ for time $\{l_1,l_2..,l_k\} $. Now the number of bits transmitted can be bounded as
+\\
+\textbf{think of a better way to write the proof}
+*****
 \begin{align}
 &\sum_{i=1}^{i=k} g\Big{(}\frac{e_i}{l_i}\Big{)}l_i\stackrel{P2}{\le} g\Big{(}\frac{\sum_{i=1}^{i=k}e_i}{\sum_{j=1}^{j=k}l_j}\Big{)} \sum_{j=1}^{j=k} l_j 
 \\
-&\stackrel{P3,P4}{\le} g\Big{(}\frac{E^T(T_{off})}{T_{off}}\Big{)} T_{off}
+&\stackrel{P3,P4}{\le} g\Big{(}\frac{E^T(T_{off})}{T^R(T_{off})}\Big{)} T^R(T_{off})
 \\
-&\stackrel{P4}{\le}\lim_{t \rightarrow T_{start}^{-}} g\Big{(}\frac{E^T(t)}{t}\Big{)} t < B_0 \label{online1}
+&\stackrel{P4}{\le}\lim_{\epsilon \rightarrow 0} g\Big{(}\frac{E^T(T_{start}-\epsilon)}{T^R(T_{start}-\epsilon)}\Big{)} T^R(T_{start}-\epsilon)
+\\
+&+ g\Big{(}\frac{E^T(T_{start})-E^T(T_{start}-\epsilon)}{T^R(T_{start})-T^R(T_{start}-\epsilon)}\Big{)} (T^R(T_{start})-T^R(T_{start}-\epsilon)) \label{online1}
 \end{align}
 where (\ref{online1}) follows form definition of $T_{start}$. But the off-line algorithm should transmit all $B_0$ bits and hence this concludes that $T_{off}\ge T_{start}$.
-
+*****
+\\
 Next we estimate the maximum time taken to complete transmission after $T_{start}$ in the on-line algorithm. Let the on-line version transmits at power sequence $\{p_1,p_2,..,p_k\}$ for time $\{l_1,l_2..,l_k\} $. Now,
 \begin{align}
-&\sum_{i=1}^{i=k}l_ig(p_i)=B_0
-\\
-&\stackrel{L\ref{online_power}}{\implies}g(p_1)\sum_{i=1}^{i=k}l_i\le B_0
-\\
-&\implies g\Big{(}\frac{E^T(T_{start})}{T}\Big{)}\sum_{i=1}^{i=k}l_i\le B_0 \text{\hspace{2mm}  s.t. } Tg\Big{(}\frac{E^T(T_{start})}{T}\Big{)}=B_0
-\\
-&\implies \sum_{i=1}^{i=k}l_i \le T
+&\sum_{i=1}^{i=k}l_ig(p_i)=B_0\stackrel{L\ref{online_power}}{\implies}\sum_{i=1}^{i=k}l_i\le \frac{B_0}{g(p_1)}\label{bits}
 \end{align}
-But, $T\stackrel{P4}{\le} T^R(T_{start})$ as $T_{start}g(\frac{E^T(T_{start})}{T_{start}})\ge B_0=Tg(\frac{E^T(T_{start})}{T})$ and from the definition of $T^R(T_{start})$ it follows that $T^R(T_{start})\le T_{start}$. So we can calculate the competitive ratio as
+Now, from the definition of $p_1$, $\frac{E^T(T_{start})}{p_1}g(p_1)=B_0 \le T^R(T_{start}) g(\frac{E^T(T_{start})}{T^R(T_{start})})$. Hence by property $P4$, $\frac{E^T(T_{start})}{T^R(T_{start})}\le p_1$. So, the RHS of (\ref{bits}) can be reduced to 
 \begin{align}
-&r=\max\dfrac{T_{online}}{T_{off}} = \dfrac{T_{start}+\sum_{i=1}^{i=k}l_i}{T_{off}} \le  \dfrac{T_{start}+T}{T_{off}} 
+&\frac{B_0}{g(p_1)} = \frac{E^T(T_{start})}{p_1} \le T^R(T_{start})\le T_{start}
 \\
-&\le \dfrac{2 T_{start}}{T_{off}} \stackrel{(\ref{online_time})}{\le} 2
-\end{align}      
+\end{align}
+where the last inequality followed from the definition of $T^R(T_{start})$. So we can calculate the competitive ratio as
+\begin{align*}
+&r=\max\dfrac{T_{online}}{T_{off}} = \dfrac{T_{start}+\sum_{i=1}^{i=k}l_i}{T_{off}} \le \dfrac{2 T_{start}}{T_{off}} \stackrel{(\ref{online_time})}{<} 2
+\end{align*}      
 \end{proof}

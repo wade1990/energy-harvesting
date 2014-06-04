@@ -5,7 +5,7 @@ The transmitted power in an optimal solution is non-decreasing with time wheneve
 \begin{proof}
 We prove this by contradiction. The following two cases arise according to the receiver being \textit{on} or \textit{off}.
 
-$case-1:$ Assume that the transmit power is $p_1$ form time $A$ to $B$ and then $p_2$ for from $B$ to $C$ with $p_1>p_2$ and the receiver is \textit{on} throughout time $A$ to $C$ as shown in figure \ref{Lemma1}. In this case suppose we transmit at a power $p'=\dfrac{p_1(B-A)+p_2(C-B)}{C-A}$ then the number of bits transmitted would be more over the same time duration due to concavity of $g(p)$ as shown below.
+$Case1:$ Assume that the transmit power is $p_1$ from time $A$ to $B$ and then $p_2$ from $B$ to $C$ with $p_1>p_2$ and the receiver is \textit{on} throughout time $A$ to $C$ as shown in figure \ref{Lemma1}. In this case suppose we transmit at a power $p'=\dfrac{p_1(B-A)+p_2(C-B)}{C-A}$ then the number of bits transmitted would be more over the same time duration due to concavity of $g(p)$ as shown below.
 \begin{align}
 &g(p_1)\frac{B-A}{C-A}+g(p_2)\frac{C-B}{C-A} \le g(\frac{p_1(B-A)+p_2(C-B)}{C-A})
 \\
@@ -13,7 +13,7 @@ $case-1:$ Assume that the transmit power is $p_1$ form time $A$ to $B$ and then 
 \end{align}
 As we can transmit more number of bits during $C-A$ with power $p'$ we could save total transmition time since we would have lesser number of bits left to transmit after time $C$. Hence this case cannot be optimal.
 
-$case-2:$ The receiver is \textit{off} for certain duration (say from $B$ to $C$) of time during $A$ to $D$ as shown in figure \ref{Lemma1}. The transmition power is $p_1$ from $A$ to $B$ and $p_2$ from $C$ to $D$. Now consider the case where keeping everything else intact we put the receiver \textit{off} from instant $A$ to $A+C-B$ and keep transmition from $A+C-B$ to $D$. This would always be feasible from the receiver point as energy with the receiver can only be non-decreasing with time. This scenario now boils down to $case-1$ from time $A+C-B$ to $D$ and hence cannot be optimal.
+$Case2:$ The receiver is \textit{off} for certain duration (say from $B$ to $C$) of time during $A$ to $D$ as shown in figure \ref{Lemma1}. The transmition power is $p_1$ from $A$ to $B$ and $p_2$ from $C$ to $D$. Now consider the case where keeping everything else intact we put the receiver \textit{off} from instant $A$ to $A+C-B$ and keep transmition from $A+C-B$ to $D$. This would always be feasible from the receiver point as energy with the receiver can only be non-decreasing with time. This scenario now boils down to $case-1$ from time $A+C-B$ to $D$ and hence cannot be optimal.
 \end{proof}
 
 \begin{figure}[htb]
@@ -23,7 +23,7 @@ $case-2:$ The receiver is \textit{off} for certain duration (say from $B$ to $C$
 \end{minipage}
 \begin{minipage}[b]{0.48\linewidth}
   \centering
-  \centerline{\includegraphics[width=4cm]{Lemma1_case2.pdf}}
+  \centerline{\includegraphics[width=4cm,height=25mm]{Lemma1_case2.pdf}}
 \end{minipage}
 \caption{Figure showing the two cases of Lemma 1, case 1[left] case2 [right] with $p_1>p_2$}
 \label{Lemma1}
