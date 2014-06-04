@@ -9,12 +9,28 @@ Therefore at the end we can transmit with a power $p'_n > p_n$ (see figure) and 
 Thus optimally we can keep lowering our first transmission power until we either exhaust our transmission duration T or we hit the origin.
 \end{proof}
 
-Suppose we are given a transmission duration T. Our goal is to find a transmission policy so we can minimise the time at which the transmission is completed. First, we find the minimum energy required by the transmitter so that the transmission can be completed. That is, the first $n$ such that \\\\
+Suppose we are given a transmission duration T. Our goal is to find a transmission policy so we can minimise the time at which the transmission is completed. To do this, we shall first find a feasible solution and keep improving upon it, until we have a solution that follows all our lemmas. 
+\\First, we need an initial feasible solution to start with. For this, we find the minimum energy required by the transmitter so that the transmission can be completed. That is, the first $n$ such that \\\\
 $Tg(\frac{\sum_{i=0}^n E_i}{T})\geq B_0$\\\\
 Let $\tilde{T}$ be the time duration such that\\\\
 $\tilde{T}g(\frac{\sum_{i=0}^n E_i}{\tilde{T}})=B_0$\\\\
-Let $p_1=\frac{\sum_{i=0}^n E_i}{\tilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\tilde{T}$ time.\\
+Let $\tilde{p}=\frac{\sum_{i=0}^n E_i}{\tilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\tilde{T}$ time.\\
 If not, we try to start the transmission as early as possible, such that the transmission is feasible. This transmission curve, will intersect the total energy arrival curve at at least one epoch.\\
+Now, we try to improve upon this policy. Let $Q$ be the first point where our transmission curve intersects the energy arrival curve.\\
+\begin{lemma}
+$Q$ lies in every optimal transmission curve.
+\end{lemma}
+\begin{proof}
+We shall prove this by contradiction. Let the start and end times of the straight line transmission curve described above be $R$ and $S$ .We make the following claims:\\
+\textbf{Claim 1:} Every optimal transmission policy begins transmission at or before time $R$\\
+Since we are transmitting all the bits at the maximum possible power, no policy that starts after $R$ can finish before $S$. Therefore, any policy that starts after $R$ cannot be optimal.\\
+\textbf{Claim 2:} Every optimal transmission policy ends transmission at or before time $S$.\\
+This follows immediately from the fact that the policy is optimal. \\
+Let $Q$ occur at time $s_k$. Suppose we have an optimal transmission policy that does not pass through point $Q$. Therefore, at $s_k$ the transmission curve lies under the energy arrival curve. The transmission power at time $s_k^+$ has to be more than $tilde{p}$. If it isn't then this policy shall not intersect the energy arrival curve at any epoch till $R$ and because of lemma \textbf{(siddharth add the energy completion lemma)}, it shall not be able to change it's power of transmission till $R$. Therefore, it ends after $R$ and is not optimal.\\
+If the policy does have a power higher than $\tilde{p}$ at $s_k^+$, then it must have the same power of transmission right from the beginning of the transmission. This again follows from lemma \textbf{(siddharth)}. Therefore, it shall begin transmission after $R$, which violates claim 1. \\
+Therefore every optimal transmission curve passes through $Q$\\
+\end{proof}
+
 
 \begin{table}
 \begin{minipage}[b]{8cm}
