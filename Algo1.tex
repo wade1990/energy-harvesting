@@ -124,9 +124,9 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{10mm}$s'_{rt} = s_{rt}$
 \\
-\hspace{10mm}$s_{rt} = \displaystyle \min_{j\in(S_{rt})}(\dfrac{E^T(j)-E^T(s_{lt})}{j-s_{lt}})$
+\hspace{10mm}$s_{rt} = \displaystyle \min_{j\in(S_{rt})}(\dfrac{E^T(j)-E^T(s_{lrt})}{j-s_{rt}})$
 \\
-\hspace{10mm}$t=1$
+\hspace{10mm}$u=1$
 \\
 \hspace{10mm}\textbf{break}
 \\
@@ -150,7 +150,7 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{End For}
 \\
-\hspace{4mm}\textbf{if}
+\hspace{4mm}\textbf{if} $u=0$
 \\
 \hspace{7mm} $s_{rt} = s_{rt} + \dfrac{E^T(s_n)-E^T(s_rt)}{p_{rt}}$
 \\
