@@ -1,7 +1,7 @@
 % !TEX root = OptimalOffline.tex
 \begin{lemma}
 If the reciever has enough energy to stay on for T time, then either the transmitter will transmit for the entire duration T or the transmitter will begin transmission at t=0.
-\label{transmission_duration}
+\label{transimission_duration}
 \end{lemma}
 \begin{proof}
 We will prove this by contradiction. Suppose the optimal transmission policy does not begin transmitting at time T and transmits for a duration $T' < T$.\\
@@ -31,22 +31,6 @@ Let $Q$ occur at time $s_k$. Suppose we have an optimal transmission policy that
 If the policy does have a power higher than $\tilde{p}$ at $s_k^+$, then it must have the same power of transmission right from the beginning of the transmission. This again follows from lemma\ref{lemma_energy_consumed}. Therefore, it shall begin transmission after $R$, which violates claim 1. \\
 Therefore every optimal transmission curve passes through $Q$\\
 \end{proof}
-
-Now that we have a starting point, we shall proceed to improve upon this policy as follows. Let $s_{lt}$ and $s_{rt}$ be the first and last energy arrival epochs where the power of transmission changes. 
-As it is evident, initially both $s_{lt}$ and $s_{rt}$ are set to point $Q$. Now, will iteratively try to omporove on the transmission curve to the left and the right of point $Q$ respectively. 
-Keeping in mind Lemma \ref{transmission_duration}, we solve 
-\begin{align}
-xg(\frac{E^T(s_{lt}}{x}) + (T-x)g(\frac{E^T(n)-E^T(s_{rt})}{T-x}) = B
-\end{align}
-Notice that $s_{lt} - x$ and $s_{rt} + T-x$ will give us the start and end points of this iteration. Now, we transmit at power $p_{lt} = \frac{E^T(s_{lt})}{x}$ prior to $s_{lt}$ and $p_{rt} = \frac{E^T(n) - E^T(s_{rt})}{T-x}$ after $s_{rt}$. 
-If this policy is feasible, then we check for the following. First, we make sure that at the end point, all the available energy is used up, because of it isn't, we can transmit at a higher power and finish earlier. 
-If all the energy is not used up, we repeat our iteration, setting $n$ to $n+1$. \\
-Also, we make sure that our start point, is not before the origin. If the start point is negative, we set it to origin and continue our iterations accordingly.\\
-
-If the policy is unfeasible on the right, we select the corner point $s_i$ with the minimum slope from $s_{rt}$ and transmit with power $\frac{E^T(s_i) - E^T(s_{rt})}{s_i-s_{rt}}$ between the two points and set $s'_{rt} = s_{rt}$ and $s_{rt} = s_i$ and repeat the process.\\
-If the policy is unfeasible on the left, we follow a similar process, be selecting the corner point $s_j$ with the \textit{maximum} slope from point $s_{rt}$.\\
-At the end of every iteration we reset our $T$ to $ T - (s_{rt} - s'_{rt}) - (s'_{lt} = s_{lt})$ and we subtract the number of bits transferred between $s_{lt}$ and $s_{rt}$ from $B$
-
 
 
 \begin{table}
@@ -94,7 +78,7 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \textbf{while} $B>0$
 \\
-\hspace{4mm}\textbf{Solve}: $xg(\dfrac{E^T(s_{lt})}{x})+(T-x)g(\dfrac{E^T(n)-E^T(s_{rt})}{T-x}) = B$
+\hspace{4mm}\textbf{Solve}: $xg(\dfrac{E^T(s_{lt})}{x})+(T-x)g(\dfrac{E^T(n)-E^T(s_{rt})}{T-x}) = B_0$
 \\
 \hspace{4mm}$p_{lt} = \dfrac{E^T(s_{lt})}{x}$
 \\

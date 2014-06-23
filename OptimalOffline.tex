@@ -1,18 +1,17 @@
 % !TEX root = main.tex
-To begin with we solve the following problem. The receiver harvests energy only once at the beginning. The transmitter, however harvests energy at different times. We exactly know the amount of energy and the time instances of all future harvests at the beginning of process.  We are supposed to transmit $B_0$ bits which is also known beforehand. The problem is to minimize the total time of transmission of all $B_0$ bits subject to certain feasibility constraints as formally stated below.
-
+To begin with we solve the following problem. The receiver harvests energy only once at the beginning. The transmitter, however harvests energy at different times. We exactly know the amount of energy and the time instances of all future harvests at the beginning of process.  We are supposed to transmit $B_0$ bits which is also known beforehand. The problem is to minimize the total time of transmission of all $B_0$ bits subject to certain feasibility constraints as formally stated below.\\
 \textbf{\textit{Problem 1:}}
 \begin{align}
 &\min_{\{\textbf{p},\textbf{s},N\}}			&& T
 \\
 &\text{\textit{subject to}} 				&& B(T)=B_0
 \\
-&     										&& E(t)\le E^T(t),  		&&& \forall 0\le t\le T
+&     										&& U(t)\le \mathcal{E}(t),  		&&& \forall 0\le t\le T
 \\
-&    										&& s_{N+1}-s_1\le T^R_0
+&    										&& s_{N+1}-s_1\le \mathcal{R}_0
 \end{align}
 
-Before describing and proving the optimal algorithm we state the following lemmas which would be useful in later proofs
+Before describing and proving the optimal algorithm we state the following Lemmas which would be useful in later proofs
 \input{propositions}
 \input{Algo1}
 \input{Algo1_proof}
