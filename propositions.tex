@@ -1,7 +1,7 @@
 % !TEX root = OptimalOffline.tex
 \begin{lemma}
 The power of transmission in every optimal solution is non-decreasing with time whenever the receiver is \textit{on}.
-\label{increasing_power}
+\label{lemma_increasing_power}
 \end{lemma}
 \begin{proof}
 We prove this by contradiction. The following two cases arise depending on whether the reciever is \textit{on} or \textit{off}.
@@ -31,10 +31,10 @@ $Case 2:$ The receiver is \textit{off} for a certain duration (say from $B$ to $
 \end{figure}
 
 \begin{lemma}
-In an optimal solution once transmission has started the receiver is remains \textit{on} until transmission is complete. \label{nobreaks}
+In an optimal solution once transmission has started the receiver is remains \textit{on} until transmission is complete. \label{lemma_nobreaks}
 \end{lemma}
 \begin{proof}
-This is equivalent to saying that there are no breaks during transmission in an optimal solution. Again, we shall prove this by contradiction. Suppose the reciever if \textit{off} for some period after transmission starts. Considering Lemma \ref{increasing_power} the power of transmission $p_1$ before the break would have to be less than or equal to the power $p_2$ after the break in transmission, as shown in figure . Consider the case where we keep the receiver \textit{off} from time $A$ to $B'=A+C-B$. Now, an energy arrival can occur at the transmitter at any time between $A$ to $D$. If there is no energy arrival then transmitting at a constant rate from $B'$ to $D$ would transmit more bits.
+This is equivalent to saying that there are no breaks during transmission in an optimal solution. Again, we shall prove this by contradiction. Suppose the reciever if \textit{off} for some period after transmission starts. Considering Lemma \ref{lemma_increasing_power} the power of transmission $p_1$ before the break would have to be less than or equal to the power $p_2$ after the break in transmission, as shown in figure . Consider the case where we keep the receiver \textit{off} from time $A$ to $B'=A+C-B$. Now, an energy arrival can occur at the transmitter at any time between $A$ to $D$. If there is no energy arrival then transmitting at a constant rate from $B'$ to $D$ would transmit more bits.
 
 $Case 1:$ If the energy arrival is between $A$ and $B'$, then it can be easily seen that transmitting at a constant rate from $B'$ to $D$ would be better due to concavity of $g(p)$.
 
@@ -46,8 +46,9 @@ Applying the above scenarios iteratively we could shift the receiver \textit{off
 \end{proof}
 
 \begin{lemma}
-In an optimal solution with no breaks, the power of transmission can only change at the time instants when energy arrives at the transmitter. 
+In an optimal solution with no breaks, the power of transmission can only change at the time instants when energy arrives at the transmitter. The total energy used for transmission till that instant equals the total energy harvested upto that instant.
+\label{lemma_energy_consumed} 
 \end{lemma}
 \begin{proof}
-Keeping in mind Lemma \ref{increasing_power} and \ref{nobreaks} the proof of this lemma follows the same structure as that of Lemma 2 in Yang et al. \cite{Yang}. 
+Keeping in mind Lemma \ref{lemma_increasing_power} and \ref{lemma_nobreaks} the proof of this lemma follows the same structure as that of Lemma 2 in Yang et al. \cite{Yang}. 
 \end{proof}	

@@ -6,9 +6,13 @@ Let a transmission policy to solve Problem 1 is given by power vector $\textbf{p
 \begin{align}
 &\sum_{i=1}^{i=N}g(p_i)(s_{i+1}-s_i)=B_0\label{claim1}
 \\
-&s_{N+1}-s_1=T^R_0 \text{ , if } s_1>0; \text{ or } s_{N+1}\le T^R_0 \text{ , if } s_1=0\label{claim2}
+&\nonumber s_{N+1}-s_1=T^R_0 				&&\text{ , if } s_1>0
 \\
-&s_{n+1}=\argmin_{t_i: s_n < t_i \le s_{N+1}} CP(t_i,s_n)\text{ and } p_n=CP(s_{n+1},s_n)\label{claim3}
+& \text{ or } s_{N+1}\le T^R_0 				&&\text{ , if } s_1=0\label{claim2}
+\\
+&\nonumber s_{n+1}=\argmin_{t_i: s_n < t_i \le s_{N+1}} CP(t_i,s_n)
+\\
+&\text{ and } p_n=CP(s_{n+1},s_n)\label{claim3}
 \\
 &\exists s_j:s_j\in \textbf{s} \text{ and } s_j=Q\label{claim4}
 \end{align}
