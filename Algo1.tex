@@ -78,13 +78,13 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \textbf{while} $B>0$
 \\
-\hspace{4mm}\textbf{Solve}: $xg(\dfrac{E^T(s_{lt})}{x})+(T-x)g(\dfrac{E^T(n)-E^T(s_{rt})}{T-x})$
+\hspace{4mm}\textbf{Solve}: $xg(\dfrac{E^T(s_{lt})}{x})+(T-x)g(\dfrac{E^T(n)-E^T(s_{rt})}{T-x}) = B_0$
 \\
 \hspace{4mm}$p_{lt} = \dfrac{E^T(s_{lt})}{x}$
 \\
 \hspace{4mm}$p_{rt} = \dfrac{E^T(n)-E^T(s_{rt})}{T-x}$
 \\
-\hspace{4mm}$S_{lt} = \{s_0,s_1,s_2,...s_{lt}\}$
+\hspace{4mm}$S_{lt} = \{s_0,s_1,s_2,...s_{lt}\}$ \textbf{modify}
 \\
 \hspace{4mm}$t=0$
 \\
@@ -114,7 +114,7 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{end if}
 \\
-\hspace{4mm}$S_{rt} = \{s_{rt},s_{rt}+1,s_{rt}+2,...s_{n-1}\}$
+\hspace{4mm}$S_{rt} = \{s_{rt},s_{rt}+1,s_{rt}+2,...s_{n-1}\}$ \textbf{modify}
 \\
 \hspace{4mm}$u=0$
 \\
