@@ -1,21 +1,26 @@
-% !TEX root = OptimalOffline.tex
+!TEX root = OptimalOffline.tex
 \begin{lemma}
-If the reciever has enough energy to stay on for T time, then either the transmitter will transmit for the entire duration T or the transmitter will begin transmission at t=0.
-\label{transimission_duration}
+If the reciever has enough energy to stay on for $T$ time, then either the transmitter will transmit for the entire duration $T$ or the transmitter will begin transmission at $t=0$.
+\label{transmission_duration}
 \end{lemma}
 \begin{proof}
-We will prove this by contradiction. Suppose the optimal transmission policy does not begin transmitting at time T and transmits for a duration $T' < T$.\\
-Let $p_1$ be the first power of transmission in this policy. If we reduce this slightly to $p_1-\delta p$, we will have transmitted more bits by time $s_{i_{n-1}}$, where $s_{i_{n-1}}$ is the last energy arrival epoch when the transmission power changes. \\
-Therefore at the end we can transmit with a power $p'_n > p_n$ (see figure) and complete our transmission at an earlier time.\\
-Thus optimally we can keep lowering our first transmission power until we either exhaust our transmission duration T or we hit the origin.
+We will prove this by contradiction. Suppose the optimal transmission policy does not begin transmitting at time $T$ and transmits for a duration $T' < T$.\\
+Let $p_1$ be the first power of transmission in this policy. If we reduce this slightly to $p_1-\delta p_1$, we will have transmitted more bits by time $t_N$, where $t_N$ is the last energy arrival epoch when the transmission power changes. \\
+Therefore at the end we can transmit with a power $p'_N > p_N$ (see figure) and complete our transmission at an earlier time.\\
+Thus optimally we can keep lowering our first transmission power until we either exhaust our transmission duration $T$ or we hit the origin.
 \end{proof}
 
-Suppose we are given a transmission duration T. Our goal is to find a transmission policy so we can minimise the time at which the transmission is completed. To do this, we shall first find a feasible solution and keep improving upon it, until we have a solution that follows all our lemmas. 
-\\First, we need an initial feasible solution to start with. For this, we find the minimum energy required by the transmitter so that the transmission can be completed. That is, the first $n$ such that \\\\
-$Tg(\frac{\sum_{i=0}^n E_i}{T})\geq B_0$\\\\
-Let $\tilde{T}$ be the time duration such that\\\\
-$\tilde{T}g(\frac{\sum_{i=0}^n E_i}{\tilde{T}})=B_0$\\\\
-Let $\tilde{p}=\frac{\sum_{i=0}^n E_i}{\tilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\tilde{T}$ time.\\
+Suppose we are given a transmission duration $T$. Our goal is to find a transmission policy so we can minimise the time at which the transmission is completed. To do this, we shall first find a feasible solution and keep improving upon it, until we have a solution that follows all our lemmas. 
+\\First, we need an initial feasible solution to start with. For this, we find the minimum energy required by the transmitter so that the transmission can be completed. That is, the first $n$ such that
+\begin{equation}
+Tg\left(\frac{\ETx(t_n)}{T}\right)\geq B_0
+\end{equation}
+
+Let $\tilde{T}$ be the time duration such that
+\begin{equation}
+\tilde{T}g\left(\frac{\ETx(t_n)}{\tilde{T}}\right)=B_0
+\end{equation}
+Let $\tilde{p}=\frac{\ETx(t_n)}{\tilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\tilde{T}$ time.\\
 If not, we try to start the transmission as early as possible, such that the transmission is feasible. This transmission curve, will intersect the total energy arrival curve at at least one epoch.\\
 Now, we try to improve upon this policy. Let $Q$ be the first point where our transmission curve intersects the energy arrival curve.\\
 \begin{lemma}
@@ -27,10 +32,26 @@ We shall prove this by contradiction. Let the start and end times of the straigh
 Since we are transmitting all the bits at the maximum possible power, no policy that starts after $R$ can finish before $S$. Therefore, any policy that starts after $R$ cannot be optimal.\\
 \textbf{Claim 2:} Every optimal transmission policy ends transmission at or before time $S$.\\
 This follows immediately from the fact that the policy is optimal. \\
-Let $Q$ occur at time $s_k$. Suppose we have an optimal transmission policy that does not pass through point $Q$. Therefore, at $s_k$ the transmission curve lies under the energy arrival curve. The transmission power at time $s_k^+$ has to be more than $tilde{p}$. If it isn't then this policy shall not intersect the energy arrival curve at any epoch till $R$ and because of lemma \ref{lemma_energy_consumed}, it shall not be able to change it's power of transmission till $R$. Therefore, it ends after $R$ and is not optimal.\\
-If the policy does have a power higher than $\tilde{p}$ at $s_k^+$, then it must have the same power of transmission right from the beginning of the transmission. This again follows from lemma\ref{lemma_energy_consumed}. Therefore, it shall begin transmission after $R$, which violates claim 1. \\
+Let $Q$ occur at time $t_k$. Suppose we have an optimal transmission policy that does not pass through point $Q$. Therefore, at $t_k$ the transmission curve lies under the energy arrival curve. The transmission power at time $t_k^+$ has to be more than $\tilde{p}$. If it isn't then this policy shall not intersect the energy arrival curve at any epoch till $R$ and because of lemma \ref{lemma_energy_consumed}, it shall not be able to change it's power of transmission till $R$. Therefore, it ends after $R$ and is not optimal.\\
+If the policy does have a power higher than $\tilde{p}$ at $t_k^+$, then it must have the same power of transmission right from the beginning of the transmission. This again follows from lemma\ref{lemma_energy_consumed}. Therefore, it shall begin transmission after $R$, which violates claim 1. \\
 Therefore every optimal transmission curve passes through $Q$\\
 \end{proof}
+
+Now that we have a starting point, we shall proceed to improve upon this policy as follows. Let $t_{lt}$ and $t_{rt}$ be the first and last energy arrival epochs where the power of transmission changes. 
+As it is evident, initially both $t_{lt}$ and $t_{rt}$ are set to point $Q$. Now, will iteratively try to omporove on the transmission curve to the left and the right of point $Q$ respectively. 
+Keeping in mind Lemma \ref{transmission_duration}, we solve 
+\begin{align}
+xg\left(\frac{\ETx(t_{lt})}{x}\right) + (T-x)g\left(\frac{\ETx(n)-\ETx(t_{rt})}{T-x}\right) = B
+\end{align}
+Notice that $t_{lt} - x$ and $t_{rt} + T-x$ will give us the start and end points of this iteration. Now, we transmit at power $p_{lt} = \frac{\ETx(t_{lt})}{x}$ prior to $t_{lt}$ and $p_{rt} = \frac{\ETx(n) - \ETx(t_{rt})}{T-x}$ after $t_{rt}$. 
+If this policy is feasible, then we check for the following. First, we make sure that at the end point, all the available energy is used up, because of it isn't, we can transmit at a higher power and finish earlier. 
+If all the energy is not used up, we repeat our iteration, setting $n$ to $n+1$. \\
+Also, we make sure that our start point, is not before the origin. If the start point is negative, we set it to origin and continue our iterations accordingly.\\
+
+If the policy is unfeasible on the right, we select the corner point $t_i$ with the minimum slope from $t_{rt}$ and transmit with power $\frac{\ETx(t_i) - \ETx(t_{rt})}{t_i-t_{rt}}$ between the two points and set $t'_{rt} = t_{rt}$ and $t_{rt} = t_i$ and repeat the process.\\
+If the policy is unfeasible on the left, we follow a similar process, be selecting the corner point $t_j$ with the \textit{maximum} slope from point $t_{rt}$.\\
+At the end of every iteration we reset our $T$ to $ T - (t_{rt} - t'_{rt}) - (t'_{lt} - t_{lt})$ and we subtract the number of bits transferred between $t_{lt}$ and $t_{rt}$ from $B$
+
 
 
 \begin{table}
@@ -56,7 +77,7 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{for} $j=i,i+1,i+2,...,n$ \textbf{do}
 \\
-\hspace{7mm}\textbf{if} $p_0s_j + (\sum_{k=0}^i E_k - p_0s_i) > \sum_{k=0}^j E_k$
+\hspace{7mm}\textbf{if} $p_0t_j + (\sum_{k=0}^i E_k - p_0t_i) > \sum_{k=0}^j E_k$
 \\
 \hspace{10mm}$t=0$
 \\
@@ -68,7 +89,7 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{if} $flag=1$
 \\
-\hspace{7mm}$s_{lt} = s_{rt} = s_i$
+\hspace{7mm}$t_{lt} = t_{rt} = t_i$
 \\
 \hspace{7mm}break
 \\
@@ -78,23 +99,23 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \textbf{while} $B>0$
 \\
-\hspace{4mm}\textbf{Solve}: $xg(\dfrac{\ETx(s_{lt})}{x})+(T-x)g(\dfrac{\ETx(n)-\ETx(s_{rt})}{T-x}) = B_0$
+\hspace{4mm}\textbf{Solve}: $xg(\dfrac{\ETx(t_{lt})}{x})+(T-x)g(\dfrac{\ETx(n)-\ETx(t_{rt})}{T-x}) = B_0$
 \\
-\hspace{4mm}$p_{lt} = \dfrac{\ETx(s_{lt})}{x}$
+\hspace{4mm}$p_{lt} = \dfrac{\ETx(t_{lt})}{x}$
 \\
-\hspace{4mm}$p_{rt} = \dfrac{\ETx(n)-\ETx(s_{rt})}{T-x}$
+\hspace{4mm}$p_{rt} = \dfrac{\ETx(n)-\ETx(t_{rt})}{T-x}$
 \\
-\hspace{4mm}$S_{lt} = \{s_0,s_1,s_2,...s_{lt}\}$ \textbf{modify}
+\hspace{4mm}$S_{lt} = \{t_0,t_1,t_2,...t_{lt}\}$ \textbf{modify}
 \\
 \hspace{4mm}$t=0$
 \\
-\hspace{4mm}\textbf{For} $s_i \in S_{lt}\setminus s_{lt}$
+\hspace{4mm}\textbf{For} $t_i \in S_{lt}\setminus t_{lt}$
 \\
-\hspace{7mm}\textbf{If} $p_{lt}s_i + (\ETx(s_{lt}) - p_{lt}s_{lt}) > \ETx(s_{i-1})$
+\hspace{7mm}\textbf{If} $p_{lt}t_i + (\ETx(t_{lt}) - p_{lt}t_{lt}) > \ETx(t_{i-1})$
 \\
-\hspace{10mm}$s'_{lt} = s_{lt}$
+\hspace{10mm}$t'_{lt} = t_{lt}$
 \\
-\hspace{10mm}$s_{lt} = \displaystyle \max_{j\in(S_{lt}\setminus {s_{lt}})}(\dfrac{\ETx(s_{lt}) - \ETx(j)}{s_{lt}-j})$
+\hspace{10mm}$t_{lt} = \displaystyle \max_{j\in(S_{lt}\setminus {t_{lt}})}(\dfrac{\ETx(t_{lt}) - \ETx(j)}{t_{lt}-j})$
 \\
 \hspace{10mm}$t=1$
 \\
@@ -102,7 +123,7 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 % \hspace{7mm}\textbf{else}
 % \\
-% \hspace{10mm} $s_{lt} = max(s_{lt} - \dfrac{\ETx(s_lt)}{p_{lt}} , 0)$
+% \hspace{10mm} $t_{lt} = max(t_{lt} - \dfrac{\ETx(t_lt)}{p_{lt}} , 0)$
 % \\
 \hspace{7mm}\textbf{end if}
 \\
@@ -110,21 +131,21 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{if} $t=0$
 \\
-\hspace{7mm}$s_{lt} = max(s_{lt} - \dfrac{\ETx(s_lt)}{p_{lt}} , 0)$
+\hspace{7mm}$t_{lt} = max(t_{lt} - \dfrac{\ETx(t_lt)}{p_{lt}} , 0)$
 \\
 \hspace{4mm}\textbf{end if}
 \\
-\hspace{4mm}$S_{rt} = \{s_{rt},s_{rt}+1,s_{rt}+2,...s_{n-1}\}$ \textbf{modify}
+\hspace{4mm}$S_{rt} = \{t_{rt},t_{rt}+1,t_{rt}+2,...t_{n-1}\}$ \textbf{modify}
 \\
 \hspace{4mm}$u=0$
 \\
-\hspace{4mm}\textbf{For} $s_i \in S_{rt}$
+\hspace{4mm}\textbf{For} $t_i \in S_{rt}$
 \\
-\hspace{7mm}\textbf{If} $p_{rt}s_i + (\ETx(s_{rt}) - p_{rt}s_{rt}) > \ETx(s_i)$
+\hspace{7mm}\textbf{If} $p_{rt}t_i + (\ETx(t_{rt}) - p_{rt}t_{rt}) > \ETx(t_i)$
 \\
-\hspace{10mm}$s'_{rt} = s_{rt}$
+\hspace{10mm}$t'_{rt} = t_{rt}$
 \\
-\hspace{10mm}$s_{rt} = \displaystyle \min_{j\in(S_{rt})}(\dfrac{\ETx(j)-\ETx(s_{lrt})}{j-s_{rt}})$
+\hspace{10mm}$t_{rt} = \displaystyle \min_{j\in(S_{rt})}(\dfrac{\ETx(j)-\ETx(t_{lrt})}{j-t_{rt}})$
 \\
 \hspace{10mm}$u=1$
 \\
@@ -132,17 +153,17 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 % \hspace{7mm}\textbf{else}
 % \\
-% \hspace{10mm} $s_{rt} = s_{rt} + \dfrac{\ETx(s_n)-\ETx(s_rt)}{p_{rt}}$
+% \hspace{10mm} $t_{rt} = t_{rt} + \dfrac{\ETx(t_n)-\ETx(t_rt)}{p_{rt}}$
 % \\
-% \hspace{10mm}\textbf{If} $s_{rt}>s_{n}$
+% \hspace{10mm}\textbf{If} $t_{rt}>t_{n}$
 % \\
-% \hspace{13mm}\textbf{While} $s_n < s_{rt}$
+% \hspace{13mm}\textbf{While} $t_n < t_{rt}$
 % \\
 % \hspace{16mm} $n=n+1$
 % \\
 % \hspace{13mm} \textbf{end while}
 % \\
-% \hspace{13mm} $s_{rt} = s'_{rt}$
+% \hspace{13mm} $t_{rt} = t'_{rt}$
 % \\
 % \hspace{10mm}\textbf{end for}
 % \\
@@ -152,25 +173,25 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{if} $u=0$
 \\
-\hspace{7mm} $s_{rt} = s_{rt} + \dfrac{\ETx(s_n)-\ETx(s_rt)}{p_{rt}}$
+\hspace{7mm} $t_{rt} = t_{rt} + \dfrac{\ETx(t_n)-\ETx(t_rt)}{p_{rt}}$
 \\
-\hspace{7mm}\textbf{If} $s_{rt}>s_{n}$
+\hspace{7mm}\textbf{If} $t_{rt}>t_{n}$
 \\
-\hspace{10mm}\textbf{While} $s_n < s_{rt}$
+\hspace{10mm}\textbf{While} $t_n < t_{rt}$
 \\
 \hspace{13mm} $n=n+1$
 \\
 \hspace{10mm} \textbf{end while}
 \\
-\hspace{7mm} $s_{rt} = s'_{rt}$
+\hspace{7mm} $t_{rt} = t'_{rt}$
 \\
 \hspace{7mm}\textbf{end for}
 \\
 \hspace{4mm}\textbf{end if}
 \\
-\hspace{4mm} $T = T - (s_{rt}-s'_{lt}) - (s'_{lt} - s_{lt})$
+\hspace{4mm} $T = T - (t_{rt}-t'_{lt}) - (t'_{lt} - t_{lt})$
 \\
-\hspace{4mm}$B = B -  (s'_{lt}-s_{lt})g(\dfrac{\ETx(s'_{lt})-\ETx(s_{lt})}{s'_{lt}-s_{lt}}) - (s_{rt}-s'_{rt})g(\dfrac{\ETx(s_{rt})-\ETx(s'_{rt})}{s_{rt}-s'_{rt}})$
+\hspace{4mm}$B = B -  (t'_{lt}-t_{lt})g(\dfrac{\ETx(t'_{lt})-\ETx(t_{lt})}{t'_{lt}-t_{lt}}) - (t_{rt}-t'_{rt})g(\dfrac{\ETx(t_{rt})-\ETx(t'_{rt})}{t_{rt}-t'_{rt}})$
 \\
 \textbf{end while}
 \end{tabular}
