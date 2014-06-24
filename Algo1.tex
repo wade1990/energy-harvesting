@@ -45,7 +45,7 @@ xg\left(\frac{\ETx(t_{lt})}{x}\right) + (T-x)g\left(\frac{\ETx(n)-\ETx(t_{rt})}{
 \end{align}
 Notice that $t_{lt} - x$ and $t_{rt} + T-x$ will give us the start and end points of this iteration. Now, we transmit at power $p_{lt} = \frac{\ETx(t_{lt})}{x}$ prior to $t_{lt}$ and $p_{rt} = \frac{\ETx(n) - \ETx(t_{rt})}{T-x}$ after $t_{rt}$. 
 If this policy is feasible, then we check for the following. First, we make sure that at the end point, all the available energy is used up, because of it isn't, we can transmit at a higher power and finish earlier. 
-If all the energy is not used up, we repeat our iteration, setting $n$ to $n+1$. \\
+If all the energy is not used up, we repeat our iteration, setting $n$ to $k$, where $t_k$ is the last energy arrival epoch before our end point, $t_{rt} + T-x$  \\
 Also, we make sure that our start point, is not before the origin. If the start point is negative, we set it to origin and continue our iterations accordingly.\\
 
 If the policy is unfeasible on the right, we select the corner point $t_i$ with the minimum slope from $t_{rt}$ and transmit with power $\frac{\ETx(t_i) - \ETx(t_{rt})}{t_i-t_{rt}}$ between the two points and set $t'_{rt} = t_{rt}$ and $t_{rt} = t_i$ and repeat the process.\\
@@ -61,15 +61,15 @@ At the end of every iteration we reset our $T$ to $ T - (t_{rt} - t'_{rt}) - (t'
 \hline \textbf{Input}: Bits to transmit $B_0$, transmission duration $T_0$.\\
 \hline
 \\
-\textbf{Initialize:}$B = B_0$, $T = T_0$, n=0
+\textbf{Initialize:}$B = B_0$, $T = T_0$, $n=1$, DEQUE $S$
 \\
-\textbf{While} $Tg(\sum_{j=0}^n E_j) < B_0$
+\textbf{While} $Tg(\ETx(n)) < B$
 \\
 \hspace{4mm} $n = n+1$
 \\
-Solve for $\tilde{T}: \tilde{T}g(\dfrac{\sum_{j=0}^n E_j}{\tilde{T}})$
+Solve for $\tilde{T}: \tilde{T}g\left(\dfrac{\ETx(n)}{\tilde{T}}\right) = B$
 \\
-$p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
+$p_0=\dfrac{\ETx(n)}{\tilde{T}}$
 \\
 \textbf{for} $i=0,1,2,...n$ \textbf{do}
 \\
@@ -77,9 +77,9 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{for} $j=i,i+1,i+2,...,n$ \textbf{do}
 \\
-\hspace{7mm}\textbf{if} $p_0t_j + (\sum_{k=0}^i E_k - p_0t_i) > \sum_{k=0}^j E_k$
+\hspace{7mm}\textbf{if} $p_0t_j + (\ETx(i) - p_0t_i) > \ETx(j)$
 \\
-\hspace{10mm}$t=0$
+\hspace{10mm}$flag=0$
 \\
 \hspace{10mm}break
 \\
@@ -91,6 +91,8 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{7mm}$t_{lt} = t_{rt} = t_i$
 \\
+\hspace{7mm} $S$.append($t_i$)
+\\
 \hspace{7mm}break
 \\
 \hspace{4mm}\textbf{end if}
@@ -99,23 +101,25 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \textbf{while} $B>0$
 \\
-\hspace{4mm}\textbf{Solve}: $xg(\dfrac{\ETx(t_{lt})}{x})+(T-x)g(\dfrac{\ETx(n)-\ETx(t_{rt})}{T-x}) = B_0$
+\hspace{4mm}\textbf{Solve}: $xg\left(\dfrac{\ETx(t_{lt})}{x}\right)+(T-x)g\left(\dfrac{\ETx(n)-\ETx(t_{rt})}{T-x}\right) = B_0$
 \\
 \hspace{4mm}$p_{lt} = \dfrac{\ETx(t_{lt})}{x}$
 \\
 \hspace{4mm}$p_{rt} = \dfrac{\ETx(n)-\ETx(t_{rt})}{T-x}$
 \\
-\hspace{4mm}$S_{lt} = \{t_0,t_1,t_2,...t_{lt}\}$ \textbf{modify}
+\hspace{4mm}$T_{lt} = \{t_i | t_i > t_{lt} - \dfrac{\ETx(t_{lt})}{p_{lt}}, t_i < t_{lt}   \}$
 \\
 \hspace{4mm}$t=0$
 \\
-\hspace{4mm}\textbf{For} $t_i \in S_{lt}\setminus t_{lt}$
+\hspace{4mm}\textbf{For} $t_i \in T_{lt}$
 \\
 \hspace{7mm}\textbf{If} $p_{lt}t_i + (\ETx(t_{lt}) - p_{lt}t_{lt}) > \ETx(t_{i-1})$
 \\
 \hspace{10mm}$t'_{lt} = t_{lt}$
 \\
-\hspace{10mm}$t_{lt} = \displaystyle \max_{j\in(S_{lt}\setminus {t_{lt}})}(\dfrac{\ETx(t_{lt}) - \ETx(j)}{t_{lt}-j})$
+\hspace{10mm}$t_{lt} = \displaystyle \argmax_{j\in(T_{lt})}\left(\dfrac{\ETx(t_{lt}) - \ETx(j)}{t_{lt}-j}\right)$
+\\
+\hspace{10mm}$S$.prepend($t_{lt}$)
 \\
 \hspace{10mm}$t=1$
 \\
@@ -131,11 +135,11 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{if} $t=0$
 \\
-\hspace{7mm}$t_{lt} = max(t_{lt} - \dfrac{\ETx(t_lt)}{p_{lt}} , 0)$
+\hspace{7mm}$t_{lt} = max\left(t_{lt} - \dfrac{\ETx(t_{lt})}{p_{lt}} , 0\right)$
 \\
 \hspace{4mm}\textbf{end if}
 \\
-\hspace{4mm}$S_{rt} = \{t_{rt},t_{rt}+1,t_{rt}+2,...t_{n-1}\}$ \textbf{modify}
+\hspace{4mm}$S_{rt} = \{t_{rt},t_{rt}+1,t_{rt}+2,...t_{n-1}\}$
 \\
 \hspace{4mm}$u=0$
 \\
@@ -145,8 +149,9 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{10mm}$t'_{rt} = t_{rt}$
 \\
-\hspace{10mm}$t_{rt} = \displaystyle \min_{j\in(S_{rt})}(\dfrac{\ETx(j)-\ETx(t_{lrt})}{j-t_{rt}})$
+\hspace{10mm}$t_{rt} = \displaystyle \argmin_{j\in(S_{rt})}\left(\dfrac{\ETx(j)-\ETx(t_{lrt})}{j-t_{rt}}\right)$
 \\
+\hspace{10mm}$S$.append($t_{rt}$)
 \hspace{10mm}$u=1$
 \\
 \hspace{10mm}\textbf{break}
@@ -171,6 +176,7 @@ $p_0=\dfrac{\sum_{j=0}^n E_j}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{End For}
 \\
+\textbf{Write the following block in a better way}\\
 \hspace{4mm}\textbf{if} $u=0$
 \\
 \hspace{7mm} $t_{rt} = t_{rt} + \dfrac{\ETx(t_n)-\ETx(t_rt)}{p_{rt}}$

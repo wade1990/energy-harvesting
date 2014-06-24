@@ -105,17 +105,15 @@ The policy described by the above algorithm is optimal.
 \end{theorem}
 \begin{proof}
 To prove that our policy is optimal, we have to show that it is of the structure described in the previous theorem. \\
-That is, $s_{stop} - s_0 \leq T$ and \\
-\textbf{Things to write}\\
-First we prove that the power allocations in this algorithm are in accordance with \textbf{insert}\\
-In the first part of the algorithm, we select the maximum slope at a corner point before $s_{left}$ and after $s'_{start}$ and ending at $s_{left}$. \\
-First we try to show that this is also the maximum such slope between any corner point before $s_{left}$ and after $s_{start}$ where $s_{start}$ is the final start point. \\
-Suppose it is not. Then we have a corner point between $s_{start}$ and $s'_{start}$ such that we can transmit with a power higher than our maximum between these two points. But, if this were possible, then 
-$p_{left}$ itself would have been feasible, which is not the case. (See figure).\\
-Now we seek to show that this procedure of selecting maximum slopes going 'backwards' also gives us the minimum slopes going 'forwards', as described in \textbf{insert}.\\
-We shall show this by contradiction. Let $s_i$, $s_j$ and $s_k$ be three consecutive corner points where the power of transmission increases, as per our allocation. Now suppose, it is possible to transmit with a lowe power between $s_i$ and some $s'_j$. 
-Then the power of transmission between $s_j$ and $s_k$ is not the maximum power since we could transmit at a higher power from $s'_j$ and $s_k$. Which is a contradiction as this is not consistent with out allocation algorithm.\\
-Therefore, the allocation policy before point $Q$ is consistent with \textbf{insert}. (See figure)
+First we prove that the power allocations in this algorithm are in accordance with \eqref{claim3}\\
+In the first part of the algorithm, we select the maximum slope at a corner point before $t_{lt}$ and after $t'_{start}$ and ending at $t_{lt}$. \\
+First we try to show that this is also the maximum such slope between any corner point before $t_{lt}$ and after $t_{start}$ where $t_{start}$ is the final start point. \\
+Suppose it is not. Then we have a corner point between $t_{start}$ and $t'_{start}$ such that we can transmit with a power higher than our maximum between these two points. But, if this were possible, then 
+$p_{lt}$ itself would have been feasible, which is not the case. (See figure).\\
+Now we seek to show that this procedure of selecting maximum slopes going 'backwards' also gives us the minimum slopes going 'forwards', as described in \eqref{claim3}.\\
+We shall show this by contradiction. Let $t_i$, $t_j$ and $t_k$ be three consecutive corner points where the power of transmission increases, as per our allocation. Now suppose, it is possible to transmit with a lowe power between $t_i$ and some $t'_j$. 
+Then the power of transmission between $t_j$ and $t_k$ is not the maximum power since we could transmit at a higher power from $t'_j$ and $t_k$. Which is a contradiction as this is not consistent with out allocation algorithm.\\
+Therefore, the allocation policy before point $Q$ is consistent with the structure.. (See figure)
 We can prove similarly for the powers after point $Q$.
 \end{proof}
 
