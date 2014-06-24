@@ -2,15 +2,15 @@
 The Transmitter energy arrival instants are marked by $t_i$'s with energy $\mathcal{E}_i$. % while the receiver energy arrivals are marked by $r_i$'s with energy $\mathcal{R}_i$ for $i \in \{0,1..\}$. 
  The receiver spends a constant $P_{r}$ amount of power to be in '\textit{on}' state during which it can accept bits from the transmitter. When it is in '\textit{off}' state it cannot accept bits and uses no power as well. Hence each energy arrival (say $E$) at the receiver can be viewed as it adds $\mathcal{R}_i=\dfrac{E}{P_{r}}$ amount of time for which the receiver can be \textit{on}. These time instances of energy arrival (or so called '\textit{time}' arrival) are denoted by $r_i$. The maximum amount of time for which the receiver (and hence the Transmitter) can be \textit{on} assuming no energy is arriving at the receiver after time '$t$' is given by function $\mathcal{R}(t)$. It can be easily seen that $\mathcal{R}(t)=\underset{i:r_i\le t}{\sum}\mathcal{R}_i$. Similarly the maximum energy harvested at the transmitter till time '$t$' is given by function $\mathcal{E}(t)=\underset{i=0:t_i\le t}{\sum}\mathcal{E}_i$. The function $CP(a,b)=\dfrac{\mathcal{E}(a^- )-\mathcal{E}(b^- )}{b-a}$ , $a>b$ denotes the maximum constant power with which transmitter can transmit from time $a$ to $b$, given that at $b$ total energy harvested is equal to the total energy used. The rate at which bits are transmitted with power '$p$' is given by function $g(p)$. This function is assumed to follow the following properties as proposed in \cite{Yang} 
 \begin{align}
-&P1) g(0)=0\text{ and }\lim_{x\rightarrow \infty} g(x)= \infty.
+&P1) &&g(0)=0\text{ and }\lim_{x\rightarrow \infty} g(x)= \infty.\label{property_0_infty}
 \\
-&P2) g(x)\text{ is concave in nature with } x.
+&P2) &&g(x)\text{ is concave in nature with } x.\label{property_concave}
 \\
-&P3) g(x)\text{ is increasing with } x.
+&P3) &&g(x)\text{ is increasing with } x.\label{property_increasing}
 \\ 
-&P4) g(x)/(x) \text{ is monotonically decreasing with } x
+&P4) &&g(x)/(x) \text{ is monotonically decreasing with } x\nonumber
 \\
-&\text{ and } \lim_{x\rightarrow \infty} g(x)/x= 0.
+&    &&\text{ and } \lim_{x\rightarrow \infty} g(x)/x= 0.\label{property_decreasing}
 \end{align}
 Any policy used for transmission is represented in form of $\{\textbf{p},\textbf{s},N\}$, where $N\in \mathbb{N}$, $\textbf{p}=[p_1 p_2 .. p_N]$ and $s=[s_1 s_2 .. s_N s_{N+1}]$. The transmitter starts transmitting at time instant $s_1$ with power $p_1$ and continues till time $s_2$. From $s_2$ it transmits with power $p_2$ and so on. The policy ends at time $s_{N+1}$. The receiver is kept \textit{on} during the time $[s_i,s_{i+1}]$ when $p_i\ne 0$, $\forall i=1,2..,N$ and kept \textit{off} otherwise. The energy used by such a policy at the transmitter upto time '$t$' is given by the function $U(t)$ and the bits sent is represented by $B(t)$. Clearly,
 \begin{align}
