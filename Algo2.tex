@@ -3,12 +3,12 @@
 \begin{minipage}[b]{8cm}
 \caption {Offline algorithm for energy arrival in receiver after time t=0}
 \begin{tabular}{p{7cm}}
-\hline \textbf{Input}: Bits to transmit $B_0$; $E^T_i$, $E^R_i$ or $T^R_i$ for all $i$
+\hline \textbf{Input}: Bits to transmit $B_0$; $\ETx_i$, $E^R_i$ or $T^R_i$ for all $i$
 \\
 \hline
 \\
 \textbf{Initialize:} 
-$u_{min}=\min u_i$ s.t. $T^R(u_i)g\Bigg{(} \dfrac{E^T(u_i)}{T^R(u_i)}\Bigg{)}\ge B_0$
+$u_{min}=\min u_i$ s.t. $T^R(u_i)g\Bigg{(} \dfrac{\ETx(u_i)}{T^R(u_i)}\Bigg{)}\ge B_0$
 \\
 for all $i$, $O_i=\min$ $t$
 \\ 
@@ -24,7 +24,7 @@ s.t. receiver is \textit{on} from $t$ to $t+T^R(r_i)$
 \\
 \hspace{4mm}Let $u_{min}=t_j$ for some $j$
 \\
-\hspace{4mm}$u_{j'}=\min r_i$ s.t. $T^R(r_i)g\Bigg{(} \dfrac{E^T(t_j)}{T^R(r_i)}\Bigg{)}\ge B_0$
+\hspace{4mm}$u_{j'}=\min r_i$ s.t. $T^R(r_i)g\Bigg{(} \dfrac{\ETx(t_j)}{T^R(r_i)}\Bigg{)}\ge B_0$
 \\
 \hspace{4mm}$O_{iter}=O_{j'}$, $T=T^R(r_{j'})$
 \\

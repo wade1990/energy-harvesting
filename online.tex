@@ -5,13 +5,13 @@ The on-line algorithm that we propose is presented in table \ref{online}.
 \begin{minipage}[b]{8cm}
 \caption {On-line Algorithm for energy harvesting transmitter and receiver}
 \begin{tabular}{p{7cm}}
-\hline \textbf{Input}: Bits to transmit $B_0$; $E^T_i$, $E^R_i$ for $t_i,r_i<t$ where $t$ is the present time instant which increments parallely with this algorithm. 
+\hline \textbf{Input}: Bits to transmit $B_0$; $\ETx_i$, $E^R_i$ for $t_i,r_i<t$ where $t$ is the present time instant which increments parallely with this algorithm. 
 \\
 \hline
 \\
-\textbf{Initialize:} $T_{start}=\min t$ s.t. $T^R(t)g\Bigg{(} \dfrac{E^T(t)}{T^R(t)}\Bigg{)}\ge B_0$
+\textbf{Initialize:} $T_{start}=\min t$ s.t. $T^R(t)g\Bigg{(} \dfrac{\ETx(t)}{T^R(t)}\Bigg{)}\ge B_0$
 \\
-\hspace{12mm}$B_{rem}=B_0$, $E_{rem}=E^T(T_{start})$, $T=T_{start}$
+\hspace{12mm}$B_{rem}=B_0$, $E_{rem}=\ETx(T_{start})$, $T=T_{start}$
 \\
 \textbf{do}
 \\
@@ -21,7 +21,7 @@ The on-line algorithm that we propose is presented in table \ref{online}.
 \\
 \hspace{7mm} $B_{rem}=B_{rem}-(t-\max (t_{i-1},T_{start}))g(p)$
 \\
-\hspace{7mm} $E_{rem}=E_{rem}+E^T_i-(t-\max (t_{i-1},T_{start}))p$
+\hspace{7mm} $E_{rem}=E_{rem}+\ETx_i-(t-\max (t_{i-1},T_{start}))p$
 \\
 \hspace{7mm} $T=t_i$
 \\
@@ -66,11 +66,11 @@ This proof follows from contradiction. Let $T_{off}\le T_{start}$ and the optima
 \begin{align}
 &\sum_{i=1}^{i=k} g\Big{(}\frac{e_i}{l_i}\Big{)}l_i\stackrel{P2}{\le} g\Big{(}\frac{\sum_{i=1}^{i=k}e_i}{\sum_{j=1}^{j=k}l_j}\Big{)} \sum_{j=1}^{j=k} l_j 
 \\
-&\stackrel{P3,P4}{\le} g\Big{(}\frac{E^T(T_{off})}{T^R(T_{off})}\Big{)} T^R(T_{off})
+&\stackrel{P3,P4}{\le} g\Big{(}\frac{\ETx(T_{off})}{T^R(T_{off})}\Big{)} T^R(T_{off})
 \\
-&\stackrel{P4}{\le}\lim_{\epsilon \rightarrow 0} g\Big{(}\frac{E^T(T_{start}-\epsilon)}{T^R(T_{start}-\epsilon)}\Big{)} T^R(T_{start}-\epsilon)
+&\stackrel{P4}{\le}\lim_{\epsilon \rightarrow 0} g\Big{(}\frac{\ETx(T_{start}-\epsilon)}{T^R(T_{start}-\epsilon)}\Big{)} T^R(T_{start}-\epsilon)
 \\
-&+ g\Big{(}\frac{E^T(T_{start})-E^T(T_{start}-\epsilon)}{T^R(T_{start})-T^R(T_{start}-\epsilon)}\Big{)} (T^R(T_{start})-T^R(T_{start}-\epsilon)) \label{online1}
+&+ g\Big{(}\frac{\ETx(T_{start})-\ETx(T_{start}-\epsilon)}{T^R(T_{start})-T^R(T_{start}-\epsilon)}\Big{)} (T^R(T_{start})-T^R(T_{start}-\epsilon)) \label{online1}
 \end{align}
 where (\ref{online1}) follows form definition of $T_{start}$. But the off-line algorithm should transmit all $B_0$ bits and hence this concludes that $T_{off}\ge T_{start}$.
 *****
@@ -79,9 +79,9 @@ Next we estimate the maximum time taken to complete transmission after $T_{start
 \begin{align}
 &\sum_{i=1}^{i=k}l_ig(p_i)=B_0\stackrel{L\ref{online_power}}{\implies}\sum_{i=1}^{i=k}l_i\le \frac{B_0}{g(p_1)}\label{bits}
 \end{align}
-Now, from the definition of $p_1$, $\frac{E^T(T_{start})}{p_1}g(p_1)=B_0 \le T^R(T_{start}) g(\frac{E^T(T_{start})}{T^R(T_{start})})$. Hence by property $P4$, $\frac{E^T(T_{start})}{T^R(T_{start})}\le p_1$. So, the RHS of (\ref{bits}) can be reduced to 
+Now, from the definition of $p_1$, $\frac{\ETx(T_{start})}{p_1}g(p_1)=B_0 \le T^R(T_{start}) g(\frac{\ETx(T_{start})}{T^R(T_{start})})$. Hence by property $P4$, $\frac{\ETx(T_{start})}{T^R(T_{start})}\le p_1$. So, the RHS of (\ref{bits}) can be reduced to 
 \begin{align}
-&\frac{B_0}{g(p_1)} = \frac{E^T(T_{start})}{p_1} \le T^R(T_{start})\le T_{start}
+&\frac{B_0}{g(p_1)} = \frac{\ETx(T_{start})}{p_1} \le T^R(T_{start})\le T_{start}
 \\
 \end{align}
 where the last inequality followed from the definition of $T^R(T_{start})$. So we can calculate the competitive ratio as
