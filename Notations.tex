@@ -12,7 +12,7 @@ The Transmitter energy arrival instants are marked by $t_i$'s with energy $\math
 \\
 &    &&\text{ and } \lim_{x\rightarrow \infty} g(x)/x= 0.\label{property_decreasing}
 \end{align}
-Any policy used for transmission is represented in form of $\{\textbf{p},\textbf{s},N\}$, where $N\in \mathbb{N}$, $\textbf{p}=[p_1 p_2 .. p_N]$ and $s=[s_1 s_2 .. s_N s_{N+1}]$. The transmitter starts transmitting at time instant $s_1$ with power $p_1$ and continues till time $s_2$. From $s_2$ it transmits with power $p_2$ and so on. The policy ends at time $s_{N+1}$. The receiver is kept \textit{on} during the time $[s_i,s_{i+1}]$ when $p_i\ne 0$, $\forall i=1,2..,N$ and kept \textit{off} otherwise. The energy used by such a policy at the transmitter upto time '$t$' is given by the function $U(t)$ and the bits sent is represented by $B(t)$. Clearly,
+Any policy used for transmission is represented in form of $\{\textbf{p},\textbf{s},N\}$, where $N\in \mathbb{N}$, $\textbf{p}=[p_1\ p_2\ ..\ p_N]$ and $\textbf{s}=[s_1\ s_2\ ..\ s_{N+1}]$. The transmitter starts transmitting at time instant $s_1$ with power $p_1$ and continues till time $s_2$. From $s_2$ it transmits with power $p_2$ and so on. The policy ends at time $s_{N+1}$. The receiver is kept \textit{on} during the time $[s_i,s_{i+1}]$ when $p_i\ne 0$, $\forall i=1,2..,N$ and kept \textit{off} otherwise. The energy used by such a policy at the transmitter upto time '$t$' is given by the function $U(t)$ and the bits sent is represented by $B(t)$. Clearly,
 \begin{align}
 &U(t)=\sum_{i=1}^{j} p_i(s_{i+1}-s_i)+p_{j+1}(t-s_j) ,
 \\
