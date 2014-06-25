@@ -16,11 +16,11 @@ Suppose we are given a transmission duration $T$. Our goal is to find a transmis
 Tg\left(\frac{\ETx(t_n)}{T}\right)\geq B_0
 \end{equation}
 
-Let $\tilde{T}$ be the time duration such that
+Let $\widetilde{T}$ be the time duration such that
 \begin{equation}
-\tilde{T}g\left(\frac{\ETx(t_n)}{\tilde{T}}\right)=B_0
+\widetilde{T}g\left(\frac{\ETx(t_n)}{\widetilde{T}}\right)=B_0
 \end{equation}
-Let $\tilde{p}=\frac{\ETx(t_n)}{\tilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\tilde{T}$ time.\\
+Let $\tilde{p}=\frac{\ETx(t_n)}{\widetilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\widetilde{T}$ time.\\
 If not, we try to start the transmission as early as possible, such that the transmission is feasible. This transmission curve, will intersect the total energy arrival curve at at least one epoch.\\
 Now, we try to improve upon this policy. Let $Q$ be the first point where our transmission curve intersects the energy arrival curve.\\
 \begin{lemma}
@@ -61,53 +61,63 @@ At the end of every iteration we reset our $T$ to $ T - (t_{rt} - t'_{rt}) - (t'
 \hline \textbf{Input}: Bits to transmit $B_0$, transmission duration $T_0$.\\
 \hline
 \\
-\textbf{Initialize:}$B = B_0$, $T = T_0$, $n=1$, DEQUE $S$
+\textbf{Initialize:}$B = B_0$, $T = \TRx_0$, DEQUE $S$, hitorig = $0$
 \\
-\textbf{While} $Tg(\ETx(n)) < B$
+% \textbf{While} $Tg(\ETx(n)) < B$
+% \\
+% \hspace{4mm} $n = n+1$
+$n=\displaystyle \argmin_k\left(\left\{t_k | Tg\left(\frac{\ETx(t_k)}{T}\right)\geq B\right\}\right)$
 \\
-\hspace{4mm} $n = n+1$
+Solve for $\widetilde{T}: \widetilde{T}g\left(\dfrac{\ETx(t_n)}{\widetilde{T}}\right) = B$
 \\
-Solve for $\tilde{T}: \tilde{T}g\left(\dfrac{\ETx(n)}{\tilde{T}}\right) = B$
+$p_0=\dfrac{\ETx(n)}{\widetilde{T}}$
 \\
-$p_0=\dfrac{\ETx(n)}{\tilde{T}}$
+% \textbf{for} $i=0,1,2,...n$ \textbf{do}
+% \\
+% \hspace{4mm}flag=1
+% \\
+% \hspace{4mm}\textbf{for} $j=i,i+1,i+2,...,n$ \textbf{do}
+% \\
+% \hspace{7mm}\textbf{if} $p_0t_j + (\ETx(t_i) - p_0t_i) > \ETx(t_j)$
+% \\
+% \hspace{10mm}$flag=0$
+% \\
+% \hspace{10mm}break
+% \\
+% \hspace{7mm}\textbf{end if}
+% \\
+% \hspace{4mm}\textbf{end for}
+% \\
+$q=\displaystyle \argmin_k\left(\left\{ t_k | (\ETx(t_k) - p_0t_k) + p_0t_j \leq \ETx(t_j) \forall j\in[0,n] \right\}\right)$
 \\
-\textbf{for} $i=0,1,2,...n$ \textbf{do}
+% \hspace{4mm}\textbf{if} $flag=1$
+% \\
+% \hspace{7mm}$t_{lt} = t_{rt} = t_i$
+% \\
+% \hspace{7mm} $S$.append($t_i$)
+% \\
+% \hspace{7mm}break
+% \\
+% \hspace{4mm}\textbf{end if}
+% \\
+% \textbf{end for}
+% \\
+%$n = \displaystyle \argmax_{k\in\mathbb{N}}\left(\left\{t_k | t_k<\dfrac{E_n - \ETx(t_i) - p_0t_i}{p_0}\right\}\right)$
+$t_{lt} = t_{rt} = t_q$
 \\
-\hspace{4mm}flag=1
-\\
-\hspace{4mm}\textbf{for} $j=i,i+1,i+2,...,n$ \textbf{do}
-\\
-\hspace{7mm}\textbf{if} $p_0t_j + (\ETx(i) - p_0t_i) > \ETx(j)$
-\\
-\hspace{10mm}$flag=0$
-\\
-\hspace{10mm}break
-\\
-\hspace{7mm}\textbf{end if}
-\\
-\hspace{4mm}\textbf{end for}
-\\
-\hspace{4mm}\textbf{if} $flag=1$
-\\
-\hspace{7mm}$t_{lt} = t_{rt} = t_i$
-\\
-\hspace{7mm} $S$.append($t_i$)
-\\
-\hspace{7mm}break
-\\
-\hspace{4mm}\textbf{end if}
-\\
-\textbf{end for}
+$S$.append($t_q$)
 \\
 \textbf{while} $B>0$
 \\
-\hspace{4mm}\textbf{Solve}: $xg\left(\dfrac{\ETx(t_{lt})}{x}\right)+(T-x)g\left(\dfrac{\ETx(n)-\ETx(t_{rt})}{T-x}\right) = B_0$
+\hspace{4mm}\textbf{Solve}: $xg\left(\dfrac{\ETx(t_{lt})}{x}\right)+(T-x)g\left(\dfrac{\ETx(t_n)-\ETx(t_{rt})}{T-x}\right) = B_0$
 \\
 \hspace{4mm}$p_{lt} = \dfrac{\ETx(t_{lt})}{x}$
 \\
-\hspace{4mm}$p_{rt} = \dfrac{\ETx(n)-\ETx(t_{rt})}{T-x}$
+\hspace{4mm}$p_{rt} = \dfrac{\ETx(t_n)-\ETx(t_{rt})}{T-x}$
 \\
-\hspace{4mm}$T_{lt} = \{t_i | t_i > t_{lt} - \dfrac{\ETx(t_{lt})}{p_{lt}}, t_i < t_{lt}   \}$
+\hspace{4mm}$t_{start} = t_{lt} - \dfrac{\ETx(t_{lt})}{p_{lt}}$
+\\
+\hspace{4mm}$T_{lt} = \{t_i | t_i >t_{start}, t_i < t_{lt}   \}$
 \\
 \hspace{4mm}$t=0$
 \\
@@ -120,6 +130,8 @@ $p_0=\dfrac{\ETx(n)}{\tilde{T}}$
 \hspace{10mm}$t_{lt} = \displaystyle \argmax_{j\in(T_{lt})}\left(\dfrac{\ETx(t_{lt}) - \ETx(j)}{t_{lt}-j}\right)$
 \\
 \hspace{10mm}$S$.prepend($t_{lt}$)
+\\
+\hspace{10mm}$t_{start} = t_{lt} - \dfrac{\ETx(t_{lt})}{p_{lt}}$
 \\
 \hspace{10mm}$t=1$
 \\
@@ -135,23 +147,32 @@ $p_0=\dfrac{\ETx(n)}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{if} $t=0$
 \\
-\hspace{7mm}$t_{lt} = max\left(t_{lt} - \dfrac{\ETx(t_{lt})}{p_{lt}} , 0\right)$
+\hspace{7mm}$t_{lt} = max\left(t_{start} , 0\right)$
+\\
+\hspace{7mm}\textbf{if} $t_{lt} = 0$ 
+\\
+\hspace{10mm}hitorig = 1
+\\
+\hspace{10mm}\textbf{break}
 \\
 \hspace{4mm}\textbf{end if}
 \\
-\hspace{4mm}$S_{rt} = \{t_{rt},t_{rt}+1,t_{rt}+2,...t_{n-1}\}$
+\hspace{4mm}$T_{rt} = \{t_k|t_k>t_{rt}, t_k<t_{rt}+p_{rt}\}$
 \\
 \hspace{4mm}$u=0$
 \\
-\hspace{4mm}\textbf{For} $t_i \in S_{rt}$
+\hspace{4mm}\textbf{For} $t_i \in T_{rt}$
 \\
 \hspace{7mm}\textbf{If} $p_{rt}t_i + (\ETx(t_{rt}) - p_{rt}t_{rt}) > \ETx(t_i)$
 \\
 \hspace{10mm}$t'_{rt} = t_{rt}$
 \\
-\hspace{10mm}$t_{rt} = \displaystyle \argmin_{j\in(S_{rt})}\left(\dfrac{\ETx(j)-\ETx(t_{lrt})}{j-t_{rt}}\right)$
+\hspace{10mm}$t_{rt} = \displaystyle \argmin_{j\in(S_{rt})}\left(\dfrac{\ETx(t_j)-\ETx(t_{lrt})}{t_j-t_{rt}}\right)$
 \\
 \hspace{10mm}$S$.append($t_{rt}$)
+\\
+\hspace{10mm}$t_{stop} = t_{rt} + \frac{\ETx(E_n)}{p_{rt}}$
+\\
 \hspace{10mm}$u=1$
 \\
 \hspace{10mm}\textbf{break}
@@ -176,22 +197,32 @@ $p_0=\dfrac{\ETx(n)}{\tilde{T}}$
 \\
 \hspace{4mm}\textbf{End For}
 \\
-\textbf{Write the following block in a better way}\\
-\hspace{4mm}\textbf{if} $u=0$
+% \textbf{Write the following block in a better way}
+% \\
+\hspace{4mm}\textbf{if} ($u=0$ and $\ETx(t_{stop}) < \ETx(n) $ )
 \\
-\hspace{7mm} $t_{rt} = t_{rt} + \dfrac{\ETx(t_n)-\ETx(t_rt)}{p_{rt}}$
+\hspace{7mm} $n=\displaystyle \argmax_k\left(\left\{t_k | t_k< t_{stop} \right\}\right)$
 \\
-\hspace{7mm}\textbf{If} $t_{rt}>t_{n}$
+% \hspace{7mm} $t_{rt} = t_{rt} + \dfrac{\ETx(t_n)-\ETx(t_rt)}{p_{rt}}$
+% \\
+% \hspace{7mm}\textbf{If} $t_{rt}>t_{n}$
+% \\
+% \hspace{10mm}\textbf{While} $t_n < t_{rt}$
+% \\
+% \hspace{13mm} $n=n+1$
+% \\
+% \hspace{10mm} \textbf{end while}
+% \\
+% \hspace{7mm} $t_{rt} = t'_{rt}$
+% \\
+% \hspace{7mm}\textbf{end for}
+% \\
 \\
-\hspace{10mm}\textbf{While} $t_n < t_{rt}$
+\hspace{4mm}\textbf{else if}($u=0$)
 \\
-\hspace{13mm} $n=n+1$
+\hspace{7mm}$t_{rt} = t_{stop}$
 \\
-\hspace{10mm} \textbf{end while}
-\\
-\hspace{7mm} $t_{rt} = t'_{rt}$
-\\
-\hspace{7mm}\textbf{end for}
+\hspace{7mm}$t_{lt} = t_{start}$
 \\
 \hspace{4mm}\textbf{end if}
 \\
@@ -200,6 +231,13 @@ $p_0=\dfrac{\ETx(n)}{\tilde{T}}$
 \hspace{4mm}$B = B -  (t'_{lt}-t_{lt})g(\dfrac{\ETx(t'_{lt})-\ETx(t_{lt})}{t'_{lt}-t_{lt}}) - (t_{rt}-t'_{rt})g(\dfrac{\ETx(t_{rt})-\ETx(t'_{rt})}{t_{rt}-t'_{rt}})$
 \\
 \textbf{end while}
+\\
+\textbf{if} hitorig = 1
+\\
+\hspace{4mm}
+Apply previous algorithm after $t_{rt}$
+\\
+\textbf{end if}
 \end{tabular}
 \end{minipage}
 \end{table}
