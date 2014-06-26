@@ -1,4 +1,12 @@
 %!TEX root = OptimalOffline.tex
+
+\begin{figure}
+\label{lemma4}
+\centering
+  \centerline{\includegraphics[width=8cm,height=50mm]{Lemma4.eps}}
+\caption{Illustration of the proof of lemma \ref{transmission_duration}. The dotted line represents the policy where the first power of transmission is slightly reduced, to make the transmissino finish earlier}
+\end{figure}
+
 \begin{lemma}
 If the reciever has enough energy to stay on for $T$ time, then either the transmitter will transmit for the entire duration $T$ or the transmitter will begin transmission at $t=0$.
 \label{transmission_duration}
@@ -6,7 +14,7 @@ If the reciever has enough energy to stay on for $T$ time, then either the trans
 \begin{proof}
 We will prove this by contradiction. Suppose the optimal transmission policy does not begin transmitting at time $T$ and transmits for a duration $T' < T$.\\
 Let $p_1$ be the first power of transmission in this policy. If we reduce this slightly to $p_1-\delta p_1$, we will have transmitted more bits by time $t_N$, where $t_N$ is the last energy arrival epoch when the transmission power changes. \\
-Therefore at the end we can transmit with a power $p'_N > p_N$ (see figure) and complete our transmission at an earlier time.\\
+Therefore at the end we can transmit with a power $p'_N > p_N$ (see figure \ref{lemma4}) and complete our transmission at an earlier time.\\
 Thus optimally we can keep lowering our first transmission power until we either exhaust our transmission duration $T$ or we hit the origin.
 \end{proof}
 
@@ -23,6 +31,15 @@ Let $\widetilde{T}$ be the time duration such that
 Let $\tilde{p}=\frac{\ETx(t_n)}{\widetilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\widetilde{T}$ time.\\
 If not, we try to start the transmission as early as possible, such that the transmission is feasible. This transmission curve, will intersect the total energy arrival curve at at least one epoch.\\
 Now, we try to improve upon this policy. Let $Q$ be the first point where our transmission curve intersects the energy arrival curve.\\
+
+\begin{figure}
+\label{straight}
+\centering
+  \centerline{\includegraphics[width=8cm]{straight.eps}}
+\caption{Figure showing point Q}
+\end{figure}
+
+
 \begin{lemma}
 $Q$ lies in every optimal transmission curve.
 \end{lemma}
@@ -33,7 +50,7 @@ Since we are transmitting all the bits at the maximum possible power, no policy 
 \textbf{Claim 2:} Every optimal transmission policy ends transmission at or before time $S$.\\
 This follows immediately from the fact that the policy is optimal. \\
 Let $Q$ occur at time $t_k$. Suppose we have an optimal transmission policy that does not pass through point $Q$. Therefore, at $t_k$ the transmission curve lies under the energy arrival curve. The transmission power at time $t_k^+$ has to be more than $\tilde{p}$. If it isn't then this policy shall not intersect the energy arrival curve at any epoch till $R$ and because of lemma \ref{lemma_energy_consumed}, it shall not be able to change it's power of transmission till $R$. Therefore, it ends after $R$ and is not optimal.\\
-If the policy does have a power higher than $\tilde{p}$ at $t_k^+$, then it must have the same power of transmission right from the beginning of the transmission. This again follows from lemma\ref{lemma_energy_consumed}. Therefore, it shall begin transmission after $R$, which violates claim 1. \\
+If the policy does have a power higher than $\tilde{p}$ at $t_k^+$, then it must have the same power of transmission right from the beginning of the transmission. This again follows from lemma \ref{lemma_energy_consumed}. Therefore, it shall begin transmission after $R$, which violates claim 1. \\
 Therefore every optimal transmission curve passes through $Q$\\
 \end{proof}
 
@@ -46,7 +63,9 @@ xg\left(\frac{\ETx(t_{lt})}{x}\right) + (T-x)g\left(\frac{\ETx(n)-\ETx(t_{rt})}{
 Notice that $t_{lt} - x$ and $t_{rt} + T-x$ will give us the start and end points of this iteration. Now, we transmit at power $p_{lt} = \frac{\ETx(t_{lt})}{x}$ prior to $t_{lt}$ and $p_{rt} = \frac{\ETx(n) - \ETx(t_{rt})}{T-x}$ after $t_{rt}$. 
 If this policy is feasible, then we check for the following. First, we make sure that at the end point, all the available energy is used up, because of it isn't, we can transmit at a higher power and finish earlier. 
 If all the energy is not used up, we repeat our iteration, setting $n$ to $k$, where $t_k$ is the last energy arrival epoch before our end point, $t_{rt} + T-x$  \\
-Also, we make sure that our start point, is not before the origin. If the start point is negative, we set it to origin and continue our iterations accordingly.\\
+If all the energy is used up, then we set $t_{rt}$ to the end point. 
+Also, we make sure that our start point, is not before the origin. If the start point is negative, we set it to origin. Now if our start point happend to hit origin at any point in the algorithm, then our problem can be 
+solved using the algorithm described by Yang et al in \cite{Yang}. So, should our start point hit origin, we simply use their algorithm for the allocations beyond $t_{rt}$.
 
 If the policy is unfeasible on the right, we select the corner point $t_i$ with the minimum slope from $t_{rt}$ and transmit with power $\frac{\ETx(t_i) - \ETx(t_{rt})}{t_i-t_{rt}}$ between the two points and set $t'_{rt} = t_{rt}$ and $t_{rt} = t_i$ and repeat the process.\\
 If the policy is unfeasible on the left, we follow a similar process, be selecting the corner point $t_j$ with the \textit{maximum} slope from point $t_{rt}$.\\
