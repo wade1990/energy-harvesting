@@ -1,4 +1,4 @@
-%!TEX root = OptimalOffline.tex
+% !TEX root = OptimalOffline.tex
 
 \begin{figure}
 \label{lemma4}
@@ -8,25 +8,28 @@
 \end{figure}
 
 \begin{lemma}
-If the reciever has enough energy to stay on for $T$ time, then either the transmitter will transmit for the entire duration $T$ or the transmitter will begin transmission at $t=0$.
+If the receiver has enough energy to stay on for $T$ time, then either the transmitter will transmit for the entire duration $T$ or the transmitter will begin transmission at time $t=0$.
 \label{transmission_duration}
 \end{lemma}
 \begin{proof}
-We will prove this by contradiction. Suppose the optimal transmission policy does not begin transmitting at time $T$ and transmits for a duration $T' < T$.\\
-Let $p_1$ be the first power of transmission in this policy. If we reduce this slightly to $p_1-\delta p_1$, we will have transmitted more bits by time $t_N$, where $t_N$ is the last energy arrival epoch when the transmission power changes. \\
-Therefore at the end we can transmit with a power $p'_N > p_N$ (see figure \ref{lemma4}) and complete our transmission at an earlier time.\\
-Thus optimally we can keep lowering our first transmission power until we either exhaust our transmission duration $T$ or we hit the origin.
+We will prove this by contradiction. Suppose the optimal transmission policy $\{\textbf{p},\textbf{s},N\}$ does not begin transmitting at time $t=0$ and transmits for a duration $s_{N+1}-s_1 < T$.
+
+If we reduce $p_1$ slightly to $p_1-\delta p_1$, we will have transmitted more bits by time $s_N$. Therefore at the end we can transmit with a power $p'_N > p_N$ and complete our transmission at an earlier time.
+
+Thus we can keep lowering our first transmission power until we either exhaust our transmission duration $T$ or we hit the origin.
 \end{proof}
 
-Suppose we are given a transmission duration $T$. Our goal is to find a transmission policy so we can minimise the time at which the transmission is completed. To do this, we shall first find a feasible solution and keep improving upon it, until we have a solution that follows all our lemmas. 
-\\First, we need an initial feasible solution to start with. For this, we find the minimum energy required by the transmitter so that the transmission can be completed. That is, the first $n$ such that
-\begin{equation}
-Tg\left(\frac{\ETx(t_n)}{T}\right)\geq B_0
-\end{equation}
+Now that we have gained some knowledge of the structure our algorithm has to follow, we consider an example to approach Problem 1. 
 
+Suppose we are given that the receiver can be \textit{on} for a maximum duration of $T$. Our goal is to find a transmission policy so that we can minimize the time at which the transmission is completed. To do this, we shall first find a feasible solution i.e. one which satisfies all constraints (\ref{pb1_constraint_bits})-(\ref{pb1_constraint_time}) and keep improving upon it, until we have a solution that follows all our Lemma 1-4 and hits the boundary on some or all of the constraints (\ref{pb1_constraint_bits})-(\ref{pb1_constraint_time}). 
+
+We need an initial feasible solution to begin with. For this, we find the minimum energy required by the transmitter so that the transmission can be completed in duration $T$ with a constant power transmission. That is, the first $n$ such that
+\begin{equation}
+T g\left(\frac{\ETx(t_n)}{T}\right)\geq B_0.
+\end{equation}
 Let $\widetilde{T}$ be the time duration such that
 \begin{equation}
-\widetilde{T}g\left(\frac{\ETx(t_n)}{\widetilde{T}}\right)=B_0
+\widetilde{T}g\left(\frac{\ETx(t_n)}{\widetilde{T}}\right)=B_0.
 \end{equation}
 Let $\tilde{p}=\frac{\ETx(t_n)}{\widetilde{T}}$. We try to transmit with this power starting at t=0. If it is feasible, we are done and our transmission is completed in $\widetilde{T}$ time.\\
 If not, we try to start the transmission as early as possible, such that the transmission is feasible. This transmission curve, will intersect the total energy arrival curve at at least one epoch.\\
