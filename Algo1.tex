@@ -78,9 +78,10 @@ If the optimal policy does have a power higher than $\tilde{p}$ at $t_i$, then i
 Now that we have a starting point, we shall proceed to improve upon this policy as follows. Let $t_{lt}$ and $t_{rt}$ be the first and last energy arrival epochs where the power of transmission changes. 
 As it is evident, initially both $t_{lt}$ and $t_{rt}$ are set to point $Q$. Now, will iteratively try to omporove on the transmission curve to the left and the right of point $Q$ respectively. 
 Keeping in mind Lemma \ref{transmission_duration}, we solve 
-\begin{align}
-xg\left(\frac{\ETx(t_{lt})}{x}\right) + (T-x)g\left(\frac{\ETx(n)-\ETx(t_{rt})}{T-x}\right) = B
-\end{align}
+\begin{equation}
+\label{xandy}
+xg\left(\frac{\ETx(t_{lt})}{x}\right) + (T-x)g\left(\frac{\ETx(n)-\ETx(t_{rt})}{T-x}\right) = B_0
+\end{equation}
 Notice that $t_{lt} - x$ and $t_{rt} + T-x$ will give us the start and end points of this iteration. Now, we transmit at power $p_{lt} = \frac{\ETx(t_{lt})}{x}$ prior to $t_{lt}$ and $p_{rt} = \frac{\ETx(n) - \ETx(t_{rt})}{T-x}$ after $t_{rt}$. 
 If this policy is feasible, then we check for the following. First, we make sure that at the end point, all the available energy is used up, because of it isn't, we can transmit at a higher power and finish earlier. 
 If all the energy is not used up, we repeat our iteration, setting $n$ to $k$, where $t_k$ is the last energy arrival epoch before our end point, $t_{rt} + T-x$  \\
@@ -92,6 +93,12 @@ If the policy is unfeasible on the right, we select the corner point $t_i$ with 
 If the policy is unfeasible on the left, we follow a similar process, be selecting the corner point $t_j$ with the \textit{maximum} slope from point $t_{rt}$.\\
 At the end of every iteration we reset our $T$ to $ T - (t_{rt} - t'_{rt}) - (t'_{lt} - t_{lt})$ and we subtract the number of bits transferred between $t_{lt}$ and $t_{rt}$ from $B$
 
+\begin{figure}
+\label{theorem1}
+\centering
+  \centerline{\includegraphics[width=8cm]{theorem1.eps}}
+\caption{Figures showing the first two iterations of the algorithm. The dash dotted lines represent the possibly unfeasible powers achieved by solving equation \eqref{xandy}, while the solid lines represent the parts of the policy that go into the final solution.}
+\end{figure}
 
 
 \begin{table}
