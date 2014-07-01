@@ -75,7 +75,7 @@ But, by constraint (\ref{pb1_constraint_energy})
 If the optimal policy does have a power higher than $\tilde{p}$ at $t_i$, then it must have the same power of transmission either from some epoch, say $t_k$, or from the beginning of transmission. If $t_k>R$, we can show that the constant power policy is infeasible with respect to constraint (\ref{pb1_constraint_energy}) at $t_k$. If $t_k<R$ it becomes infeasible at time $R$. If the optimal policy starts transmission with power $p$, it has to begin transmission after time $R$ which follows from equation (\ref{eqlemmaQ2}). This violates \textit{Claim 1}. Therefore every optimal transmission policy must use all energy till epoch $Q$.
 \end{proof}
 
-Now that we have a starting point, we shall proceed to improve upon this policy as follows. Let $t_{lt}$ and $t_{rt}$ be the first and last energy arrival epochs where the power of transmission changes. 
+Now that we have a starting feasible solution, we shall proceed to improve upon this policy as follows. Let $t_{lt}$ and $t_{rt}$ be the first and last energy arrival epochs where the power of transmission changes. 
 As it is evident, initially both $t_{lt}$ and $t_{rt}$ are set to point $Q$. Now, will iteratively try to omporove on the transmission curve to the left and the right of point $Q$ respectively. 
 Keeping in mind Lemma \ref{transmission_duration}, we solve 
 \begin{equation}
