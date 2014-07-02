@@ -1,20 +1,33 @@
 % !TEX root = OptimalOffline.tex
+
 \begin{lemma}
-The power of transmission in every optimal solution is non-decreasing with time whenever the receiver is \textit{on}.
+The transmission power in an optimal solution $\{\textbf{p},\textbf{s},N\}$ to Problem 1 is non-decreasing with time whenever the receiver is '\textit{on}' i.e. $p_i\ge p_j$ for all $i\in \{1,2..N\},j<i$ if $p_i\neq 0$. 
 \label{lemma_increasing_power}
 \end{lemma}
 \begin{proof}
-We prove this by contradiction. The following two cases arise depending on whether the reciever is \textit{on} or \textit{off}.
+We prove this by contradiction. Assume that the optimal solution $\{\textbf{p},\textbf{s},N\}$ does not follow the condition stated in Lemma \ref{lemma_increasing_power}. Let $i$ be the minimum index for which the condition is violated. So, $\exists j<i:\ p_i<p_j $. Let $j$ be the maximum index less than $i$ such that $p_i<p_j$. 
 
-$Case 1:$ Assume that the power of transmission is $p_1$ from time $A$ to $B$ and then $p_2$ from $B$ to $C$ with $p_1>p_2$ and the receiver is \textit{on} for the entire time $A$ through $C$ as shown in figure \ref{Lemma1}. In this case suppose we transmit at a power $p'=\dfrac{p_1(B-A)+p_2(C-B)}{C-A}$ then the number of bits transmitted would be more over the same time duration due to concavity of $g(p)$ as shown below.
-\begin{align}
-&g(p_1)\frac{B-A}{C-A}+g(p_2)\frac{C-B}{C-A} \le g\left(\frac{p_1(B-A)+p_2(C-B)}{C-A}\right),
+%
+%\begin{lemma}
+%The transmission power in every optimal solution to Problem 1 is non-decreasing with time whenever the receiver is \textit{on}.
+%\label{lemma_increasing_power}
+%\end{lemma}
+%\begin{proof}
+%We prove this by contradiction. The following two cases arise depending on whether the receiver is \textit{on} or \textit{off}.
+
+$Case 1:$ Suppose $j=i-1$. This situation is shown in Fig. \ref{Lemma1}. In this case consider a transmission policy which is same as the optimal policy till time $s_{i-1}$. From $s_{i-1}$ to $s_{i+1}$ this new policy transmits at a constant power $p'=\dfrac{p_i(s_{i+1}-s_{i})+p_{i-1}(s_{i}-s_{i-1})}{s_{i+1}-s_{i-1}}$. Then the number of bits transmitted in this new policy till $s_{i+1}$ would be more than the optimal policy, due to concavity of $g(p)$ as shown below.
+\begin{align*}
+&g(p_i)\frac{s_{i+1}-s_{i}}{s_{i+1}-s_{i-1}}+g(p_{i-1})\frac{s_{i}-s_{i-1}}{s_{i+1}-s_{i-1}}
+\\ 
+&\le g\left(\frac{p_i(s_{i}-s_{i-1})+p_{i-1}(s_{i+1}-s_{i})}{s_{i+1}-s_{i-1}}\right),
 \\
-&\implies g(p')(C-A)\ge g(p_1)(B-A)+g(p_2)(C-B).  
-\end{align}
-As we can transmit more number of bits during $(C-A)$ with power $p'$ we can save on the total transmission time since we would have less number of bits left to transmit after time $C$. Hence this case cannot be optimal.
+&\implies g(p')(s_{i+1}-s_{i-1})
+\\
+&\ge g(p_i)(s_{i+1}-s_{i})+g(p_{i-1})(s_{i}-s_{i-1}).  
+\end{align*}
+After time $s_{i+1}$, the policy that we are describing follows same transmission powers as the optimal policy till it transmits $B_0$ bits. Since we have transmitted more number of bits than the optimal policy till time $s_{i+1}$, we would finish transmitting all $B_0$ bits at an earlier time. This new policy contradicts the optimality of policy $\{\textbf{p},\textbf{s},N\}$.
 
-$Case 2:$ The receiver is \textit{off} for a certain duration (say from $B$ to $C$) between $A$ and $D$ as shown in Figure \ref{Lemma1}. The transmission power is $p_1$ from $A$ to $B$ and $p_2$ from $C$ to $D$. Now, suppose we keep the receiver \textit{off} from $A$ to $(A+C-B)$ instead of $A$ to $B$ and transmit from $(A+C-B)$ to $C$ with power $p_1$.  This is shown in the Figure \ref{Lemma1} by the dotted lines. This scenario now boils down to $Case 1$ from time $(A+C-B)$ to $D$ and hence cannot be optimal.
+$Case 2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{i-1},..,p_{j+1}$. As $i$ is the minimum index violating the condition stated in Lemma \ref{lemma_increasing_power}, we can argue that $p_{i-1},..,p_{j+1}=0$. This situation is shown in Fig. \ref{Lemma1}. Now, consider a policy where the transmission power is same as the optimal policy before time $s_j$ and after time $s_{i+1}$. From $s_j$ to $s_j'=s_j+s_{i}-s_{j+1}$ we keep the receiver \textit{off} and from $s_j'$ to $s_{i}$ we transmit at power $p_j$. This new policy still transmits same number of bits and ends at the same time as the optimal policy. From this new policy we can generate another policy which would finish earlier than the optimal policy as we did is \textit{Case1} and reach a contradiction. 
 \end{proof}
 
 \begin{figure}[htb]
@@ -31,31 +44,34 @@ $Case 2:$ The receiver is \textit{off} for a certain duration (say from $B$ to $
 \end{figure}
 
 \begin{lemma}
-In an optimal solution once transmission has started the receiver is remains \textit{on} until transmission is complete. \label{lemma_nobreaks}
+The optimal solution to Problem 1 may not be unique, but there always exists a solution where once transmission has started, the receiver remains \textit{on} until the transmission is complete. \label{lemma_nobreaks}
 \end{lemma}
 \begin{proof}
-This is equivalent to saying that there are no breaks during transmission in an optimal solution. Again, we shall prove this by contradiction. Suppose the reciever if \textit{off} for some period after transmission starts. Considering Lemma \ref{lemma_increasing_power} the power of transmission $p_1$ before the break would have to be less than or equal to the power $p_2$ after the break, as shown in Figure \ref{Lemma2_figure} (a). Consider the case where we keep the receiver \textit{off} from time $A$ to $B'=(A+C-B)$. Now, an energy arrival can occur at the transmitter at any time between $A$ to $D$. If there is no energy arrival then transmitting at a constant rate from $B'$ to $D$ would transmit more bits.
-
-$Case 1:$ If the energy arrival is between $A$ and $B'$, then it can be easily seen that transmitting at a constant rate from $B'$ to $D$ would be better due to concavity of $g(p)$.
-
-$Case 2:$ If the arrival is between $B'$ and $C$ (say $C'$), then again transmitting at a same rate $p_1$ from $B'$ to $C'$ and  at a constant rate from $C'$ to $D$ would deliver more number of bits. In the worst case, an energy arrival occurring at $C$ would make this scenario transmit equal number of bits as the original scenario.
-
-$Case 3:$ If there is an energy arrival from $C$ to $D$ (say $D'$), then transmitting at maximum possible constant power form $B'$ to $D'$ and then at same rate $p_2$ from $D'$ to $D$ would deliver more bits to the receiver.
-
-Applying the above scenarios iteratively we could shift the receiver \textit{off} duration $(C-B)$ to the beginning of transmission and still, at worst case, transmit equal number of bits in same total time. Hence having a break in between transmission is always discouraged. This also gives us an idea of why the optimal solution may not be unique.
+The proof involves showing that we can generate an optimal solution with no breaks in transmission from any other optimal solution. Let the optimal policy be $\{\textbf{p},\textbf{s},N\}$. Now, if $p_i\neq 0,\forall \ i$, then we are done. Suppose some of $p_i$'s, say $p_{i_1},p_{i_2},...,p_{i_k}=0$ for some $k<N$, where $i_1<i_2<..<i_k$. Let $p_j$ be the first non-zero power after $p_{i_1}$. Consider a policy which is same as policy $\{\textbf{p},\textbf{s},N\}$ till time $s_{i_1-1}$ and after time $s_{j}$. But, we keep the receiver \textit{off} for a period of $(s_{j}-s_{i_1})$ starting from time $s_{i_1-1}$ and transmit with power $p_{i_1-1}$ from time $(s_{i_1-1}+s_{j}-s_{i_1})$ till $s_j$. This new policy transmits same amount of bits in same time  as policy $\{\textbf{p},\textbf{s},N\}$ and also satisfies all constraints. We continue this process of shifting the receiver \textit{off} period to left again and again to generate new policies till we reach a policy where the receiver is \textit{off} for time $(s_{j}-s_{i_1})$ from $s_1$. The start time of this policy can now be changed to $(s_1+s_{j}-s_{i_1})$. Similarly, we shift the receiver \textit{off} period corresponding to $p_{i_2},...,p_{i_k}$ till the total \textit{off} period is shifted to the beginning of transmission. This will result in a policy which starts after time $s_1$ and ends at time $s_{N+1}$, but the transmission power never goes zero in-between. This new policy is also optimal and has no breaks.
 \end{proof}
-
-\begin{figure}[htb]
-\centering
-\centerline{\includegraphics[width=8cm]{Lemma2.pdf}}
-\caption{Figure showing the three cases of Lemma \ref{lemma_nobreaks}, (a) the original scenario, (b) \textit{Case 1}, (c) \textit{Case 2} and (d) \textit{Case3} with $p_1>p_2$.}
-\label{Lemma2_figure}
-\end{figure}
+In rest of the paper, whenever we refer to the optimal solution for Problem 1, we assume it is the one with no breaks in transmission.
+%This is equivalent to saying that there are no breaks during transmission in an optimal solution. Again, we shall prove this by contradiction. In the optimal solution, suppose the receiver is \textit{off} for some period after transmission starts. Let the transmission power before the break is $p_1$ and after the break is $p_2$. Considering Lemma \ref{lemma_increasing_power}, $p_1<p_2$, as shown in Fig. \ref{Lemma2_figure} (a). Consider the policy where we keep the receiver \textit{off} from time $A$ to $B'=(A+C-B)$. Now, an energy arrival can occur at the transmitter at any time between $A$ to $D$. If there is no energy arrival then transmitting at a constant rate from $B'$ to $D$ would transmit more bits.
+%
+%$Case 1:$ If the energy arrival is between $A$ and $B'$, then it can be easily seen that transmitting at a constant rate from $B'$ to $D$ would be better due to concavity of $g(p)$.
+%
+%$Case 2:$ If the arrival is between $B'$ and $C$ (say $C'$), then again transmitting at a same rate $p_1$ from $B'$ to $C'$ and  at a constant rate from $C'$ to $D$ would deliver more number of bits. In the worst case, an energy arrival occurring at $C$ would make this scenario transmit equal number of bits as the original scenario.
+%
+%$Case 3:$ If there is an energy arrival from $C$ to $D$ (say $D'$), then transmitting at maximum possible constant power form $B'$ to $D'$ and then at same rate $p_2$ from $D'$ to $D$ would deliver more bits to the receiver.
+%
+%Applying the above scenarios iteratively we could shift the receiver \textit{off} duration $(C-B)$ to the beginning of transmission and still, at worst case, transmit equal number of bits in same total time. Hence having a break in between transmission is always discouraged. This also gives us an idea of why the optimal solution may not be unique.
+%\end{proof}
+%
+%\begin{figure}[htb]
+%\centering
+%\centerline{\includegraphics[width=8cm]{Lemma2.pdf}}
+%\caption{Figure showing the three cases of Lemma \ref{lemma_nobreaks}, (a) the original scenario, (b) \textit{Case 1}, (c) \textit{Case 2} and (d) \textit{Case3} with $p_1>p_2$.}
+%\label{Lemma2_figure}
+%\end{figure}
 
 \begin{lemma}
-In an optimal solution with no breaks, the power of transmission can only change at the time instants when energy arrives at the transmitter. The total energy used for transmission till that instant equals the total energy harvested upto that instant.
+In an optimal solution with no breaks, the transmission power can only change at the time instants when energy arrives at the transmitter. The total energy used for transmission till that instant equals the total energy harvested upto that instant.
 \label{lemma_energy_consumed} 
 \end{lemma}
 \begin{proof}
-Keeping in mind Lemma \ref{lemma_increasing_power} and \ref{lemma_nobreaks} the proof of this Lemma follows from Lemma 2 in \cite{Yang}. 
+Keeping in mind Lemma \ref{lemma_increasing_power} and \ref{lemma_nobreaks}, in the optimal solution $\{\textbf{p}, \textbf{s}, N\}$, transmission starts at $s_1$ and ends at $s_{N+1}$ without stopping in-between. Further, the transmission powers are also increasing. Assuming such a structure, the proof of this Lemma can be argued in similar terms of Lemma 2,3 in \cite{Yang}. 
 \end{proof}	
