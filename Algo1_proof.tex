@@ -1,5 +1,98 @@
 %!TEX root = OptimalOffline.tex
 %input{Siddhartha}
+
+\begin{algorithm}
+\caption{Procedure to find initial feasible policy to Problem 1 for Algorithm 2}
+\label{init_policy}
+\begin{algorithmic}[1]
+\State \textbf{Initialization}: $B_0$, $\TRx_0$
+\Procedure{INIT\_POLICY}{}
+
+\State $n=\displaystyle \argmin_k\left(\left\{t_k | \TRx_0 g\left(\frac{\ETx(t_k)}{\TRx_0}\right)\geq B_0\right\}\right)$
+
+\State Solve for $\widetilde{T}: \widetilde{T}g\left(\dfrac{\ETx(t_n)}{\widetilde{T}}\right) = B_0$
+
+\State $p_0=\dfrac{\ETx(n)}{\widetilde{T}}$
+
+\State $q=\displaystyle \argmin_k\ ( \{ t_k | ((\ETx(t_k) - p_0t_k) + p_0t_j) \leq \ETx(t_j),$
+
+$			 						\qquad \qquad \qquad \forall j\in[0,n]  \} )$
+
+\State $T_{start}=t_q-\dfrac{\ETx(t_q)}{p_0}$, $T_{stop}=t_q+\dfrac{\ETx(t_n)-\ETx(t_q)}{p_0}$
+
+\If {$\ETx(t_n)<\ETx(T_{stop}^-)$}
+	\State $\widetilde{B}=g(p_0)(T_{stop}-t_q)$  
+	\State $\{\textbf{p},\textbf{s},N\}\gets$  Apply Algorithm1 in \cite{Yang} to \\	
+			\hspace{26pt} minimize time of 					transmission of $\widetilde{B}$ bits\\  	
+			\hspace{26pt} after time $t_q$ assuming a  total of $\ETx_{q}$\\
+			\hspace{26pt} amount of energy available at $t_q$. 
+	\State\Return $\{\{p_0,\textbf{p}\},\{T_{start},\textbf{s}\},N+1\}$ (Transmis-\\
+	 		\hspace{26pt} sion with $p_0$ from $T_{start}$ to $t_q$ and then with\\
+	 		\hspace{26pt} policy $\{\textbf{p},\textbf{s},N\}$)
+\Else 
+	\State\Return $\{\{p_0,p_0\},\{T_{start},t_q,T_{stop}\},2\}$ 
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Off-line Algorithm for finding optimal transmission policy to Problem 1}
+\label{Algorithm1}
+\begin{algorithmic}[1]
+\State \textbf{Initialization}: $\{\textbf{p},\textbf{s},N\}\gets$ INIT\_POLICY, $t_l=s_2$, $t_{r}=s_{N}$, $T_{start}=s_1$, $T_{stop}=s_{N+1}$, $p_l=p_1$, $p_r=p_{N}$,DEQUE $\textbf{P}=\textbf{p}$, DEQUE $\textbf{S}=\textbf{s}$, $control=0$. 
+%\Procedure{InitPolicy}{}
+\While {$(T_{stop}-T_{start})\le \TRx_0$}
+	\If {$\{i:t_r<t_i < T_{stop}\}=\emptyset$}
+		\State $B_l=g(p_r)(T_{stop}-t_r)+g(p_l)(t_l-T_{start})$, $control=1$.
+	\Else
+		\State $j=\displaystyle \argmin_{i:t_r<t_i < T_{stop}} \mathcal{P}(t_r,t_i)$
+		\State $B_l=g(p_r)(T_{stop}-t_r)+g(p_l)(t_l-T_{start})-g\left(\mathcal{P}(t_r,t_j)\right)						\left(\frac{\ETx(T_{stop}^-)-\ETx(t_r^-)}{\mathcal{P}(t_r,t_j)}\right) $
+	\EndIf
+
+	\State Solve for $\tilde{p}$: $\frac{\ETx(t_l^-)}{\tilde{p}}g(\tilde{p})=B_l$
+	\State $A=\{i:\tilde{p}t_i+(\ETx(t_l^-\tilde{p}t_l))> \ETx(t_i^-), \forall \left(t_l-					\frac{\ETx(t_l^-)}{\tilde{p}}\right)<t_i<t_l\}$
+
+	\If {$A=\emptyset$}
+		\State $p_l=\tilde{p}$, $T_{start}=t_l-\ETx(t_l^-)/p_l$
+	    \If {$(T_{start})<0$} break \EndIf
+		\If {$control=0$}
+			\State $p_r=\mathcal{P}(t_r,t_j)$, $T_{stop}=t_r+\frac{\ETx(T_{stop^-})-\ETx(t_r^-)}							{\mathcal{P}					(t_r,t_j)}$
+			\State $t_r=t_j$, $\textbf{p}.append(\mathcal{P}(t_r,t_j))$, $\textbf{s}.append( t_j)$ 
+		\Else
+			\State $T_{stop}=t_r$, $t_r=\textbf{s}.last$, $p_r=\textbf{p}.last$
+			\State Delete $\textbf{s}.last$, Delete $\textbf{p}.last$
+			\State $control=0$
+		\EndIf
+	\Else 
+		\State $k=\displaystyle \argmax_{i:\max\left(\left(t_l-\ETx(t_l^-)/\tilde{p}\right),0\right)					\le t_i <t_l} \mathcal{P}(t_i,t_l)$
+		\State $B_r=g(p_r)(T_{stop}-t_r)+g(p_l)(t_l-T_{start})-g\left(\mathcal{P}(t_k,t_l)\right)							\left(\frac{\ETx(T_{start}^-)}{\mathcal{P}(t_k,t_l)}\right)$
+		\State $p_l=\mathcal{P}(t_k,t_l)$, $T_{start}=t_l-\ETx(t_l^-)/\mathcal{P}(t_k,t_l)$
+		 \If {$(T_{start})<0$} break \EndIf
+		\State $t_l=t_k$, $\textbf{p}.prepend=p_l$, $\textbf{s}.prepend=t_k$
+	
+		\State Solve for $p_r$: $\frac{\ETx(T_{stop}^-)-\ETx(t_r)}{p_r}g(p_r)=B_r$
+		\State $T_{stop}=t_r+(\ETx(T_{stop}^-)-\ETx(t_r^-))/p_r$	
+	\EndIf
+
+\EndWhile
+
+\If {$T_{start}<0$}
+	\State $B_r=g(p_r)(T_{stop}-t_r)+g(p_l)(t_l-T_{start})-g\left(\mathcal{P}(t_0,t_l)\right)t_l$
+	\State $p_l=\mathcal{P}(t_0,t_l)$, $T_{start}=0$
+	\State $t_l=t_0$, $\textbf{p}.prepend=p_l$, $\textbf{s}.prepend=t_l$
+	\State Solve for $p_r$: $\frac{\ETx(T_{stop}^-)-\ETx(t_r)}{p_r}g(p_r)=B_r$
+	\State $T_{stop}=t_r+(\ETx(T_{stop}^-)-\ETx(t_r^-))/p_r$
+	\State $\textbf{s}.append(t_r)$, $\textbf{p}.append(p_r)$
+	\State \Return $\{\textbf{p},\textbf{s}, \text{number of elements in } \textbf{p} \}$
+\EndIf
+\State Solve for  $x$: $xg\left(\dfrac{\ETx(t_{l}^-)}{x}\right)+\left(\TRx_0-x\right) g \left(\dfrac{\ETx(t_{stop}^-)-\ETx(t_{r}^-)}{\TRx_0-x}\right) = B_0$
+
+%\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
 \begin{theorem}
 A transmission policy $\{\textbf{p},\textbf{s},N\}$ is an optimal solution to Problem 1 if and only if it satisfies the following structure.
 \label{th_algo1_1}
@@ -16,7 +109,7 @@ A transmission policy $\{\textbf{p},\textbf{s},N\}$ is an optimal solution to Pr
 \\
 &p_n=\mathcal{P}(s_{n},s_{n+1});\label{claim3}							
 \\
-&\exists s_j:s_j\in \textbf{s} \text{ and } s_j=Q.					
+&\exists s_j:s_j\in \textbf{s} \text{ and } s_j=t_q.					
 \label{claim4}
 \end{align}
 for $n=\{ 1,2,..,N\}$.
@@ -53,7 +146,7 @@ Substituting (\ref{diff_1}) and (\ref{diff_2}) into (\ref{bits_equal}) we get,
 &\delta(p_N+\beta)p_N\frac{d}{dp} \frac{g(p)}{p}  \bigg{\vert}_{p=p_N'}
 =\gamma(p_1-\alpha)p_1\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_1'}.\label{bits_equal1}
 \end{align}
-It can be verified that $g(p)/p$ is decreasing function of $p$. As $p_1'<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence the time for which transmission occurs in the policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $\{\textbf{p},\textbf{s},N\}$ i.e. $(s_{N+1}-s_1)$. As $s_{N+1}-s_1<\TRx_0$, we can choose arbitrarily small positive value of $\beta$ so that $(s_{N+1}-s_1)<(s_{N+1}-s_1+\gamma -\delta)<\TRx_0$ holds. So policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ is feasible with constraints  (\ref{pb1_constraint_bits}), (\ref{pb1_constraint_energy}), (\ref{pb1_constraint_time}) and contradicts the optimality of policy $\{\textbf{p},\textbf{s},N\}$. This concludes that $s_{N+1}-s_1=\TRx_0$ (if $s_1\neq 0$) in optimal policy.
+It can be verified that $\dfrac{d}{dp} \dfrac{g(p)}{p}$ is decreasing function of $p$. As $p_1'<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence the time for which transmission occurs in the policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $\{\textbf{p},\textbf{s},N\}$ i.e. $(s_{N+1}-s_1)$. As $s_{N+1}-s_1<\TRx_0$, we can choose arbitrarily small positive value of $\beta$ so that $(s_{N+1}-s_1)<(s_{N+1}-s_1+\gamma -\delta)<\TRx_0$ holds. So policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ is feasible with constraints  (\ref{pb1_constraint_bits}), (\ref{pb1_constraint_energy}), (\ref{pb1_constraint_time}) and contradicts the optimality of policy $\{\textbf{p},\textbf{s},N\}$. This concludes that $s_{N+1}-s_1=\TRx_0$ (if $s_1\neq 0$) in optimal policy.
 
 Next, we prove the sufficiency of the structure. Let the the policy $\{\textbf{p},\textbf{s},N\}$ follow  structure (\ref{claim1})-(\ref{claim4}). We need to show that this policy is optimal. Assume that there exists another policy given by $\{\textbf{p'},\textbf{s'},N'\}$ which abides by the Lemma 1-5 and is optimal, but does not follow the structure. We argue next that such a policy is not feasible and hence contradict its optimality. 
 
@@ -111,50 +204,54 @@ The transmission policy, which results from the algorithm presented in Table \re
 \begin{proof}
 To prove that the policy (say $\{\textbf{p},\textbf{s},N\}$) described by Algorithm \ref{Algorithm1} is optimal, it is sufficient to show that it abides by the structure presented in Theorem \ref{th_algo1_1}.
 
-To begin with, we prove that the power allocations in Algorithm \ref{Algorithm1} are increasing. We prove this by induction. The base case constitutes of showing that, the initial feasible solution has increasing powers. If we begin with the constant power policy from time $R$ to $S$ with power $p_c=\frac{\ETx(t_n)}{S-R}=\frac{\ETx(t_n)-\ETx(Q^-)}{S-Q}$, then we are done. 
+To begin with, we prove that the power allocations in Algorithm \ref{Algorithm1} are increasing. We prove this by induction. The base case constitutes of showing that, the initial feasible solution has increasing powers. If we begin with the constant power policy from time $R$ to $S$ with power $p_c=\frac{\ETx(t_n)}{S-R}=\frac{\ETx(t_n)-\ETx(t_q^-)}{S-t_q}$, then we are done. 
 
-Suppose we solve for Algorithm 1 from \cite{Yang} with $B_2$ bits to transmit after time $Q$, then the transmission power after time $Q$ is always increasing. Now, we need to prove that transmission power $p_c$ between time $S$ and $Q$ is less than the transmission power just after time $Q$(say $p_i$). Let transmission with $p_i$ end at epoch $t_i$. We prove it by contradiction. Assume that $p_i<p_c$. Following two cases arise.
+Suppose we solve for Algorithm 1 from \cite{Yang} with $B_2$ bits to transmit after time $t_q$, then the transmission power after time $t_q$ is always increasing. Now, we need to prove that transmission power $p_c$ between time $S$ and $t_q$ is less than the transmission power just after time $t_q$(say $p_i$). Let transmission with $p_i$ end at epoch $t_i$. We prove it by contradiction. Assume that $p_i<p_c$. Following two cases arise.
 
-\textit{Case1:} If $t_i<S$, energy consumed by $p_c$ between time $Q$ to $t_i$ is 
+\textit{Case1:} If $t_i<S$, energy consumed by $p_c$ between time $t_q$ to $t_i$ is 
 \begin{align}
-&p_c(t_i-Q)>p_i(t_i-Q)=(\ETx(t_i^-)-\ETx(Q^-))\label{eq_1_algo1_modified}
+&p_c(t_i-t_q)>p_i(t_i-t_q)=(\ETx(t_i^-)-\ETx(t_q^-))\label{eq_1_algo1_modified}
 \end{align}
-Since $p_c$ uses all energy by $Q$, the maximum amount of energy available for transmission between $Q$ and $t_i$ is $(\ETx(t_i^-)-\ETx(Q^-))$. But by \eqref{eq_1_algo1_modified}, $p_c$ is infeasible between time $Q$ and $t_i$. As transmitting with $p_c$ was always feasible between $Q$ and $S$ (and therefore between $Q$ and $t_i$) in constant power policy, we reach a contradiction.        
+Since $p_c$ uses all energy by $t_q$, the maximum amount of energy available for transmission between $t_q$ and $t_i$ is $(\ETx(t_i^-)-\ETx(t_q^-))$. But by \eqref{eq_1_algo1_modified}, $p_c$ is infeasible between time $t_q$ and $t_i$. As transmitting with $p_c$ was always feasible between $t_q$ and $S$ (and therefore between $t_q$ and $t_i$) in constant power policy, we reach a contradiction.        
 
 \textit{Case2:} If $t_i>S$, then $\ETx(t_i^-)>\ETx(S)=\ETx(t_n)$. So, 
 \begin{align}
-g(p_i)(t_i-Q)&=g\left(\frac{\ETx(t_i^-)-\ETx(Q^-)}{t_i-Q}\right)(t_i-Q)
+g(p_i)(t_i-t_q)&=g\left(\frac{\ETx(t_i^-)-\ETx(t_q^-)}{t_i-t_q}\right)(t_i-t_q)
 \\
-&>g\left(\frac{\ETx(t_n)-\ETx(Q^-)}{t_i-Q}\right)(t_i-Q)
+&>g\left(\frac{\ETx(t_n)-\ETx(t_q^-)}{t_i-t_q}\right)(t_i-t_q)
 \\
-&>g\left(\frac{\ETx(t_n)-\ETx(Q^-)}{S-Q}\right)(S-Q)\label{eq_2_algo1_modified}
+&>g\left(\frac{\ETx(t_n)-\ETx(t_q^-)}{S-t_q}\right)(S-t_q)\label{eq_2_algo1_modified}
 \\
-&=g(p_c)(S-Q)=B_2.
+&=g(p_c)(S-t_q)=B_2.
 \end{align}
-where \eqref{eq_2_algo1_modified} follows from Property P4. So transmission with $p_i$ from $Q$ to $t_i$ departs more than $B_2$ bits. This is inconsistent with the assumption that the solution we get from Algorithm 1 in \cite{Yang} exactly transmits $B_2$ bits after $Q$. 
+where \eqref{eq_2_algo1_modified} follows from Property P4. So transmission with $p_i$ from $t_q$ to $t_i$ departs more than $B_2$ bits. This is inconsistent with the assumption that the solution we get from Algorithm 1 in \cite{Yang} exactly transmits $B_2$ bits after $t_q$. 
 
-Having proved the base case, assume that transmission powers from Algorithm \ref{Algorithm1} are increasing in its $n^{th}$ iteration. In $(n+1)^{th}$ iteration,   
- 
-First we prove that the power allocations in Algorithm \ref{Algorithm1} are in accordance with \eqref{claim3}. In any particular iteration of the algorithm, we select the maximum transmission power between $t_{l}$ and all epochs before lying in range $t_{start}$ to $t_l$. Let $t_j$ be the epoch which amounts to the maximum power and $p_j$ be the maximum power, i.e. 
-\begin{align}
-&t_j=\argmax_{t_i:t_{start}\le t_i< t_l} \max\left(\frac{\ETx(t_l^-)-\ETx(t_i^-)}{t_l-t_i}, \frac{\ETx(t_l^-)}{t_l-t_{start}}\right)
-\\
-&p_j= \max_{t_i:t_{start}\le t_i< t_l} \max\left(\frac{\ETx(t_l^-)-\ETx(t_i^-)}{t_l-t_i}, \frac{\ETx(t_l^-)}{t_l-t_{start}}\right)
-\label{eq_max_algo1_2}
-\end{align}
-We claim that this is indeed the maximum over all $t_i$'s in range $s_1$ to $t_l$. To prove this by contradiction, assume that $\exists t_{a}: s_1\le t_{a}<t_{start}$ and $p_{a}=\dfrac{\ETx(t_l^-)-\ETx(t_a^-)}{t_l-t_a}>p_j $. From \eqref{eq_max_algo1_2}, we can say that 
-\begin{align}
-&\ETx(t_l^-)\le p_j(t_l-t_{start}),\\
-&\implies \ETx(t_l^-)<p_a(t_l-t_{start}).
-\end{align}
-But transmission with power $p_a$ consumes $p_a(t_l-t_{start})$ amount of energy between $t_j$ and $t_l$, which is more than the maximum available energy till $t_l$ i.e. $\ETx(t_l^-)$. Hence transmission with $p_a$ is infeasible. 
+Having proved the base case, assume that transmission powers from Algorithm \ref{Algorithm1} are increasing in its $n^{th}$ iteration. The transmission powers between $t_l$ and $t_r$ remain same over iteration $n^{th}$ to $(n+1)^{th}$ iteration. So, we only need to prove that the transmission power before time $t_l$ is less than the transmission power after $t_l$ and the same for time $t_r$. In $(n+1)^{th}$ iteration, by the definition of the algorithm either $t_l$ updates or $t_{r}$ updates. Assume $t_l$ gets updated to $t_{l}'$, $p_l$ to $p_l'$, $p_r$ to $p_r'$ and $t_r$ remains same. The proof for $t_r$ getting updated can be done with similar arguments and hence we only show proof of this case. If we show that $p_l<p_l'$ and $p_r>p_r'$, then we are done by induction hypotheses. If $t_l$ updates and $t_r$ remains same, then we are certain that $p_{r}'>p_r$ by algorithm definition. Now, from $n^{th}$ step to $(n+1)^{th}$ step, the number of bits transmitted after $t_r$ should decrease as $p_{r}'>p_r$. So, the number of bits transmitted before $t_l$ must be increasing from $n^{th}$ to $(n+1)^{th}$ iteration. This implies that $p_l'$ must also be less than $p_l$.
 
- 
-Now we seek to show that this procedure of selecting maximum slopes going 'backwards' also gives us the minimum slopes going 'forwards', as described in \eqref{claim3}.\\
-We shall show this by contradiction. Let $t_i$, $t_j$ and $t_k$ be three consecutive corner points where the power of transmission increases, as per our allocation. Now suppose, it is possible to transmit with a lower power between $t_i$ and some $t'_j$. 
-Then the power of transmission between $t_j$ and $t_k$ is not the maximum power since we could transmit at a higher power from $t'_j$ and $t_k$. Which is a contradiction as this is not consistent with out allocation algorithm.\\
-Therefore, the allocation policy before point $Q$ is consistent with the structure.. (See figure)
-We can prove similarly for the powers after point $Q$.
+Hence we have proved that the transmission powers are always increasing in the policy being output by Algorithm \ref{Algorithm1}. By Lemma 6, we are sure that Algorithm \ref{Algorithm1} always converges to a solution and at the policy that we recover as output (say $\{\textbf{p},\textbf{s},N\}$) satisfies \eqref{claim2}. \eqref{claim1} is satisfied in every iteration of the algorithm. By Lemma 7, $t_q$ exists in the final solution of the algorithm. Hence all four structure \eqref{claim1}-\eqref{claim4} are satisfied by the final policy of the algorithm which proves it to be optimal.
+
+%      
+% 
+%First we prove that the power allocations in Algorithm \ref{Algorithm1} are in accordance with \eqref{claim3}. In any particular iteration of the algorithm, we select the maximum transmission power between $t_{l}$ and all epochs before lying in range $t_{start}$ to $t_l$. Let $t_j$ be the epoch which amounts to the maximum power and $p_j$ be the maximum power, i.e. 
+%\begin{align}
+%&t_j=\argmax_{t_i:t_{start}\le t_i< t_l} \max\left(\frac{\ETx(t_l^-)-\ETx(t_i^-)}{t_l-t_i}, \frac{\ETx(t_l^-)}{t_l-t_{start}}\right)
+%\\
+%&p_j= \max_{t_i:t_{start}\le t_i< t_l} \max\left(\frac{\ETx(t_l^-)-\ETx(t_i^-)}{t_l-t_i}, \frac{\ETx(t_l^-)}{t_l-t_{start}}\right)
+%\label{eq_max_algo1_2}
+%\end{align}
+%We claim that this is indeed the maximum over all $t_i$'s in range $s_1$ to $t_l$. To prove this by contradiction, assume that $\exists t_{a}: s_1\le t_{a}<t_{start}$ and $p_{a}=\dfrac{\ETx(t_l^-)-\ETx(t_a^-)}{t_l-t_a}>p_j $. From \eqref{eq_max_algo1_2}, we can say that 
+%\begin{align}
+%&\ETx(t_l^-)\le p_j(t_l-t_{start}),\\
+%&\implies \ETx(t_l^-)<p_a(t_l-t_{start}).
+%\end{align}
+%But transmission with power $p_a$ consumes $p_a(t_l-t_{start})$ amount of energy between $t_j$ and $t_l$, which is more than the maximum available energy till $t_l$ i.e. $\ETx(t_l^-)$. Hence transmission with $p_a$ is infeasible. 
+%
+% 
+%Now we seek to show that this procedure of selecting maximum slopes going 'backwards' also gives us the minimum slopes going 'forwards', as described in \eqref{claim3}.\\
+%We shall show this by contradiction. Let $t_i$, $t_j$ and $t_k$ be three consecutive corner points where the power of transmission increases, as per our allocation. Now suppose, it is possible to transmit with a lower power between $t_i$ and some $t'_j$. 
+%Then the power of transmission between $t_j$ and $t_k$ is not the maximum power since we could transmit at a higher power from $t'_j$ and $t_k$. Which is a contradiction as this is not consistent with out allocation algorithm.\\
+%Therefore, the allocation policy before point $t_q$ is consistent with the structure.. (See figure)
+%We can prove similarly for the powers after point $t_q$.
 \end{proof}
 
 
