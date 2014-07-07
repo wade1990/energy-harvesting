@@ -9,7 +9,7 @@ The on-line algorithm that we propose is presented in table \ref{online}.
 \\
 \hline
 \\
-\textbf{Initialize:} $T_{start}=\min t$ s.t. $T^R(t)g\Bigg{(} \dfrac{\ETx(t)}{T^R(t)}\Bigg{)}\ge B_0$
+\textbf{Initialize:} $T_{start}=\min t$ s.t. $\TRx(t)g\Bigg{(} \dfrac{\ETx(t)}{\TRx(t)}\Bigg{)}\ge B_0$
 \\
 \hspace{12mm}$B_{rem}=B_0$, $E_{rem}=\ETx(T_{start})$, $T=T_{start}$
 \\
@@ -66,11 +66,11 @@ This proof follows from contradiction. Let $T_{off}\le T_{start}$ and the optima
 \begin{align}
 &\sum_{i=1}^{i=k} g\Big{(}\frac{e_i}{l_i}\Big{)}l_i\stackrel{P2}{\le} g\Big{(}\frac{\sum_{i=1}^{i=k}e_i}{\sum_{j=1}^{j=k}l_j}\Big{)} \sum_{j=1}^{j=k} l_j 
 \\
-&\stackrel{P3,P4}{\le} g\Big{(}\frac{\ETx(T_{off})}{T^R(T_{off})}\Big{)} T^R(T_{off})
+&\stackrel{P3,P4}{\le} g\Big{(}\frac{\ETx(T_{off})}{\TRx(T_{off})}\Big{)} \TRx(T_{off})
 \\
-&\stackrel{P4}{\le}\lim_{\epsilon \rightarrow 0} g\Big{(}\frac{\ETx(T_{start}-\epsilon)}{T^R(T_{start}-\epsilon)}\Big{)} T^R(T_{start}-\epsilon)
+&\stackrel{P4}{\le}\lim_{\epsilon \rightarrow 0} g\Big{(}\frac{\ETx(T_{start}-\epsilon)}{\TRx(T_{start}-\epsilon)}\Big{)} \TRx(T_{start}-\epsilon)
 \\
-&+ g\Big{(}\frac{\ETx(T_{start})-\ETx(T_{start}-\epsilon)}{T^R(T_{start})-T^R(T_{start}-\epsilon)}\Big{)} (T^R(T_{start})-T^R(T_{start}-\epsilon)) \label{online1}
+&+ g\Big{(}\frac{\ETx(T_{start})-\ETx(T_{start}-\epsilon)}{\TRx(T_{start})-\TRx(T_{start}-\epsilon)}\Big{)} (\TRx(T_{start})-\TRx(T_{start}-\epsilon)) \label{online1}
 \end{align}
 where (\ref{online1}) follows form definition of $T_{start}$. But the off-line algorithm should transmit all $B_0$ bits and hence this concludes that $T_{off}\ge T_{start}$.
 *****
@@ -79,12 +79,12 @@ Next we estimate the maximum time taken to complete transmission after $T_{start
 \begin{align}
 &\sum_{i=1}^{i=k}l_ig(p_i)=B_0\stackrel{L\ref{online_power}}{\implies}\sum_{i=1}^{i=k}l_i\le \frac{B_0}{g(p_1)}\label{bits}
 \end{align}
-Now, from the definition of $p_1$, $\frac{\ETx(T_{start})}{p_1}g(p_1)=B_0 \le T^R(T_{start}) g(\frac{\ETx(T_{start})}{T^R(T_{start})})$. Hence by property $P4$, $\frac{\ETx(T_{start})}{T^R(T_{start})}\le p_1$. So, the RHS of (\ref{bits}) can be reduced to 
+Now, from the definition of $p_1$, $\frac{\ETx(T_{start})}{p_1}g(p_1)=B_0 \le \TRx(T_{start}) g(\frac{\ETx(T_{start})}{\TRx(T_{start})})$. Hence by property $P4$, $\frac{\ETx(T_{start})}{\TRx(T_{start})}\le p_1$. So, the RHS of (\ref{bits}) can be reduced to 
 \begin{align}
-&\frac{B_0}{g(p_1)} = \frac{\ETx(T_{start})}{p_1} \le T^R(T_{start})\le T_{start}
+&\frac{B_0}{g(p_1)} = \frac{\ETx(T_{start})}{p_1} \le \TRx(T_{start})\le T_{start}
 \\
 \end{align}
-where the last inequality followed from the definition of $T^R(T_{start})$. So we can calculate the competitive ratio as
+where the last inequality followed from the definition of $\TRx(T_{start})$. So we can calculate the competitive ratio as
 \begin{align*}
 &r=\max\dfrac{T_{online}}{T_{off}} = \dfrac{T_{start}+\sum_{i=1}^{i=k}l_i}{T_{off}} \le \dfrac{2 T_{start}}{T_{off}} \stackrel{(\ref{online_time})}{<} 2
 \end{align*}      

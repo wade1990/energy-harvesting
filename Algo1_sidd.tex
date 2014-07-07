@@ -1,0 +1,101 @@
+% !TEX root = OptimalOffline.tex
+
+\begin{figure}
+\label{lemma4}
+\centering
+  \centerline{\includegraphics[width=8cm,height=50mm]{Lemma4.eps}}
+\caption{Illustration of the proof of lemma \ref{transmission_duration}. The dotted line represents the policy where the first power of transmission is slightly reduced, to make the transmissino finish earlier}
+\end{figure}
+
+\begin{lemma}
+If the receiver has enough energy to stay on for $T$ time, then either the transmitter will transmit for the entire duration $T$ or the transmitter will begin transmission at time $t=0$.
+\label{transmission_duration}
+\end{lemma}
+\begin{proof}
+We will prove this by contradiction. Suppose the optimal transmission policy $\{\textbf{p},\textbf{s},N\}$ does not begin transmitting at time $t=0$ and transmits for a duration $s_{N+1}-s_1 < T$.
+
+If we reduce $p_1$ slightly to $p_1-\delta p_1$, we will have transmitted more bits by time $s_N$. Therefore at the end we can transmit with a power $p'_N > p_N$ and complete our transmission at an earlier time.
+
+Thus we can keep lowering our first transmission power until we either exhaust our transmission duration $T$ or we hit the origin.
+\end{proof}
+
+Concluding the results of all Lemmas our optimal policy $\{\textbf{p},\textbf{s},N\}$ must have change transmission powers at energy arrival epochs only i.e. $\forall i,\ s_i=t_j$ for some $j$. At these epochs we exhaust the total energy available with us i.e. $U(s_i^-)=\ETx(s_i^-)$. The transmission powers are also non decreasing with time and we exhaust the total 'receiver time' time given to us, if we do not start transmitting from origin.
+
+Now that we have gained some knowledge of the structure our algorithm has to follow, we consider an example to approach Problem 1. 
+
+Suppose we are given that the receiver can be \textit{on} for a maximum duration of $T$. Our goal is to find a transmission policy so that we can minimize the time at which the transmission is completed. To do this, we shall first find a feasible solution i.e. one which satisfies all constraints (\ref{pb1_constraint_bits})-(\ref{pb1_constraint_time}) and keep improving upon it, until we have a solution that follows all our Lemma 1-4 and hits the boundary on some or all of the constraints (\ref{pb1_constraint_bits})-(\ref{pb1_constraint_time}). 
+
+We need an initial feasible solution to begin with. For this, we find the minimum energy required by the transmitter so that the transmission can be completed in duration $T$ with a constant power. That is, the first $\ETx(t_n)$ such that
+\begin{equation}
+T g\left(\frac{\ETx(t_n)}{T}\right)\geq B_0.
+\end{equation}
+Let $\widetilde{T}$ be the time duration such that
+\begin{equation}
+\widetilde{T}g\left(\frac{\ETx(t_n)}{\widetilde{T}}\right)=B_0.
+\end{equation}
+Let $p_c=\frac{\ETx(t_n)}{\widetilde{T}}$. We try to transmit with this power starting at time $t=0$. If it does not violate the energy constraint (\ref{pb1_constraint_energy}), we are done with the optimal solution and our transmission is completed in $\widetilde{T}$ time.
+
+If not, we start the transmission as early as possible, such that the transmission is feasible with respect to (\ref{pb1_constraint_energy}). This transmission policy, will encounter atleast one epoch where total energy consumed till that epoch is equal to the total energy harvested upto it. Let time $t_q$ be the first point where this happens. This is shown in Fig. \ref{straight} .  Till now we have not argued why we chose such a policy to start with. In fact the Lemma \ref{lemma_Q} shows that this starting solution is a 'good' estimate of policy at and before time $t_q$, as both the optimal policy and the above policy run out of all their energy at epoch $t_q$. 
+
+Now, according to Lemma \ref{lemma_energy_consumed}, the optimal policy must finish all available energy when it stops transmission. If transmitting with $p_c$ power does use up all the energy (Fig. \ref{straight} (b)), then we accept the constant power transmission with $p_c$ as our initial policy (line number \ref{init_policy_CP} in Algorithm \ref{init_policy}). If it does not finish up all of $\ETx(n)$ with $p_c$ power till the end (shown in Fig. \ref{straight} (b)), we should choose a better policy after time $t_q$. $p_c$ departs $\widetilde{B}$ amount of bits after $t_q$, which is calculated in line number \ref{init_policy_bits_t_q} of INIT\_POLICY. Now, we require our transmission policy to send $\widetilde{B}$ bits after time $t_q$, in as less time as possible (of course, before $S$), keeping in mind that the policy should use all $\ETx(t_n)$ amount of energy till the end. Algorithm 1 in \cite{Yang} does the job for us. Hence we choose transmission with $p_c$ till $t_q$ and then the solution of Algorithm 1 in \cite{Yang} after time $t_q$. 
+
+\begin{figure}
+\label{straight}
+\centering
+  \centerline{\includegraphics[width=8cm]{straight.eps}}
+\caption{Figure showing point $t_q$.}
+\end{figure}
+
+\begin{lemma}
+In every optimal solution, at energy arrival epoch $t_q$, $U(t_q^-)=\ETx(t_q^-)$.
+\label{lemma_Q}
+\end{lemma}
+\begin{proof}
+We shall prove this by contradiction. Let the start and end times of the constant power transmission policy described above be $R$ and $S$ receptively. We make the following claims:
+
+\textbf{Claim 1:} Every optimal transmission policy begins transmission at or before time $R$
+
+Since, $S-T=\widetilde{T}\le T$ (by Lemma \ref{transmission_duration}) if a transmission policy has to finish before $S$, it has to start before time $\max(S-T,0) \le \max(R,0)$. 
+
+%Since we are transmitting all the bits at the maximum possible power, no policy that starts after $R$ can finish before $S$. Therefore, any policy that starts after $R$ cannot be optimal.
+
+\textbf{Claim 2:} Every optimal transmission policy ends transmission at or before time $S$.
+This follows immediately from the fact that the policy is optimal.
+
+Let $t_q$ equal to time $t_i$ for some $i\in\mathbb{N}$. Suppose we have an optimal transmission policy that does not exhaust all its energy at time $t_q$ i.e. $U(t_j)<\ETx(t_i^-)$. By Lemma \ref{lemma_energy_consumed} it does not change its transmission power at $t_i$. Let the transmission power of optimal policy be $p$ at $t_i$. This does not change till an epoch, say $t_j$. Now, $t_j<S$ by \textit{Claim 2}. Further the constant power policy exhausts all its energy by $t_q$. So,
+\begin{align}
+&\tilde{p}(t_i-R)=\ETx(t_i^-)\label{eqlemmaQ1}.
+\end{align}
+But, by constraint (\ref{pb1_constraint_energy})
+\begin{align}
+&\tilde{p}(t_i-R)+\tilde{p}(t_j-t_i)\le \ETx(t_j^-),
+\\
+&\implies \tilde{p}(t_j-t_i)\stackrel{(\ref{eqlemmaQ1})}{\le} \ETx(t_j^-)-\ETx(t_i^-),\\
+&\implies \tilde{p}(t_j-t_i)< \ETx(t_j^-)-U(t_i)=p(t_j-t_i),\\
+&\implies \tilde{p}<p .\label{eqlemmaQ2}
+\end{align}
+If the optimal policy does have a power higher than $\tilde{p}$ at $t_i$, then it must have the same power of transmission either from some epoch, say $t_k$, or from the beginning of transmission. If $t_k>R$, we can show that the constant power policy is infeasible with respect to constraint (\ref{pb1_constraint_energy}) at $t_k$. If $t_k<R$ it becomes infeasible at time $R$. If the optimal policy starts transmission with power $p$, it has to begin transmission after time $R$ which follows from equation (\ref{eqlemmaQ2}). This violates \textit{Claim 1}. Therefore every optimal transmission policy must use all energy till epoch $t_q$.
+\end{proof}
+
+Now that we have a starting feasible solution, we shall proceed to improve upon this policy as follows. The formal algorithm is presented as Algorithm \ref{Algorithm1}. In any iteration, let $t_{l}$ and $t_{r}$ be the first and last energy arrival epochs where the power of transmission changes. $p_l$ and $p_r$ are the first and last power. The possible cases that can happen in an iteration of the Algorithm are shown in Fig. \ref{figure_Algorithm1}. 
+
+Step1: The Algorithm tries to increase $p_r$ as much as possible till it hits the boundary of energy constraint \eqref{pb1_constraint_energy} as shown in Fig. \ref{figure_Algorithm1}(a). Then the Algorithm calculates the possible power $p_l'$ such that it transmits same number of bits in total with the previous iteration policy as shown in line number \ref{algo_bits_left_1} and \ref{algo_bits_left_2} of Algorithm \ref{Algorithm1}. 
+
+Step2: If $p_l'$ is feasible, which is the case shown in Fig. \ref{figure_Algorithm1}(a), the policy changes $p_l$ to $p_l'$ and $p_r$ to $p_r'$. $T_{start}$ and $T_{stop}$ are changed accordingly. 
+
+Step3: If $p_l'$ is not feasible, as shown in Fig. \ref{figure_Algorithm1}(b), then $p_l'$ is set to be the maximum possible feasible power from $t_l$, as shown in Fig. \ref{figure_Algorithm1}(c). Now, $p_r'$ is recalculated so as to settle the transmission of equal number of bits as the previous iteration. We can be sure that $p_r'$ calculated now, would not be infeasible.  
+
+Going back to the first step where the Algorithm was increasing $p_r$, it could happen, as shown in Fig. \ref{figure_Algorithm1}(d), that $p_r$ can go the infinity without violating the energy constraint \ref{pb1_constraint_energy}. This happens when there is no energy epoch between $t_r$ and $T_{stop}$. In this scenario, transmission is stopped at $t_r$ and both $t_r$ and $p_r$ are updated to the previous feasible sections. $T_{stop}$ gets updated to $t_r$. This is shown in Fig. \ref{figure_Algorithm1}(d). Now, the Algorithm proceeds to calculate $p_l'$ as done in Step1, and follows Step2, Step3 according to the calculated $p_l'$.
+
+\begin{figure}
+\label{figure_Algorithm1}
+\centering
+  \centerline{\includegraphics[width=8cm]{Algorithm1.eps}}
+\caption{Figures showing any iteration of the Algorithm \ref{Algorithm1}. The solid line represents the transmission policy in the previous iteration. The dash dotted lines in (a), (b), (c), (d) represent the possible configurations of policy in the current iteration.}
+\end{figure}
+
+This is how the algorithm proceeds to generate a new transmission policy every iteration, which begins early and ends early, until a point is reached where $T_{start}-T_{stop}>\TRx_0$. The following Lemma  establishes that the algorithm always terminates to a policy in finite iterations. 
+
+\begin{lemma}
+
+\end{lemma}
