@@ -288,3 +288,7 @@ Apply previous algorithm after $t_{rt}$
 \end{tabular}
 \end{minipage}
 \end{table}
+
+
+% We now try to illustrate our allocation algorithm with an example. We first compute the maximum feasible power with which we can transmit from point $Q$, completing $\ETx(t_n)$ energy. That is, we compute ${p_{r}} = \displaystyle \min_{j \in \left\{t_q,t_n\right\}}(CP(t_q,t_j))$. We transmit with this power from $t_q$ until $T_{stop} = \left( \dfrac{\ETx{t_n^-} - \ETx{t_q^-}}{p_r} \right)$. The number of bits transmitted in this duration is given by ${B_2} = g(p_r)(T_{stop} - t_q) $.
+% $B_1 = B_0 - B_2$ are the bits we have left to transmit. We shall try to transmit these with a constant power, ending at $Q$. Let $p_l$ be this power. $p_l$ is the solution of the equation $\frac{\ETx(t_q^-)}{p_l}g(p'_l) = B_1$. We now have two cases, one where this power $p'_l$ is feasible, and one where it is not.
