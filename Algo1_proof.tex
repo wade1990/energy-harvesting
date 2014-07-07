@@ -21,12 +21,12 @@
 \State $q=\displaystyle \argmin_k\ ( \{ t_k | ((\ETx(t_k) - p_ct_k) + p_ct_j) \leq \ETx(t_j),$
 
 $			 						\qquad \qquad \qquad \forall j\in[0,n]  \} )$
-
+\label{init_policy_t_q}
 \State $T_{start}=t_q-\dfrac{\ETx(t_q)}{p_c}$, $T_{stop}=t_q+\dfrac{\ETx(t_n)-\ETx(t_q)}{p_c}$
 
 \If {$\ETx(t_n)<\ETx(T_{stop}^-)$}
 	\State $\widetilde{B}=g(p_c)(T_{stop}-t_q)$\label{init_policy_bits_t_q}  
-	\State $\{\textbf{p},\textbf{s},N\}\gets$  Apply Algorithm1 in \cite{Yang} to 	minimize time of
+	\State $\{\textbf{p},\textbf{s},N\}\gets$  Apply Algorithm 1 in \cite{Yang} to 	minimize time of
 		\Statex   transmission of $\widetilde{B}$ bits  after time $t_q$ assuming	a  total of $\ETx_{q}$   
 		\Statex amount of energy available at $t_q$. 
 	\State\Return $\{\{p_c,\textbf{p}\},\{T_{start},\textbf{s}\},N+1\}$ \label{init_policy_Yang}
@@ -84,7 +84,7 @@ $			 						\qquad \qquad \qquad \forall j\in[0,n]  \} )$
 
 \If {$(T_{start}-T_{stop})>\TRx_0$}
 	\State $T=\TRx_0-(t_r-t_l)$, $B=B_0-\displaystyle\sum_{i}g(p_i)(s_{i+1}-s_{i})$
-	\State Solve for  $x$: $xg\left(\dfrac{\ETx(t_{l}^-)}{x}\right)+\left(T-x\right) g 		\left(\dfrac{\ETx(t_{stop}^-)-\ETx(t_{r}^-)}{T-x}\right) = B$(with prev iteration $t_l$ and $t_r$)
+	\State Solve for  $x$: $xg\left(\dfrac{\ETx(t_{l}^-)}{x}\right)+\left(T-x\right) g 		\left(\dfrac{\ETx(t_{stop}^-)-\ETx(t_{r}^-)}{T-x}\right) = B$(with prev iteration $t_l$ and $t_r$)\label{algo_solve_eqn}
 	\State $p_l=\dfrac{\ETx(t_{l}^-)}{x}$, $T_{start}=t_l-x$
 	\State $p_r=\dfrac{\ETx(t_{stop}^-)-\ETx(t_{r}^-)}{T-x}$, $T_{stop}=t_r+T-x$
 \EndIf
@@ -242,9 +242,9 @@ So $\widetilde{T}\le \TRx_0$ by Property P4. Hence $T_{start}-T_{stop}$ is initi
 
 If Algorithm \ref{init_policy} returns policy form line \ref{init_policy_Yang}, then by the properties satisfied by policy presented in \cite{Yang}, we know that the transmission powers would be increasing after time $t_q$. This policy is same as policy in line \ref{init_policy_CP} till time $t_q$. As transmission with power $p_c$ after $t_q$ finishes transmission till $T_{stop}$, the policy form line \ref{init_policy_Yang}, transmitting with atleast $p_c$ or more power after $t_q$, would definitely finish before time $T_{stop}$. So $T_{start}-T_{stop}$ in the initial iteration of Algorithm \ref{Algorithm1} must be less than or equal to $\TRx_0$.
 
-As $T_{stop}$ decreases in every iteration of the algorithm, $t_r$ must also decrease globally, though it can increase in few iterations. Hence we can be sure that $t_r$ can potentially reach $t_q$ (Initially $t_r>t_q$). If it does reach $t_q$, then the policy    
+%As $T_{stop}$ decreases in every iteration of the algorithm, $t_r$ must also decrease globally, though it can increase in few iterations. Hence we can be sure that $t_r$ can potentially reach $t_q$ (Initially $t_r>t_q$). If it does reach $t_q$, then the policy    
  
-By Lemma 6, we are sure that Algorithm \ref{Algorithm1} always converges to a solution and at the policy that we recover as output (say $\{\textbf{p},\textbf{s},N\}$) satisfies \eqref{claim2}. \eqref{claim1} is satisfied in every iteration of the algorithm. By Lemma 7, $t_q$ exists in the final solution of the algorithm. Hence all four structure \eqref{claim1}-\eqref{claim4} are satisfied by the final policy of the algorithm which proves it to be optimal.
+We are sure that Algorithm \ref{Algorithm1} always converges to a solution which satisfies structure \eqref{claim2} and \eqref{claim4}, by the arguments presented before Theorem \ref{th_algo1_1}. Hence, all structures are satisfied and the Algorithm results in an optimal solution.
 
 %      
 % 
