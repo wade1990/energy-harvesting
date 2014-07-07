@@ -44,7 +44,7 @@ $Case 2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{i-1},..,p_{j+
 \end{figure}
 
 \begin{lemma}
-The optimal solution to Problem 1 may not be unique, but there always exists a solution where once transmission has started, the receiver remains \textit{on} until the transmission is complete. \label{lemma_nobreaks}
+The optimal solution to Problem 1 may not be unique, but there always exists an optimal solution where once transmission has started, the receiver remains \textit{on} until the transmission is complete. \label{lemma_nobreaks}
 \end{lemma}
 \begin{proof}
 The proof involves showing that we can generate an optimal solution with no breaks in transmission from any other optimal solution. Let the optimal policy be $\{\textbf{p},\textbf{s},N\}$. Now, if $p_i\neq 0,\forall \ i$, then we are done. Suppose some of $p_i$'s, say $p_{i_1},p_{i_2},...,p_{i_k}=0$ for some $k<N$, where $i_1<i_2<..<i_k$. Let $p_j$ be the first non-zero power after $p_{i_1}$. Consider a policy which is same as policy $\{\textbf{p},\textbf{s},N\}$ till time $s_{i_1-1}$ and after time $s_{j}$. But, we keep the receiver \textit{off} for a period of $(s_{j}-s_{i_1})$ starting from time $s_{i_1-1}$ and transmit with power $p_{i_1-1}$ from time $(s_{i_1-1}+s_{j}-s_{i_1})$ till $s_j$. This new policy transmits same amount of bits in same time  as policy $\{\textbf{p},\textbf{s},N\}$ and also satisfies all constraints. We continue this process of shifting the receiver \textit{off} period to left again and again to generate new policies till we reach a policy where the receiver is \textit{off} for time $(s_{j}-s_{i_1})$ from $s_1$. The start time of this policy can now be changed to $(s_1+s_{j}-s_{i_1})$. Similarly, we shift the receiver \textit{off} period corresponding to $p_{i_2},...,p_{i_k}$ till the total \textit{off} period is shifted to the beginning of transmission. This will result in a policy which starts after time $s_1$ and ends at time $s_{N+1}$, but the transmission power never goes zero in-between. This new policy is also optimal and has no breaks.
@@ -75,3 +75,35 @@ In an optimal solution with no breaks, the transmission power can only change at
 \begin{proof}
 Keeping in mind Lemma \ref{lemma_increasing_power} and \ref{lemma_nobreaks}, in the optimal solution $\{\textbf{p}, \textbf{s}, N\}$, transmission starts at $s_1$ and ends at $s_{N+1}$ without stopping in-between. Further, the transmission powers are also increasing. Assuming such a structure, the proof of this Lemma can be argued in similar terms of Lemma 2,3 in \cite{Yang}. 
 \end{proof}	
+
+\begin{lemma}
+Consider two policies $\{\textbf{p},\textbf{s},N\}$  and $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ ,which are feasible with respect to energy constraint \eqref{pb1_constraint_bits}, have non-decreasing powers and transmit same number of bits in total. If $\widetilde{p}_1=p_1-\alpha,\widetilde{p}_2=p_2,..,\widetilde{p}_{N-1}=p_{N-1},\widetilde{p}_N=p_N+\beta $ and $\widetilde{s}_1=s_1-\gamma,\widetilde{s}_2=s_2,..,\widetilde{s}_{N-1}=s_{N-1},\widetilde{s}_N=s_N+\delta $, where $\gamma=\dfrac{\alpha}{p_1-\alpha}(s_2-s_1)$, $\delta =\dfrac{\beta}{p_N+\beta}(s_{N+1}-s_N)$ and $\alpha ,\beta$ are positive constants, then 
+\begin{equation}
+(\widetilde{s}_{N+1}-\widetilde{s}_1)>(s_{N+1}-s_1)
+\end{equation}
+\label{lemma_increase_time}
+\end{lemma}
+\begin{proof}
+The policies are shown in Fig. \ref{lemma4}. For every $\beta$ we can find a value of $\alpha$ such that the number of bits transmitted in policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ remains the same as policy $\{\textbf{p},\textbf{s},N\}$. So, excluding the common parts in the transmission policy $\{\textbf{p},\textbf{s},N\}$ and $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, we can equate
+\begin{align}
+&g(p_N)(s_{N+1}-s_N)+g(p_1)(s_2-s_1)\nonumber
+\\
+&=g(p_1-\alpha)(s_2-s_1+\gamma)+g(p_N+\beta)(s_{N+1}-s_N-\delta)\nonumber,
+\\
+&\implies \delta(p_N+\beta)p_N\frac{1}{\beta}\left(\frac{g(p_N)}{p_N}-\frac{g(p_N+\beta)}{p_N+\beta}\right)\nonumber
+\\
+&=\gamma(p_1-\alpha)p_1\frac{1}{\alpha}\left(\frac{g(p_1-\alpha)}{p_1-\alpha}-\frac{g(p_1)}{p_1}\right).\label{bits_equal}
+\end{align}
+$\exists$ $p_N':p_N<p_N'<p_{N}+\beta$ and $p_1':p_1-\alpha<p_1'<p_{1}$ such that
+\begin{align}
+&\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_N'}=\frac{1}{\beta}\left(\frac{g(p_N+\beta)}{p_N+\beta}-\frac{g(p_N)}{p_N}\right),\label{diff_1}
+\\
+&\frac{d}{dp} \frac{g(p)}{p}\bigg{\vert}_{p=p_1'}=-\frac{1}{\alpha}\left(\frac{g(p_1-\alpha)}{p_1-\alpha}-\frac{g(p_1)}{p_1}\right)\label{diff_2}.
+\end{align}
+Substituting (\ref{diff_1}) and (\ref{diff_2}) into (\ref{bits_equal}) we get,
+\begin{align}
+&\delta(p_N+\beta)p_N\frac{d}{dp} \frac{g(p)}{p}  \bigg{\vert}_{p=p_N'}
+=\gamma(p_1-\alpha)p_1\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_1'}.\label{bits_equal1}
+\end{align}
+It can be verified that $\dfrac{d}{dp} \dfrac{g(p)}{p}$ is a decreasing function of $p$. As $p_1'<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence the time for which transmission occurs in the policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $\{\textbf{p},\textbf{s},N\}$ i.e. $(s_{N+1}-s_1)$.
+\end{proof}
