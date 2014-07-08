@@ -1,24 +1,5 @@
 % !TEX root = OptimalOffline.tex
 
-\begin{figure}
-\label{lemma4}
-\centering
-  \centerline{\includegraphics[width=8cm,height=50mm]{Lemma4.eps}}
-\caption{Illustration of the proof of lemma \ref{transmission_duration}. The dotted line represents the policy where the first power of transmission is slightly reduced, to make the transmissino finish earlier}
-\end{figure}
-
-\begin{lemma}
-If the receiver has enough energy to stay on for $T$ time, then either the transmitter will transmit for the entire duration $T$ or the transmitter will begin transmission at time $t=0$.
-\label{transmission_duration}
-\end{lemma}
-\begin{proof}
-We will prove this by contradiction. Suppose the optimal transmission policy $\{\textbf{p},\textbf{s},N\}$ does not begin transmitting at time $t=0$ and transmits for a duration $s_{N+1}-s_1 < T$.
-
-If we reduce $p_1$ slightly to $p_1-\delta p_1$, we will have transmitted more bits by time $s_N$. Therefore at the end we can transmit with a power $p'_N > p_N$ and complete our transmission at an earlier time.
-
-Thus we can keep lowering our first transmission power until we either exhaust our transmission duration $T$ or we hit the origin.
-\end{proof}
-
 Concluding the results of all Lemmas our optimal policy $\{\textbf{p},\textbf{s},N\}$ must have change transmission powers at energy arrival epochs only i.e. $\forall i,\ s_i=t_j$ for some $j$. At these epochs we exhaust the total energy available with us i.e. $U(s_i^-)=\ETx(s_i^-)$. The transmission powers are also non decreasing with time and we exhaust the total 'receiver time' time given to us, if we do not start transmitting from origin.
 
 Now that we have gained some knowledge of the structure our algorithm has to follow, we consider an example to approach Problem 1. 
@@ -97,9 +78,6 @@ Going back to the first step of the algorithm where we were increasing $p_r$, it
 This is how the algorithm proceeds to generate a new transmission policy in every iteration, which begins and ends earlier than the policy given by the previous iteration, until a point is reached where either $T_{stop}-T_{start}>\TRx_0$ or $T_{start}=0$. Suppose the Algorithm terminates with $T_{start}=0$ and $T_{start}-T_{stop}\le\TRx_0$, then the policy at this iteration is the optimal policy. 
 
 
-For the case where the algorithm terminates with $T_{stop}-T_{start}>\TRx_0$, let $T_{start}'$, $T_{stop}'$, $p_l'$, $p_r'$, $t_l'$, $t_r'$ be the values in the termination iteration and $T_{start}$, $T_{stop}$, $p_l$, $p_r$, $t_l$, $t_r$ be the values in the previous iteration. Then, the possible valid configurations can be one of the three shown in Fig. \ref{figure_Algorithm1} (a) (c) (d). Note that $\ETx(T_{stop}^-)=\ETx(T_{stop}'^-)$ in all the cases. (In case Fig. \ref{figure_Algorithm1} (d) we can assume that $T_{stop}'=t_r'^+$ and transmission exists after $t_r$, but with infinite power. Since transmitting with infinite power for $0$ time does not transmit any bits, we would transmit the same number of bits, as we did prior to this modification). Thus following the arguments presented in the necessary part of the Proof of Theorem \ref{th_algo1_1}, we can verify that $(T_{stop}'-T_{start}')>(T_{stop}-T_{start})$. Since $(T_{stop}'-T_{start}')\ge\TRx_0>(T_{stop}-T_{start})$, there must exist a solution to equation presented in line number \ref{algo_solve_eqn} of Algorithm \ref{Algorithm1}. Let the policy obtained from the solution start and end at $T_{start}''$ and $T_{stop}''$. Then $T_{stop}''-T_{start}''=\TRx_0$.
+For the case where the algorithm terminates with $T_{stop}-T_{start}>\TRx_0$, let $T_{start}'$, $T_{stop}'$, $p_l'$, $p_r'$, $t_l'$, $t_r'$ be the values in the termination iteration and $T_{start}$, $T_{stop}$, $p_l$, $p_r$, $t_l$, $t_r$ be the values in the previous iteration. Then, the possible valid configurations can be one of the three shown in Fig. \ref{figure_Algorithm1} (a) (c) (d). Note that $\ETx(T_{stop}^-)=\ETx(T_{stop}'^-)$ in all the cases. (In case Fig. \ref{figure_Algorithm1} (d) we can assume that $T_{stop}'=t_r'^+$ and transmission exists after $t_r$, but with infinite power. Since transmitting with infinite power for $0$ time does not transmit any bits, we would transmit the same number of bits, as we did prior to this modification). Thus, by Lemma \ref{lemma_increase_time}, we can verify that $(T_{stop}'-T_{start}')>(T_{stop}-T_{start})$. Since $(T_{stop}'-T_{start}')\ge\TRx_0>(T_{stop}-T_{start})$, there must exist a solution to equation presented in line number \ref{algo_solve_eqn} of Algorithm \ref{Algorithm1}. Let the policy obtained from the solution start and end at $T_{start}''$ and $T_{stop}''$. Then $T_{stop}''-T_{start}''=\TRx_0$.
 
 So we can conclude by stating that, the solution to Algorithm \ref{Algorithm1} satisfies Lemma \ref{lemma4}. Now, according to the definition of $t_n$ and $t_q$ in line number \ref{init_policy_Etn} and \ref{init_policy_t_q} of INIT\_POLICY, $t_q<t_n$. Since $t_n$ is defined as the first energy arrival epoch by which $B_0$ bits can be transmitted in $\TRx_0$ time, any transmission policy which ends at of before $t_n$ should take more than $\TRx_0$ time to transmit all of $B_0$ bits. As $t_q<t_n$, we are guaranteed that no transmission policy can finish at or before $t_q$. Hence in the iterations of the algorithm $t_r$ can never decreases beyond $t_q$. Therefore, $t_q$ always exists in the final solution to Algorithm \ref{Algorithm1}.   
-\begin{lemma}
-
-\end{lemma}

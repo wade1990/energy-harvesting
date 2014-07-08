@@ -107,3 +107,17 @@ Substituting (\ref{diff_1}) and (\ref{diff_2}) into (\ref{bits_equal}) we get,
 \end{align}
 It can be verified that $\dfrac{d}{dp} \dfrac{g(p)}{p}$ is a decreasing function of $p$. As $p_1'<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence the time for which transmission occurs in the policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $\{\textbf{p},\textbf{s},N\}$ i.e. $(s_{N+1}-s_1)$.
 \end{proof}
+\begin{figure}
+\label{lemma4}
+\centering
+  \centerline{\includegraphics[width=8cm]{Lemma4.eps}}
+\caption{Illustration of the proof of Lemma \ref{lemma_increase_time}.}
+\end{figure}
+
+\begin{lemma}
+If the receiver has energy to stay \textit{on} for $\TRx_0$ time, then either the transmitter will transmit for the entire duration $\TRx_0$ or the transmitter will begin transmission at time $t=0$, in which case it stays \textit{on} for less than or equal to $\TRx_0$ time. 
+\label{transmission_duration}
+\end{lemma}
+\begin{proof}
+We will prove this by contradiction. Suppose the optimal transmission policy $\{\textbf{p},\textbf{s},N\}$ does not begin transmitting at time $t=0$ and transmits for a duration $(s_{N+1}-s_1)< \TRx_0$. Now, consider a policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ as defined in Lemma \ref{lemma_increase_time}. By Lemma \ref{lemma_energy_consumed}, policy $\{\textbf{p},\textbf{s},N\}$ exhausts all energy at epochs $s_i$'s. So, $s_{2}$ is the first energy arrival which is on the boundary of energy constraint (\ref{pb1_constraint_energy}) i.e. $U(s_2)=\ETx(s_2^-)$ and $s_{N}$ is the last epoch satisfying $U(s_N)=\ETx(s_N^-)$. So we can choose arbitrarily small $\alpha ,\beta$ such that policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ would be feasible with respect energy constraint (\ref{pb1_constraint_energy}). By Lemma \ref{lemma_increase_time}, the time for which transmission occurs in the policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $\{\textbf{p},\textbf{s},N\}$ i.e. $(s_{N+1}-s_1)$. As $s_{N+1}-s_1<\TRx_0$, we can choose arbitrarily small positive value of $\beta$ so that $(s_{N+1}-s_1)<(s_{N+1}-s_1+\gamma -\delta)<\TRx_0$ holds. So policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ is feasible with constraints  (\ref{pb1_constraint_bits}), (\ref{pb1_constraint_energy}), (\ref{pb1_constraint_time}) and contradicts the optimality of policy $\{\textbf{p},\textbf{s},N\}$ (as $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ finishes before the optimal policy ). This concludes that $s_{N+1}-s_1=\TRx_0$ (if $s_1\neq 0$) in optimal policy.
+\end{proof}
