@@ -1,7 +1,6 @@
 % !TEX root = main.tex
-To begin with, we solve the following problem.
-\subsection{Problem 1:}
-The receiver harvests energy only once at the beginning. The transmitter, however harvests energy at different times. We exactly know the amount of energy and the time instances of all future harvests at the beginning of process.  We are supposed to transmit $B_0$ bits which is also known beforehand. The problem is to minimize the total time of transmission of all $B_0$ bits subject to certain feasibility constraints as formally stated below.
+We consider an off-line scenario, where we know exactly when and in what amounts the transmitter harvests energy. We have an idealized situation where there is an infinite battery available at the transmitter to store harvested energy. A total of $B_0$ bits is available at the transmitter at time $t=0$. The receiver (and hence the transmitter) can only be \textit{on} for $\TRx_0$ amount of time. The transmitter is supposed to transmit all $B_0$ bits in as minimum time as possible. The problem is formally stated below.
+\begin{problem}
 \begin{align}
 &\min_{\{\textbf{p},\textbf{s},N\}}			&& T
 \\
@@ -13,7 +12,7 @@ The receiver harvests energy only once at the beginning. The transmitter, howeve
 &    										&& s_{N+1}-s_1\le \mathcal{R}_0
 \label{pb1_constraint_time}
 \end{align}
-
+\end{problem}
 Before describing and proving the optimal algorithm to solve Problem 1 we state the following Lemmas which would be useful in later proofs and also give us an intuitive insight of the algorithm.
 \input{propositions}
 \input{Algo1_sidd}
