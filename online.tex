@@ -1,4 +1,6 @@
 % !TEX root = main.tex
+In an on-line scenario, we can only know the present and past energy arrivals at transmitter or 'time' additions at receiver. We use competitive ratio analysis to compare performance of on-line algorithm vs the optimal off-line algorithm.  
+ 
 \textit{Notation:} The starting time of transmission is denoted by $T_{start}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any Transmitter energy epoch is represented by $B_{rem}$ and $E_{rem}$ receptively.
 
 The on-line algorithm that we propose is presented in Algorithm \ref{algo_online}. The Algorithm waits till time $T_{start}$ which marks the first energy arrival at transmitter or 'time' addition at receiver such that using the energy $\ETx(T_{start})$ and time $\TRx(T_{start})$, $B_0$ or more bits can be transmitted.
