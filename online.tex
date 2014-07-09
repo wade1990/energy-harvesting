@@ -1,5 +1,5 @@
 % !TEX root = main.tex
-\textit{Notation:} The starting time of the transmission is denoted by $T_{start}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any Transmitter energy epoch is represented by $B_{rem}$ and $E_{rem}$ receptively.
+\textit{Notation:} The starting time of transmission is denoted by $T_{start}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any Transmitter energy epoch is represented by $B_{rem}$ and $E_{rem}$ receptively.
 
 The on-line algorithm that we propose is presented in Algorithm \ref{algo_online}. The Algorithm waits till time $T_{start}$ which marks the first energy arrival at transmitter or 'time' addition at receiver such that using the energy $\ETx(T_{start})$ and time $\TRx(T_{start})$, $B_0$ or more bits can be transmitted.
 \begin{equation}
@@ -69,7 +69,7 @@ So the number of bits transmitted by the off-line policy $\{\textbf{p},\textbf{s
 \\
 &\le g\left(\frac{\ETx(T_{start}^-)}{\TRx(T_{start}^-)}\right)\TRx(T_{start}^-)<B_0.\label{online_eq_2}
 \end{align}
-where \eqref{online_eq_3} follows from concavity of $g(p)$, \eqref{online_eq_1} follows form property P4, \eqref{online_eq_2} follows form \eqref{online_T_start}. Since the number of bits that is transmitted by the off-line policy is less than $B_0$, it amounts to a contradiction.
+where \eqref{online_eq_3} follows from concavity of $g(p)$, \eqref{online_eq_1} follows form \eqref{property_decreasing}, \eqref{online_eq_2} follows form \eqref{online_T_start}. Since the number of bits that is transmitted by the off-line policy is less than $B_0$, it amounts to a contradiction.
 %
 %If $T_{start}=r_j$, then then the maximum time for which the receiver can be \textit{on} is $\TRx(T_{start}^-)=\TRx(T_{start})-\TRx_j$, as the off-line policy has to finish at or before $T_{start}$.
 %Now, from \eqref{online_eq_4}, the maximum number of bits being transmitted can be bounded by  
@@ -87,7 +87,7 @@ Next we estimate the maximum time taken to complete transmission after $T_{start
 \begin{align}
 &\sum_{i=1}^{i=k}l_ig(p_i)=B_0\implies\sum_{i=1}^{i=k}l_i\le \frac{B_0}{g(p_1)}.\label{bits}
 \end{align}
-Now, from the definition of $p_1$, $\frac{\ETx(T_{start})}{p_1}g(p_1)=B_0 \le \TRx(T_{start}) g(\frac{\ETx(T_{start})}{\TRx(T_{start})})$. Hence by property $P4$, $\frac{\ETx(T_{start})}{\TRx(T_{start})}\le p_1$. So, the RHS of (\ref{bits}) can be reduced to, 
+Now, from the definition of $p_1$, $\frac{\ETx(T_{start})}{p_1}g(p_1)=B_0 \le \TRx(T_{start}) g(\frac{\ETx(T_{start})}{\TRx(T_{start})})$. Hence by \eqref{property_decreasing}, $\frac{\ETx(T_{start})}{\TRx(T_{start})}\le p_1$. So, the RHS of (\ref{bits}) can be reduced to, 
 \begin{align}
 &\frac{B_0}{g(p_1)} = \frac{\ETx(T_{start})}{p_1} \le \TRx(T_{start})\le T_{start}.
 \end{align}
