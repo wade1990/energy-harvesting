@@ -15,13 +15,13 @@ We prove this by contradiction. Assume that the optimal policy say $X$, with $\{
 %\begin{proof}
 %We prove this by contradiction. The following two cases arise depending on whether the receiver is \textit{on} or \textit{off}.
 
-$Case\;1:$ Suppose $j=i-1$. This situation is shown in Fig. \ref{Lemma1} (a). In this case, consider a new transmission policy (say $Y$) which is same as the optimal policy till time $s_{i-1}$. From $s_{i-1}$ to $s_{i+1}$, it transmits at a constant power $p'=\dfrac{p_i(s_{i+1}-s_{i})+p_{i-1}(s_{i}-s_{i-1})}{s_{i+1}-s_{i-1}}$. Then the number of bits transmitted by policy $Y$ from time $s_{i-1}$ to $s_{i+1}$ is given by $g(p')(s_{i+1}-s_{i-1})$ while the optimal policy transmits $g(p_i)(s_{i+1}-s_{i})+g(p_{i-1})(s_{i}-s_{i-1})$ bits. Due to concavity of $g(p)$,
+$Case\;1:$ Suppose $j=i-1$. This situation is shown in Fig. \ref{Lemma1} (a). In this case, consider a new transmission policy (say $Y$) which is same as the optimal policy till time $s_{i-1}$. From $s_{i-1}$ to $s_{i+1}$, $Y$ transmits at a constant power $p'=\dfrac{p_i(s_{i+1}-s_{i})+p_{i-1}(s_{i}-s_{i-1})}{s_{i+1}-s_{i-1}}$. Then the number of bits transmitted by policy $Y$ from time $s_{i-1}$ to $s_{i+1}$ is given by $g(p')(s_{i+1}-s_{i-1})$ while the optimal policy transmits $g(p_i)(s_{i+1}-s_{i})+g(p_{i-1})(s_{i}-s_{i-1})$ bits. Due to concavity of $g(p)$,
 \begin{align*}
 &g(p_i)\frac{s_{i+1}-s_{i}}{s_{i+1}-s_{i-1}}+g(p_{i-1})\frac{s_{i}-s_{i-1}}{s_{i+1}-s_{i-1}}
 \\ 
 &\le g\left(\frac{p_i(s_{i}-s_{i-1})+p_{i-1}(s_{i+1}-s_{i})}{s_{i+1}-s_{i-1}}\right),
 \\
-&\implies g(p')(s_{i+1}-s_{i-1})
+& g(p')(s_{i+1}-s_{i-1})
 \\
 &\ge g(p_i)(s_{i+1}-s_{i})+g(p_{i-1})(s_{i}-s_{i-1}).  
 \end{align*}
@@ -37,10 +37,10 @@ $Case\;2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{j+1},..,p_{i
 \end{figure}
 
 \begin{lemma}
-The optimal solution to Problem 1 may not be unique, but there always exists an optimal solution where once transmission has started, the receiver remains '\textit{on}' throughtout, until the transmission is complete. \label{lemma_nobreaks}
+The optimal solution to Problem 1 may not be unique, but there always exists an optimal solution where once transmission has started, the receiver remains `\textit{on}' throughtout, until the transmission is complete. \label{lemma_nobreaks}
 \end{lemma}
 \begin{proof}
-This is equivalent to saying that in at least one of the optimal solutions, $p_i>0$ for all $i\in\left\{ 1,2,3... N\right\}$. We prove this by showing that we can generate an optimal solution with no breaks in transmission from any other optimal solution. Let a optimal policy $X$ be characterized by $\{\bm{p},\bm{s},N\}$. Now, if $p_i\neq 0\; \forall \ i$, then we are done. Suppose some powers, say $p_{i_1},p_{i_2},...,p_{i_k}=0$ for some $k<N$, where $i_1<i_2<..<i_k$. 
+This is equivalent to saying that in at least one of the optimal solutions, $p_i>0$ for all $i\in\left\{ 1,2,3... N\right\}$. We prove this by showing that we can generate an optimal solution with no breaks in transmission from any other optimal solution. Let an optimal policy $X$ be characterized by $\{\bm{p},\bm{s},N\}$. Now, if $p_i\neq 0\; \forall \ i$, then we are done. Suppose some powers, say $p_{i_1},p_{i_2},...,p_{i_k}=0$ for some $k<N$, where $i_1<i_2<..<i_k$. 
 %Let $p_j$ be the first non-zero power after $p_{i_1}$.
 
 Consider a new policy (say $Y$) which is same as policy $X$ before time $s_{i_1-1}$ and after time $s_{i_1+1}$. But, it keeps the receiver \textit{off} for a period of $(s_{i_1+1}-s_{i_1})$ starting from time $s_{i_1-1}$ and transmits with power $p_{i_1-1}$ from time $s_{i_1}'=(s_{i_1-1}+s_{i_1+1}-s_{i_1})$ till $s_{i_1+1}$. $Y$ transmits same amount of bits in same time as $X$ and also satisfies all the constraints. So $Y$ is also an optimal policy. But the receiver \textit{off} duration in $Y$, $(s_{{i_1+1}}-s_{i_1})$, has been shifted to left as shown in Fig.\ref{fig_Lemma2} (a). 
@@ -54,7 +54,7 @@ Similarly, we shift the receiver \textit{off} period corresponding to $p_{i_2},.
   \centerline{\includegraphics[width=8cm]{Lemma2_modified.eps}}
 \caption{Illustration of Lemma \ref{lemma_nobreaks}. Receiver \textit{off} time of $(s_{j}-s_{i_1})$ is progressively shifted to left as shown in (a) to (b) to (c).}\label{fig_Lemma2}
 \end{figure}
-In the subsequemt discussion, whenever we refer to the optimal solution for Problem 1, we assume it is the one with no breaks in transmission.
+In the subsequent discussion, whenever we refer to the optimal solution for Problem 1, we assume it is the one with no breaks in transmission.
 %This is equivalent to saying that there are no breaks during transmission in an optimal solution. Again, we shall prove this by contradiction. In the optimal solution, suppose the receiver is \textit{off} for some period after transmission starts. Let the transmission power before the break is $p_1$ and after the break is $p_2$. Considering Lemma \ref{lemma_increasing_power}, $p_1<p_2$, as shown in Fig. \ref{Lemma2_figure} (a). Consider the policy where we keep the receiver \textit{off} from time $A$ to $B'=(A+C-B)$. Now, an energy arrival can occur at the transmitter at any time between $A$ to $D$. If there is no energy arrival then transmitting at a constant rate from $B'$ to $D$ would transmit more bits.
 %
 %$Case 1:$ If the energy arrival is between $A$ and $B'$, then it can be easily seen that transmitting at a constant rate from $B'$ to $D$ would be better due to concavity of $g(p)$.
@@ -108,7 +108,7 @@ The two policies $X$  and $Y$ are shown in Fig. \ref{lemma4}. As $X$ and $Y$ tra
 \\
 &=g(\widetilde{p}_N)(\widetilde{s}_{N+1}-\widetilde{s}_N)+g(\widetilde{p}_1)(\widetilde{s}_2-\widetilde{s}_1)\label{Lemma4_eq1},
 \\
-&\implies (p_N+\beta)p_N\frac{\delta}{\beta}\left(\frac{g(p_N)}{p_N}-\frac{g(p_N+\beta)}{p_N+\beta}\right)\nonumber
+& (p_N+\beta)p_N\frac{\delta}{\beta}\left(\frac{g(p_N)}{p_N}-\frac{g(p_N+\beta)}{p_N+\beta}\right)\nonumber
 \\
 &=(p_1-\alpha)p_1\frac{\gamma}{\alpha}\left(\frac{g(p_1-\alpha)}{p_1-\alpha}-\frac{g(p_1)}{p_1}\right).\label{bits_equal}
 \end{align}
@@ -123,7 +123,7 @@ Substituting (\ref{diff_1}) and (\ref{diff_2}) in (\ref{bits_equal}) we get,
 &\delta(p_N+\beta)p_N\frac{d}{dp} \frac{g(p)}{p}  \bigg{\vert}_{p=p_N'}
 =\gamma(p_1-\alpha)p_1\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_1'}.\label{bits_equal1}
 \end{align}
-$\dfrac{d}{dp} \dfrac{g(p)}{p}$ being an increasing function of $p$ (from P\ref{property_decreasing}), with $p_1'<p_1\le p_N<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence, transmission time in the policy $Y$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $X$ i.e. $(s_{N+1}-s_1)$.
+$\dfrac{d}{dp} \dfrac{g(p)}{p}$ being an increasing function of $p$ (from \eqref{property_decreasing}), with $p_1'<p_1\le p_N<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence, transmission time in the policy $Y$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $X$ i.e. $(s_{N+1}-s_1)$.
 \end{proof}
 \begin{figure}
 \centering
@@ -132,7 +132,7 @@ $\dfrac{d}{dp} \dfrac{g(p)}{p}$ being an increasing function of $p$ (from P\ref{
 \end{figure}
 
 \begin{lemma}
-In an optimal policy, if the receiver has energy to stay \textit{`on'} for a maximum of $\TRx_0$ time , then either $s_{N+1} - s_1 = \TRx_0$ or $s_1 = 0$. 
+In an optimal policy, if the receiver has energy to stay \textit{`on'} for a maximum of $\TRx_0$ time, then either $s_{N+1} - s_1 = \TRx_0$ or $s_1 = 0$. 
 \label{transmission_duration}
 \end{lemma}
 \begin{proof}

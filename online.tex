@@ -1,9 +1,9 @@
 % !TEX root = main.tex
-In an on-line scenario, we can only know the present and past energy arrivals at transmitter or 'time' additions at receiver. We use competitive ratio analysis to compare performance of on-line algorithm vs the optimal off-line algorithm.  
+In an on-line scenario, we can only know the present and past energy arrivals at transmitter or `time' additions at receiver. We use competitive ratio analysis to compare the performance of an on-line algorithm vs. the optimal off-line algorithm.  
  
 \textit{Notation:} The starting time of transmission is denoted by $T_{start}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any Transmitter energy epoch is represented by $B_{rem}$ and $E_{rem}$ receptively.
 
-The on-line algorithm that we propose is presented in Algorithm \ref{algo_online}. The Algorithm waits till time $T_{start}$ which marks the first energy arrival at transmitter or 'time' addition at receiver such that using the energy $\ETx(T_{start})$ and time $\TRx(T_{start})$, $B_0$ or more bits can be transmitted.
+The on-line algorithm that we propose is presented in Algorithm \ref{algo_online}. The Algorithm waits till time $T_{start}$ which marks the first energy arrival at transmitter or `time' addition at receiver such that using the energy $\ETx(T_{start})$ and time $\TRx(T_{start})$, $B_0$ or more bits can be transmitted.
 \begin{equation}
 T_{start}=\min\ t \ s.t.\  \TRx(t)g\Bigg{(} \dfrac{\ETx(t)}{\TRx(t)}\Bigg{)}\ge B_0.\label{online_T_start}
 \end{equation}
@@ -36,7 +36,7 @@ The transmit power in the on-line algorithm is non-decreasing with time after $T
 \label{online_power}
 \end{lemma}
 \begin{proof}
-From the definition of the algorithm the transmit power only changes when there is a new energy arrival after $T_{start}$. So, if there is no energy arrival, the transmit power is same i.e. non decreasing. Suppose there are energy arrivals after $T_{start}$ and for any energy arrival(say $E_{new}$) the power changes from $p_i$ to $p_{i+1}$. Let the energy remaining at start of transmission with power $p_i$ be $E_{rem}$ and bits remaining be $B_{rem}$. The transmission continues for time $l_i$ with power $p_i$. Now, we need to show that $p_i<p_{i+1}$. Form the algorithm we get the following equations. 
+From the definition of the algorithm the transmit power only changes when there is a new energy arrival after $T_{start}$. So, if there is no energy arrival, the transmit power is same i.e. non decreasing. Suppose there are energy arrivals after $T_{start}$ and for any energy arrival(say $E_{new}$) the power changes from $p_i$ to $p_{i+1}$. Let the energy remaining at start of transmission with power $p_i$ be $E_{rem}$ and bits remaining be $B_{rem}$. The transmission continues for time $l_i$ with power $p_i$. Now, we need to show that $p_i<p_{i+1}$. From the algorithm we get the following equations. 
 \begin{align}
 &\frac{g(p_i)}{p_i}=\frac{B_{rem}}{E_{rem}} \label{power_increasing_eq1}
 \\
@@ -48,7 +48,7 @@ Substituting $g(p_i)$ from (\ref{power_increasing_eq1}) into RHS of (\ref{power_
 The competitive ratio of the on-line algorithm presented in Algorithm \ref{algo_online} is less than 2.
 \end{theorem}
 \begin{proof}
-This is equivalent to saying that the time taken by the on-line algorithm can at max be twice the time taken by optimal off-line algorithm. Let the time taken by the off-line version be $T_{off}$ and the on-line version be $T_{online}$. 
+This is equivalent to saying that the time taken by the on-line algorithm can at max be twice the time taken by optimal off-line algorithm in the worst case. Let the time taken by the off-line version be $T_{off}$ and the on-line version be $T_{online}$. 
 
 We now show that 
 \begin{align}
@@ -57,21 +57,21 @@ T_{off} > T_{start}
 \end{align}
 This proof follows from contradiction. Let $T_{off}\le T_{start}$. From \eqref{online_T_start}, either $T_{start}=t_i$ for some $i$ and/or $T_{start}=r_j$ for some $j$. Let $\{\textbf{p},\textbf{s},N\}$ ($T_{off}=s_{N+1}$) be the off-line policy.
 
-If $T_{start}=t_i$, then as $T_{off}\le T_{start}$, the maximum energy that can be utilized by the off-line algorithm is $\ETx(T_{start}^-)=\ETx(T_{start})-\ETx_i$. Note that the off-line algorithm cannot use energy arrival $\ETx_i$, as using any finite amount of energy for 0 time cannot deliver any bits. If $T_{start}=r_j$, then then the maximum time for which the receiver can be \textit{on} is $(s_{N+1}-s_1) \le\TRx(T_{start}^-)=\TRx(T_{start})-\TRx_j$, as the off-line policy has to finish at or before $T_{start}$. 
+If $T_{start}=t_i$, then as $T_{off}\le T_{start}$, the maximum energy that can be utilized by the off-line algorithm is $\ETx(T_{start}^-)=\ETx(T_{start})-\ETx_i$. Note that the off-line algorithm cannot use energy arrival $\ETx_i$, as using any finite amount of energy for 0 time cannot deliver any bits. If $T_{start}=r_j$, then the maximum time for which the receiver can be \textit{on} is $(s_{N+1}-s_1) \le\TRx(T_{start}^-)=\TRx(T_{start})-\TRx_j$, as the off-line policy has to finish at or before $T_{start}$. 
 %If $T_{start}\neq t_i$ or $T_{start}\neq r_j$ then, $\ETx(T_{start}^-)=\ETx(T_{start})$ or $\TRx(T_{start}^-)=\TRx(T_{start})$.
 So the number of bits transmitted by the off-line policy $\{\textbf{p},\textbf{s},N\}$ is given by,
 \begin{align}
 &\sum_{i=1}^{i=N} g(p_i)(s_{i+1}-s_{i}),
 \\
-&\le g\left(\sum_{i=1}^{i=N}p_i\left(\frac{(s_{i+1}-s_{i})}{\sum_{j=1}^{j=N}(s_{i+1}-s_{i})}\right)\right) \sum_{j=1}^{j=N} (s_{i+1}-s_{i}),\label{online_eq_3}
+&\stackrel{(a)}{\le} g\left(\sum_{i=1}^{i=N}p_i\left(\frac{(s_{i+1}-s_{i})}{\sum_{j=1}^{j=N}(s_{i+1}-s_{i})}\right)\right) \sum_{j=1}^{j=N} (s_{i+1}-s_{i}),\label{online_eq_3}
 \\
 &=g\left(\frac{\displaystyle\sum_{i=1}^{i=N}p_i(s_{i+1}-s_{i})}{(s_{N+1}-s_{1})}\right)(s_{N+1}-s_{1}),\label{online_eq_4} 
 \\
-&\le g\left(\frac{\displaystyle\sum_{i=1}^{i=N}p_i(s_{i+1}-s_{i})}{\TRx(T_{start}^-)}\right)\TRx(T_{start}^-), \label{online_eq_1}
+&\stackrel{(b)}{\le} g\left(\frac{\displaystyle\sum_{i=1}^{i=N}p_i(s_{i+1}-s_{i})}{\TRx(T_{start}^-)}\right)\TRx(T_{start}^-), \label{online_eq_1}
 \\
-&\le g\left(\frac{\ETx(T_{start}^-)}{\TRx(T_{start}^-)}\right)\TRx(T_{start}^-)<B_0.\label{online_eq_2}
+&\le g\left(\frac{\ETx(T_{start}^-)}{\TRx(T_{start}^-)}\right)\TRx(T_{start}^-)\stackrel{(c)}{<}B_0.\label{online_eq_2}
 \end{align}
-where \eqref{online_eq_3} follows from concavity of $g(p)$, \eqref{online_eq_1} follows form \eqref{property_decreasing}, \eqref{online_eq_2} follows form \eqref{online_T_start}. Since the number of bits that is transmitted by the off-line policy is less than $B_0$, it amounts to a contradiction.
+where $(a)$ follows from concavity of $g(p)$, $(b)$ follows form \eqref{property_decreasing}, $(c)$ follows form \eqref{online_T_start}. Since the number of bits that is transmitted by the off-line policy is less than $B_0$, it amounts to a contradiction.
 %
 %If $T_{start}=r_j$, then then the maximum time for which the receiver can be \textit{on} is $\TRx(T_{start}^-)=\TRx(T_{start})-\TRx_j$, as the off-line policy has to finish at or before $T_{start}$.
 %Now, from \eqref{online_eq_4}, the maximum number of bits being transmitted can be bounded by  
@@ -89,7 +89,8 @@ Next we estimate the maximum time taken to complete transmission after $T_{start
 \begin{align}
 &\sum_{i=1}^{i=k}l_ig(p_i)=B_0\implies\sum_{i=1}^{i=k}l_i\le \frac{B_0}{g(p_1)}.\label{bits}
 \end{align}
-Now, from the definition of $p_1$, $\frac{\ETx(T_{start})}{p_1}g(p_1)=B_0 \le \TRx(T_{start}) g(\frac{\ETx(T_{start})}{\TRx(T_{start})})$. Hence by \eqref{property_decreasing}, $\frac{\ETx(T_{start})}{\TRx(T_{start})}\le p_1$. So, the RHS of (\ref{bits}) can be reduced to, 
+Now, from the definition of $p_1$, $\dfrac{\ETx(T_{start})}{p_1}g(p_1)=B_0 \le \TRx(T_{start}) g\left( \dfrac{\ETx(T_{start})}{\TRx(T_{start})} \right)$. Hence by \eqref{property_decreasing}, $\dfrac{\ETx(T_{start})}{\TRx(T_{start})}\le p_1$.\vspace{2pt}
+So, the RHS of (\ref{bits}) can be reduced to, 
 \begin{align}
 &\frac{B_0}{g(p_1)} = \frac{\ETx(T_{start})}{p_1} \le \TRx(T_{start})\le T_{start}.
 \end{align}

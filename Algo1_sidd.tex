@@ -1,6 +1,6 @@
 % !TEX root = OptimalOffline.tex
 
-Summarising the results of Lemmas \ref{lemma_increasing_power}-\ref{transmission_duration}, the optimal policy $\{\textbf{p},\textbf{s},N\}$ may change transmission powers at energy arrival epochs only i.e. $\forall 1<i<N+1,\ s_i=t_j$ for some $j$. At these epochs, it exhausts the total energy available i.e. $U(s_i)=\ETx(s_i^-)$. The transmission powers are also non decreasing with time. The optimal policy exhausts the total 'receiver time' time allowed, if it does not start transmitting from origin.
+Summarising the results of Lemmas \ref{lemma_increasing_power}-\ref{transmission_duration}, the optimal policy $\{\textbf{p},\textbf{s},N\}$ may change transmission powers at energy arrival epochs only i.e. $\forall 1<i<N+1,\ s_i=t_j$ for some $j$. At these epochs, it exhausts the total energy available i.e. $U(s_i)=\ETx(s_i^-)$. The transmission powers are also non decreasing with time. The optimal policy exhausts the total `receiver time' time allowed, if it does not start transmitting from origin.
 
 Now that we have gained some knowledge of the structure the optimal policy has to follow, we consider an example to approach Problem 1. 
 
@@ -93,27 +93,27 @@ But, by constraint (\ref{pb1_constraint_energy}),
 \begin{align}
 &p_c(t_q-R)+p_c(s_j-t_q)\le \ETx(s_j^-),
 \\
-&\implies p_c(s_j-t_q)\stackrel{(\ref{eqlemmaQ1})}{\le} \ETx(s_j^-)-\ETx(t_q^-),
+& p_c(s_j-t_q)\stackrel{(\ref{eqlemmaQ1})}{\le} \ETx(s_j^-)-\ETx(t_q^-),
 \\
-&\implies p_c(s_j-t_q)< \ETx(s_j^-)-U(t_q)=p_{j-1}(s_j-t_q),
+& p_c(s_j-t_q)< \ETx(s_j^-)-U(t_q)=p_{j-1}(s_j-t_q),
 \\
-&\implies p_c<p_{j-1} .\label{eqlemmaQ2}
+& p_c<p_{j-1} .\label{eqlemmaQ2}
 \end{align}
-If ${j-1}= 1$, then power at $t_q$ is the first transmission power $p_1$. But then by \eqref{eqlemmaQ2}, $p_1 > p_c$. By the definition of $p_c$, we must have $s_{1} > R$. But, this will contradict \textit{Claim 1}.
+If ${j-1}= 1$, then power at $t_q$ is the first transmission power $p_1$. But then by \eqref{eqlemmaQ2}, $p_1 > p_c$. By the definition of $p_c$, we must have $s_{1} > R$, but this will contradict \textit{Claim 1}.
 
-So ${j-1}\ge 2$, which means the power of transmission must change at least once between $R$ and $t_q$. By Lemma \ref{lemma_energy_consumed}, $X$ has used all energy by $s_{j-1}$ and $s_{j}$ as well. So, $p_{j}(\ETx(s_{j}^-)-\ETx(s_{j-1}^-))$ is the maximum energy available between time $s_{j-1}$ and $s_{j}$. If $R<s_{j-1}$, then $p_c$ (by \eqref{eqlemmaQ2}) uses more energy, than available between $s_{j-1}$ and $s_{j}$, which is not possible. If $s_{j-1}\le R$ then $p_{j-1}$ uses more than maximum energy available (given by $p_c(t_q-R)=\ETx(t_q^-)$ ) between time $R$ and $t_q$, violating energy constraint \eqref{pb1_constraint_energy}. 
+So ${j-1}\ge 2$, which means that the power of transmission must change at least once between $R$ and $t_q$. By Lemma \ref{lemma_energy_consumed}, $X$ has used all energy by $s_{j-1}$ and $s_{j}$ as well. So, $p_{j}(\ETx(s_{j}^-)-\ETx(s_{j-1}^-))$ is the maximum energy available between time $s_{j-1}$ and $s_{j}$. If $R<s_{j-1}$, then $p_c$ (by \eqref{eqlemmaQ2}) uses more energy, than available between $s_{j-1}$ and $s_{j}$, which is not possible. If $s_{j-1}\le R$ then $p_{j-1}$ uses more than maximum energy available (given by $p_c(t_q-R)=\ETx(t_q^-)$ ) between time $R$ and $t_q$, violating energy constraint \eqref{pb1_constraint_energy}. 
 
 Therefore, every optimal transmission policy must use all energy till epoch $t_q$. 
 
 %If the optimal policy does have a power higher than $p_c$ at $t_q$, then it must have the same power of transmission either from some epoch, say $t_k$, or from the beginning of transmission. If $t_k>R$, we can show that $p_c$ becomes infeasible with respect to energy constraint (\ref{pb1_constraint_energy}) at $t_k$. If $t_k<R$, $p$ becomes infeasible with energy constraint \eqref{pb1_constraint_energy} at time $R$. Now, only thing left is the optimal policy begins transmission with power $p$. If so, then it has to begin transmission after time $R$ which follows from equation (\ref{eqlemmaQ2}). This violates \textit{Claim 1}. Therefore every optimal transmission policy must use all energy till epoch $t_q$.
 \end{proof}
 
-Now that we have an initial feasible solution, we shall proceed to improve upon this policy as follows. The formal algorithm is presented as Algorithm \ref{Algorithm1}. We explain the procedure by an example. Assume that the starting feasible solution is given by the constant power policy, as shown by dotted line in Fig. \ref{fig_example_algo1} (a), where $t_q=t_2$. We first assign the following initial values for the initial feasible policy - transmission power left to $t_2$ $p_l=p_c$, power right to $t_2$ $p_r=p_c$, start time of $T_{start}=R$, stop time $T_{stop}=S$, epoch at which $p_l$ ends $t_l=t_2$, epoch at which $p_r$ starts $t_r=t_2$. Now, we increase $p_r$, keeping $t_r$ fixed, till it reaches $p_r'$ which hits epoch $t_3$, as shown by the solid line in Fig \ref{figure_example_Algorithm1} (a). As in total we need to transmit $B_0$ bits, the decrease in bits transferred by $p_r$ to $p_r'$ is compensated by calculating appropriate $p_l'$ according to the following equation
+Now that we have an initial feasible solution, we shall proceed to improve upon this policy as follows. The formal algorithm is presented as Algorithm \ref{Algorithm1}. We explain the procedure by an example. Assume that the starting feasible solution is given by the constant power policy, as shown by dotted line in Fig. \ref{figure_example_Algorithm1} (a), where $t_q=t_2$. We first assign the following initial values for the initial feasible policy - transmission power left to $t_2$ $p_l=p_c$, power right to $t_2$ $p_r=p_c$, start time of $T_{start}=R$, stop time $T_{stop}=S$, epoch at which $p_l$ ends $t_l=t_2$, epoch at which $p_r$ starts $t_r=t_2$. Now, we increase $p_r$, keeping $t_r$ fixed, till it reaches $p_r'$ which hits epoch $t_3$, as shown by the solid line in Fig \ref{figure_example_Algorithm1} (a). As in total we need to transmit $B_0$ bits, the decrease in bits transferred by $p_r$ to $p_r'$ is compensated by calculating appropriate $p_l'$ according to the following equation
 \begin{align}
 &g(p_l')\frac{\ETx(t_l^-)}{p_l'}=g(p_r)(T_{stop}-t_r)+g(p_l)(t_l-T_{start})\nonumber\\
 &-g(p_r')(\mathcal{P}(t_r,t_3))\frac{\ETx(T_{stop}^-)-ETx(t_r^-)}{\mathcal{P}(t_r,t_3)}.
 \end{align}   
-Having got a feasible $p_l'$, as shown in Fig. \ref{figure_example_Algorithm1} (a), we assign $T_{start}'$ with the point where $p_l'$ starts, $T_{stop}'$ with the point where $p_r'$ ends. $t_r'$ gets the value $t_3$ and $t_l'$ remains same as $t_l=t_2$. Note that parameters $\{T_{start}',T_{stop}',t_l',t_r',p_l',p_r'\}$ define the policy at end of first iteration. 
+Having got a feasible $p_l'$, as shown in Fig. \ref{figure_example_Algorithm1} (a), we assign $T_{start}'$ with the point where $p_l'$ starts, $T_{stop}'$ with the point where $p_r'$ ends. $t_r'$ gets the value $t_3$ and $t_l'$ remains same as $t_l=t_2$. Note that parameters $\{T_{start}',T_{stop}',t_l',t_r',p_l',p_r'\}$ define the policy at the end of first iteration. 
 
 In the next iteration, the portion of transmission between $t_l'=t_2$ to $t_r'=t_3$ is not updated. In this iteration, we try to increase $p_r'$ about $t_r'$ till it hits the feasibility equation of energy. $p_r'$ could virtually be increased to infinity. But transmission with infinite power for 0 time does not send any bits. So we assign $t_r''=t_2$ and $p_r''=\mathcal{P}(t_2,t_3)$. With this change in $p_r'$ to $p_r''$, we again calculate $p_l''$ which compensates the decrease in bits transferred after $t_r'$. But the calculated $p_l''$ becomes infeasible at $t_1$ as shown in Fig. \ref{figure_example_Algorithm1} (b). Hence, we set $p_l''$ to the maximum feasible power $\mathcal{P}(t_1,t_2)$ as shown in Fig. \ref{figure_example_Algorithm1} (c). With this $p_l''$, we re-calculate $p_r''$, so as to transmit $B_0$ bits in total. $t_l''$ is assigned to $t_1$, $t_r''$ remains $t_3$. $T_{start}''$ and $T_{stop}''$ as calculated to values marked in Fig. \ref{figure_example_Algorithm1} (c). The final policy at the end of second iteration is shown by solid line in Fig. \ref{figure_example_Algorithm1} (c). Like this we continue to the third iteration, by improving the policy (to finish earlier) before $t_l''$ and after $t_r''$ and so on.
 
