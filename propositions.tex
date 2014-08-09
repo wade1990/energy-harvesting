@@ -1,11 +1,11 @@
 % !TEX root = OptimalOffline.tex
 
 \begin{lemma}
-In an optimal solution $\{\bm{p},\bm{s},N\}$ of Problem 1, $p_i\ge p_j$ for all $i\in \{1,2..N\}$ and $j<i$, if $p_i\neq 0$. 
+In an optimal solution $\{\bm{p},\bm{s},N\}$ of Problem 1, if $p_i\neq 0$, $p_i\ge p_j$ for all $i,j\in \{1,2..N\}$ and $j<i$.\footnote{\label{note1}Observe that w/o receiver energy harvesting constraint \eqref{pb1_constraint_time}, $p_i\neq 0,\forall i$ from \cite{Yang} and Lemma \ref{lemma_increasing_power} would be same as Lemma 1 in \cite{Yang}. But, as we have constraint on the total receiver time, in optimal solution, transmitter may shut \textit{off} for some time and resume transmission when enough energy is harvested to finish transmission in the given time. Hence, $p_i$ may be $0$ in-between transmission. Lemma \ref{lemma_increasing_power} shows that even if this happens, non-zero powers still remain non-increasing.}  
 \label{lemma_increasing_power}
 \end{lemma}
 \begin{proof}
-We prove this by contradiction. Assume that the optimal policy say $X$, with $\{\bm{p},\bm{s},N\}$ violates the condition stated in Lemma \ref{lemma_increasing_power}. Let $p_i$ be the first transmission power such that $\exists k<i:\ p_i<p_k $. Let $j$ be the maximum index less than $i$ such that $p_i<p_j$. 
+We prove this by contradiction. Assume that the optimal policy (say $X$), with $\{\bm{p},\bm{s},N\}$ violates the condition stated in Lemma \ref{lemma_increasing_power}. Let $p_i\neq 0$ be the first transmission power such that $\exists k<i:\ p_i<p_k $. Let $j$ be the maximum such index less than $i$ such that $p_i<p_j$. 
 
 %
 %\begin{lemma}
@@ -25,9 +25,9 @@ $Case\;1:$ Suppose $j=i-1$. This situation is shown in Fig. \ref{Lemma1} (a). In
 \\
 &\ge g(p_i)(s_{i+1}-s_{i})+g(p_{i-1})(s_{i}-s_{i-1}).  
 \end{align*}
-Thus both $X$ and $Y$ transmit equal number of bits till time $s_{i-1}$ while $Y$ transmits more number of bits than $X$ by time $s_{i+1}$. After time $s_{i+1}$, suppose policy $Y$ follows same transmission powers as $X$ till it transmits $B_0$ bits. Since $Y$ has transmitted more bits than $X$ till time $s_{i+1}$, it finishes transmitting all $B_0$ bits earlier than $X$. Therefore, $X$ cannot be optimal.
+Hence, both $X$ and $Y$ transmit equal number of bits till time $s_{i-1}$, while $Y$ transmits more number of bits than $X$ by time $s_{i+1}$. After time $s_{i+1}$, suppose policy $Y$ follows same transmission powers as $X$ till it transmits $B_0$ bits. Since $Y$ has transmitted more bits than $X$ till time $s_{i+1}$, it finishes transmitting all $B_0$ bits earlier than $X$, contradicting the optimality of $X$.
 
-$Case\;2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{j+1},..,p_{i-1}$ and $p_i<p_{j}$. So, $p_{i-1},..,p_{j+1}<p_j$. If any of $p_{i-1},..,p_{j+1}$ is non zero, then $i$ no longer remains the minimum index violating the condition stated in Lemma \ref{lemma_increasing_power}. Hence, $p_{i-1},..,p_{j+1}=0$. This situation is shown in Fig. \ref{Lemma1}(b). Now, consider a policy $W$ where the transmission power is same as the optimal policy before time $s_j$ and after time $s_{i+1}$. From $s_j$ to $s_j'=s_j+s_{i}-s_{j+1}$, $W$ keeps the receiver \textit{off} and from $s_j'$ to $s_{i}$ it transmits at power $p_j$. This policy still transmits equal number of bits and ends at the same time as the optimal policy $X$. Now that $W$ matches with the form of $X$ in \textit{Case 1} from time $s_j'$ to $s_{i+1}$, we could proceed to generate another policy form $W$ (like $Y$ in \textit{Case 1}) which would finish earlier than $W$. Hence, this new policy would finish earlier than $X$ as well and we would reach a contradiction. 
+$Case\;2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{j+1},..,p_{i-1}$ and $p_i<p_{j}$. So, $p_{i-1},..,p_{j+1}<p_j$. If any of $p_{i-1},..,p_{j+1}$ is non zero, then $i$ no longer remains the minimum index violating the condition stated in Lemma \ref{lemma_increasing_power}. Hence, $p_{i-1},..,p_{j+1}=0$. This situation is shown in Fig. \ref{Lemma1}(b). Now, consider a policy $W$ where the transmission power is same as the optimal policy before time $s_j$ and after time $s_{i+1}$. From $s_j$ to $s_j'=s_j+s_{i}-s_{j+1}$, $W$ keeps the receiver \textit{off} (so transmitter does not transmit in this duration) and from $s_j'$ to $s_{i}$ it transmits at power $p_j$. This policy still transmits equal number of bits and ends at the same time as the optimal policy $X$. Now that $W$ matches with the form of $X$ in \textit{Case 1} from time $s_j'$ to $s_{i+1}$, we could proceed to generate another policy form $W$ (like $Y$ in \textit{Case 1}) which would finish earlier than $W$. Hence, this new policy would finish earlier than $X$ as well and we would reach a contradiction. 
 \end{proof}
 
 \begin{figure}[htb]
@@ -40,14 +40,14 @@ $Case\;2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{j+1},..,p_{i
 The optimal solution to Problem 1 may not be unique, but there always exists an optimal solution where once transmission has started, the receiver remains `\textit{on}' throughtout, until the transmission is complete. \label{lemma_nobreaks}
 \end{lemma}
 \begin{proof}
-This is equivalent to saying that in at least one of the optimal solutions, $p_i>0$ for all $i\in\left\{ 1,2,3... N\right\}$. We prove this by showing that we can generate an optimal solution with no breaks in transmission from any other optimal solution. Let an optimal policy $X$ be characterized by $\{\bm{p},\bm{s},N\}$. Now, if $p_i\neq 0\; \forall \ i$, then we are done. Suppose some powers, say $p_{i_1},p_{i_2},...,p_{i_k}=0$ for some $k<N$, where $i_1<i_2<..<i_k$. 
+This is equivalent to saying that in at least one of the optimal solutions, $p_i>0$ for all $i\in\left\{ 1,2,3... N\right\}$. We prove this by showing that we can generate an optimal solution with no breaks in transmission from any other optimal solution. Let an optimal policy $X$ be characterized by $\{\bm{p},\bm{s},N\}$. Now, if $p_i\neq 0\; \forall \ i$, then we are done. Suppose some powers, say $p_{i_1},p_{i_2},...,p_{i_k}=0$ (this can happen in an optimal solution\footnotemark[\ref{note1}]) for some $k<N$, where $i_1<i_2<..<i_k$. 
 %Let $p_j$ be the first non-zero power after $p_{i_1}$.
 
-Consider a new policy (say $Y$) which is same as policy $X$ before time $s_{i_1-1}$ and after time $s_{i_1+1}$. But, it keeps the receiver \textit{off} for a period of $(s_{i_1+1}-s_{i_1})$ starting from time $s_{i_1-1}$ and transmits with power $p_{i_1-1}$ from time $s_{i_1}'=(s_{i_1-1}+s_{i_1+1}-s_{i_1})$ till $s_{i_1+1}$. $Y$ transmits same amount of bits in same time as $X$ and also satisfies all the constraints. So $Y$ is also an optimal policy. But the receiver \textit{off} duration in $Y$, $(s_{{i_1+1}}-s_{i_1})$, has been shifted to left as shown in Fig.\ref{fig_Lemma2} (a). 
+Consider a new policy (say $Y$) which is same as policy $X$ before time $s_{i_1-1}$ and after time $s_{i_1+1}$. But, it keeps the receiver \textit{off} for a duration of $(s_{i_1+1}-s_{i_1})$ starting from time $s_{i_1-1}$ (i.e. from $s_{i_1}$ to $s_{i_1}'=(s_{i_1-1}+s_{i_1+1}-s_{i_1})$) and transmits with power $p_{i_1-1}$ from time $s_{i_1}'$ till $s_{i_1+1}$. $Y$ transmits same amount of bits in same time as $X$ and also satisfies constraints \eqref{pb1_constraint_bits}-\eqref{pb1_constraint_time}. So $Y$ is also an optimal policy. But the receiver \textit{off} duration in $Y$, $(s_{{i_1+1}}-s_{i_1})$, has been shifted to left as shown in Fig.\ref{fig_Lemma2} (a). 
 
-Next, we generate another policy $Z$ from $Y$ by shifting the \textit{off} duration $(s_{{i_1+1}}-s_{i_1})$ to start from epoch $s_{i_1-2}$, as shown Fig. \ref{fig_Lemma2} (b). Note that $Z$ is also optimal. We continue this process of shifting the receiver \textit{off} period to the left to generate new optimal policies till we reach a policy (say $W$) where the receiver is \textit{off} for time $(s_{{i_1+1}}-s_{i_1})$ from $s_1$, as shown in Fig. \ref{fig_Lemma2}(c). The start time of $W$, can now be changed to $s_1'=(s_1+s_{i_1+1}-s_{i_1})$. 
+Next, we generate another policy $Z$ from $Y$ by shifting the \textit{off} duration $s_{i_1}'-s_{i_1-1}=(s_{{i_1+1}}-s_{i_1})$ to start from epoch $s_{i_1-2}$ upto $s_{i_1-1}'$, $s_{i_1-1}'-s_{i_1-2}=s_{i_1}'-s_{i_1-1}=(s_{{i_1+1}}-s_{i_1})$, as shown Fig. \ref{fig_Lemma2} (b). $p_{i_1-2}$  is shifted right to start from $s_{i_1-1}'$. Note that $Z$ is also optimal. We continue this process of shifting the receiver \textit{off} period to the left to generate new optimal policies till we reach a policy (say $W$) where the receiver is \textit{off} for time $(s_{{i_1+1}}-s_{i_1})$ from $s_1$, i.e. from $s_{1}$ to $s_1'$, $s_1'-s_1=(s_{{i_1+1}}-s_{i_1})$ , as shown in Fig. \ref{fig_Lemma2}(c). As $W$ has $0$ power transmission from the start $s_1$ to $s_1'$, the effective start time of $W$ can now be changed to $s_1'$. 
 
-Similarly, we shift the receiver \textit{off} period corresponding to $p_{i_2},...,p_{i_k}$ till the total \textit{off} period is shifted to the beginning of transmission. This will result in a policy which starts after time $s_1$ and ends at time $s_{N+1}$, but the transmission power never goes zero in-between. Such a policy is also optimal and has no breaks.
+Similarly, we shift the receiver \textit{off} period corresponding to $p_{i_2},...,p_{i_k}$ till the total \textit{off} period is shifted to the beginning of transmission. This will result in a policy which starts \textit{after} time $s_1$ (at $s_1+(s_{{i_1+1}}-s_{i_1})+..+(s_{{i_k+1}}-s_{i_k})$) and ends at time $s_{N+1}$, but the transmission power never goes zero in-between. Such a policy is also optimal and has no breaks.
 \end{proof}
 \begin{figure}[htb]
   \centering
@@ -74,14 +74,14 @@ In the subsequent discussion, whenever we refer to the optimal solution for Prob
 %\end{figure}
 
 \begin{lemma}
-In an optimal policy $\{\bm{p},\bm{s},N\}$ with $p_i>0$ for all $i\in\{1,2,3...N\}$, the transmission power can change only at the time instants when energy arrives at the transmitter. $U(t) = \ETx(t^-)$ whenever the transmission power changes. The time instant where the transmission policy ends also satisfies this property.
+In an optimal policy $\{\bm{p},\bm{s},N\}$ with $p_i>0$ for all $i\in\{1,2,3...N\}$, the transmission power can change only at the time instants when energy arrives at the transmitter. Moreover, energy used is equal to energy harvested upto these instants i.e. $U(t) = \ETx(t^-)$. The time instant where the transmission policy ends also satisfies this property.
 \label{lemma_energy_consumed} 
 \end{lemma}
 \begin{proof}
 Keeping in mind Lemma \ref{lemma_increasing_power} and \ref{lemma_nobreaks}, in the optimal solution $\{\bm{p}, \bm{s}, N\}$, transmission starts at $s_1$ and ends at $s_{N+1}$ without stopping in-between. Further, the transmission powers are also increasing. Assuming such a structure, the proof of this Lemma can be argued in similar terms of Lemma 2,3 in \cite{Yang}. 
 \end{proof}	
 
-From the previous Lemma we know that, whenever the transmission power changes, $ U(t) = \ETx(t^-)$. With this information, any policy can be sufficiently described by marking time instants where transmission power changes. Hence, any policy $X$, $\{\bm{p},\bm{s},N\}$, satisfying properties of Lemma \ref{lemma_increasing_power}-\ref{lemma_energy_consumed} can be sufficiently represented by $s_i$'s $\forall i\in\{2,3,..,N\}$, where $s_i=t_j$ for some $j$, $p_{i+1}>p_i$ and $U(s_i)=\ETx(s_i^-)$. There may exist some $t_k$'s where $U(t_k)=\ETx(t_k^-)$, but transmission power does not change at $t_k$. For notational simplicity we also include such $t_k$'s in $\bm{s}$ (say $s_l=t_k$, where $p_{l-1}=p_l$). Henceforth, whenever we describe any policy $X$, $\forall i\in\{2,3,..,N\}$ $s_i=t_j$ for some $j$, $p_{i+1}\ge p_i$ and $U(s_i)=\ETx(s_i^-)$. Furthermore, $s_i$'s exhaust all time instants $t$ such that $U(t)= \ETx(t^-)$.
+From the Lemma \ref{lemma_energy_consumed} we know that, whenever the transmission power changes, $ U(t) = \ETx(t^-)$. With this information, any policy can be sufficiently described by marking time instants where transmission power changes. Hence, any policy $X$, $\{\bm{p},\bm{s},N\}$, satisfying properties of Lemma \ref{lemma_increasing_power}-\ref{lemma_energy_consumed} can be sufficiently represented by $s_i$'s $\forall i\in\{2,3,..,N\}$, where $s_i=t_j$ for some $j$, $p_{i+1}>p_i$ and $U(s_i)=\ETx(s_i^-)$. Note that transmission starts at $s_1$ and $U(s_1)$ may not be equal to $\ETx(s_1^-)$. There may exist some $t_k$'s where $U(t_k)=\ETx(t_k^-)$, but transmission power does not change at $t_k$. For notational simplicity we also include such $t_k$'s in $\bm{s}$ (say $s_l=t_k$, where $p_{l-1}=p_l$). Henceforth, whenever we describe any policy $X$, $\forall i\in\{2,3,..,N\}$ $s_i=t_j$ for some $j$, $p_{i+1}\ge p_i$ and $U(s_i)=\ETx(s_i^-)$. Furthermore, $s_i$'s exhaust all time instants $t$ such that $U(t)= \ETx(t^-)$.
   
 \begin{lemma}
 %Consider two policies $X$, $\{\bm{p},\bm{s},N\}$  and $Y$, $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, which are feasible with respect to energy constraint \eqref{pb1_constraint_bits}, have non-decreasing powers, and transmit same number of bits in total. If $\widetilde{p}_1=p_1-\alpha,\widetilde{p}_2=p_2,..,\widetilde{p}_{N-1}=p_{N-1},\widetilde{p}_N=p_N+\beta $ and $\widetilde{s}_1=s_1-\gamma,\widetilde{s}_2=s_2,..,\widetilde{s}_{N-1}=s_{N-1},\widetilde{s}_N=s_N+\delta $, where $\gamma=\dfrac{\alpha}{p_1-\alpha}(s_2-s_1)$, $\delta =\dfrac{\beta}{p_N+\beta}(s_{N+1}-s_N)$ and $\alpha ,\beta$ are positive constants, then 
@@ -93,26 +93,27 @@ From the previous Lemma we know that, whenever the transmission power changes, $
 % Consider a feasible policy $X$, $\{\bm{p},\bm{s},N\}$ with non-decreasing powers. If it is possible to create another policy $Y$,$\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, from $X$ by keeping the transmission same as $X$ from time $s_2$ to $s_{N}$, but by decreasing $p_1$ and increasing $p_N$ such that $Y$ is also feasible with respect to energy constraint \eqref{pb1_constraint_bits}, transmits same number of bits as $X$ and uses same amount of energy by the time it finishes, then transmission time for $Y$ is more than that of $X$.
 % 
 % \textbf{other way:}
-Consider two policies $X$, $\{\bm{p},\bm{s},N\}$  and $Y$, $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, which are feasible with respect to energy constraint \eqref{pb1_constraint_bits}, have non-decreasing powers, transmit same number of bits in total and use same amount of energy by the time they finish. If $Y$ is same as $X$ from time $s_2$ to $s_{N}$, but $\widetilde{p}_1$ is less than $p_1$ and $\widetilde{p}_N$ is more than $p_N$, then transmission time for $Y$ is more than that of $X$.
+Consider two policies $X$, $\{\bm{p},\bm{s},N\}$  and $Y$, $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, which are feasible with respect to energy constraint \eqref{pb1_constraint_energy}, have non-decreasing powers, transmit same number of bits in total and use same amount of energy by the time they finish. If $Y$ is same as $X$ from time $s_2$ to $s_{N}$, but $\widetilde{p}_1$ is less than $p_1$ and $\widetilde{p}_N$ is more than $p_N$, then transmission time for $Y$ is more than that of $X$.
 
 \label{lemma_increase_time}
 \end{lemma}
 \begin{proof}
-Restating our objective mathematically, if $\widetilde{p}_1=p_1-\alpha,\widetilde{p}_2=p_2,..,\widetilde{p}_{N-1}=p_{N-1},\widetilde{p}_N=p_N+\beta $ and $\widetilde{s}_1=s_1-\gamma,\widetilde{s}_2=s_2,..,\widetilde{s}_{N-1}=s_{N-1},\widetilde{s}_N=s_N+\delta $, where $\gamma=\dfrac{\alpha}{p_1-\alpha}(s_2-s_1)$, $\delta =\dfrac{\beta}{p_N+\beta}(s_{N+1}-s_N)$ and $\alpha ,\beta$ are positive constants, then we need to show that
-$
-(\widetilde{s}_{N+1}-\widetilde{s}_1)>(s_{N+1}-s_1)$.
+Restating our objective mathematically, if $\widetilde{p}_1=p_1-\alpha,\widetilde{p}_2=p_2,..,\widetilde{p}_{N-1}=p_{N-1},\widetilde{p}_N=p_N+\beta $ and $\widetilde{s}_1=s_1-\gamma,\widetilde{s}_2=s_2,..,\widetilde{s}_{N-1}=s_{N-1},\widetilde{s}_N=s_N+\delta $, where $\alpha ,\beta,\gamma,\delta$ are positive constants, then we need to show that $(\widetilde{s}_{N+1}-\widetilde{s}_1)>(s_{N+1}-s_1)$. The two policies $X$  and $Y$ are shown in Fig. \ref{lemma4}.
 \\
-The two policies $X$  and $Y$ are shown in Fig. \ref{lemma4}. As $X$ and $Y$ transmit equal number of bits between time $s_2$ and $s_N$, we can equate the number of bits transmitted by $X$ before $s_1$ and after $s_{N}$ (LHS of \eqref{Lemma4_eq1}) with that of $Y$ (RHS of \eqref{Lemma4_eq1}).
+$X$ and $Y$ having used same amount of energy, we can say that $\ETx(\widetilde{s}_2)-\ETx(\widetilde{s}_1)=\ETx(s_2)-\ETx(s_1)$ and $\ETx(\widetilde{s}_{N+1})-\ETx(\widetilde{s}_N)=\ETx(s_{N+1})-\ETx(s_N)$. Thus, we can calculate $\gamma=\dfrac{\alpha}{p_1-\alpha}(s_2-s_1)$ and $\delta =\dfrac{\beta}{p_N+\beta}(s_{N+1}-s_N)$. As $X$ and $Y$ transmit equal number of bits between time $s_2$ and $s_N$, we can just equate the number of bits transmitted by $X$ before $s_1$ and after $s_{N}$ (LHS of \eqref{Lemma4_eq1}) with that of $Y$ (RHS of \eqref{Lemma4_eq1}). Note that only one of the four variable $\alpha,\beta,\gamma,\delta$ can be independently chosen.
+\\
 \begin{align}
 &g(p_N)(s_{N+1}-s_N)+g(p_1)(s_2-s_1)\nonumber
 \\
 &=g(\widetilde{p}_N)(\widetilde{s}_{N+1}-\widetilde{s}_N)+g(\widetilde{p}_1)(\widetilde{s}_2-\widetilde{s}_1)\label{Lemma4_eq1},
-\\
+\end{align}
+Therefore,
+\begin{align}
 & (p_N+\beta)p_N\frac{\delta}{\beta}\left(\frac{g(p_N)}{p_N}-\frac{g(p_N+\beta)}{p_N+\beta}\right)\nonumber
 \\
 &=(p_1-\alpha)p_1\frac{\gamma}{\alpha}\left(\frac{g(p_1-\alpha)}{p_1-\alpha}-\frac{g(p_1)}{p_1}\right).\label{bits_equal}
 \end{align}
-As $g(p)/p$ is a continuous differentiable function, the mean value theorem implies that $\exists$ $p_N':p_N<p_N'<p_{N}+\beta$ and $p_1':p_1-\alpha<p_1'<p_{1}$ such that
+As $g(p)/p$ is a continuous \& differentiable function, the mean value theorem implies that $\exists$ $p_N':p_N<p_N'<p_{N}+\beta$ and $p_1':p_1-\alpha<p_1'<p_{1}$ such that
 \begin{align}
 &\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_N'}=\frac{1}{\beta}\left(\frac{g(p_N+\beta)}{p_N+\beta}-\frac{g(p_N)}{p_N}\right)\text{ and }\label{diff_1}
 \\
@@ -123,16 +124,16 @@ Substituting (\ref{diff_1}) and (\ref{diff_2}) in (\ref{bits_equal}) we get,
 &\delta(p_N+\beta)p_N\frac{d}{dp} \frac{g(p)}{p}  \bigg{\vert}_{p=p_N'}
 =\gamma(p_1-\alpha)p_1\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_1'}.\label{bits_equal1}
 \end{align}
-$\dfrac{d}{dp} \dfrac{g(p)}{p}$ being an increasing function of $p$ (from \eqref{property_decreasing}), with $p_1'<p_1\le p_N<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence, transmission time in the policy $Y$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $X$ i.e. $(s_{N+1}-s_1)$.
+Since $\dfrac{d}{dp} \dfrac{g(p)}{p}$ is an increasing function of $p$ (from \eqref{property_decreasing}), with $p_1'<p_1\le p_N<p_N'$, (\ref{bits_equal1}) implies $\gamma >\delta$. Hence, transmission time in the policy $Y$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than the transmission time in policy $X$ i.e. $(s_{N+1}-s_1)$.
 \end{proof}
 \begin{figure}
 \centering
   \centerline{\includegraphics[width=8cm]{Lemma4.eps}}
-\caption{Illustration of the proof of Lemma \ref{lemma_increase_time}.}\label{lemma4}
+\caption{Illustration for the proof of Lemma \ref{lemma_increase_time}.}\label{lemma4}
 \end{figure}
 
 \begin{lemma}
-In an optimal policy, if the receiver has energy to stay \textit{`on'} for a maximum of $\TRx_0$ time, then either $s_{N+1} - s_1 = \TRx_0$ or $s_1 = 0$. 
+If the receiver has energy to stay \textit{`on'} for a maximum of $\TRx_0$ time, then in an optimal policy, either $s_{N+1} - s_1 = \TRx_0$ or $s_1 = 0$. 
 \label{transmission_duration}
 \end{lemma}
 \begin{proof}

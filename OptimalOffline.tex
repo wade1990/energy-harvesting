@@ -1,5 +1,5 @@
 % !TEX root = main.tex
-We consider an off-line scenario, which means we know all $t_i$'s and $\ETx_i$'s, non causally. We assume that the receiver harvests energy only once at time $r_0=0$. Hence, the receiver (and so does the transmitter) can be \textit{on} for a maximum period of $\TRx_0$. We also assume that an infinite battery capacity is available both at the transmitter and receiver to store the harvested energy. Our objective is to complete transmission (transmit $B_0$ bits) as early as possible. This is stated as an optimization problem below.
+We consider an off-line scenario, which means we know all $t_i$'s and $\ETx_i$'s, non causally. We assume that the receiver harvests energy only once (say of amount $E$) at time $r_0=0$. Hence, the receiver (and so does the transmitter) can be \textit{on} for a maximum period of $\TRx_0=\frac{E}{P_r}$. We also assume that an infinite battery capacity is available both at the transmitter and the receiver to store the harvested energy. Our objective is to complete transmission (transmit $B_0$ bits) as early as possible. This is stated as an optimization problem below.
 
 %The transmitter is supposed to transmit all $B_0$ bits in as minimum time as possible. The problem is formally stated below.
 \begin{problem}
@@ -11,10 +11,12 @@ We consider an off-line scenario, which means we know all $t_i$'s and $\ETx_i$'s
 \\
 &     										&& U(t)\le \mathcal{E}(t)  		&&& \forall \; t\;\in\;[0,T], \label{pb1_constraint_energy}
 \\
-&    										&& s_{N+1}-s_1\le \mathcal{R}_0.
+&    										&& s_{N+1}-s_1\le \TRx_0.
 \label{pb1_constraint_time}
 \end{align}
 \end{problem}
+Constraint \eqref{pb1_constraint_energy} means that we cannot use more than available energy at any point of time till we finish transmission. \eqref{pb1_constraint_time} implies that the maximum duration of transmission cannot exceed $\TRx_0$. Note that the maximum transmission duration is actually given by $\displaystyle\sum_{i=1:p_i\neq 0}^{N}(s_{i+1}-s_i)$, but as we shall see in Lemma \ref{lemma_nobreaks}, this reduces to $(s_{N+1}-s_1)$.  
+
 Before describing an algorithm to solve Problem 1, we state the following Lemmas, which shall help us construct our algorithm.
 \input{propositions}
 \input{Algo1_sidd}
