@@ -9,9 +9,9 @@
 \\
 \textbf{Initialize:}
 \\ 
-$u=\min u_i$ s.t. $\TRx(u_i)g\left( \dfrac{\ETx(u_i)}{\TRx(u_i)} \right) \ge B_0$. $O_f=\infty$.
+$u=\min u_i$ s.t. $\TRx(u_i)g\left( \dfrac{\ETx(u_i)}{\TRx(u_i)} \right) \ge B_0$. $O_f=\infty$.\\ $u_1=min(r_1,t_1),u_2=min(..)$
 \\
-For all $i$, define $O_i=\min$ $t$ s.t. receiver can be \textit{on} from $t$ to $(t+\TRx(r_i))$, i.e. $K(x) \le \TRx(x)$,  $t \le x\le (t+\TRx(r_i))$. 
+For all $i$, define $O_i=\min$ $t$ s.t. receiver can be \textit{on} from $t$ to $(t+\TRx(r_i))$, i.e. $x-t \le \TRx(x)$,  $t \le x\le (t+\TRx(r_i))$.
 \\
 \\
 \textbf{if} $u=r_j$ for some $j$  \textbf{then}
@@ -30,7 +30,7 @@ For all $i$, define $O_i=\min$ $t$ s.t. receiver can be \textit{on} from $t$ to 
 \\
 \textbf{do}
 \\
-\hspace{4mm}Apply $Algo1(O,T)\rightarrow T_{opt}$
+\hspace{4mm}Apply $Algo1(O_l,T)\rightarrow T_{opt}$
 \\
 \hspace{4mm}$r_k=\max_i r_i $ s.t. $r_i<T_{opt}$ 
 \\
@@ -40,7 +40,7 @@ For all $i$, define $O_i=\min$ $t$ s.t. receiver can be \textit{on} from $t$ to 
 \\
 \hspace{4mm}\textbf{end if}
 \\
-\hspace{4mm}$l=l+1$
+\hspace{4mm}\textbf{if} hit origin \textbf{then} $l=l-1$ \textbf{else} $l=l+1$
 \\
 \textbf{while} $O_l \le O_{f}$
 \\
