@@ -1,4 +1,33 @@
 % !TEX root = OptimalOffline.tex
+
+We now proceed to relax the condition that the receiver harvests energy only once. The receiever harvests energy equivalent to the amount required to stay on for time $\TRx_i$ at time instances $r_i$. 
+We assume that the receiver has an infinite battery capacity. 
+Again, since we are considering the offline case, we assume we have knowledge of the receiver energy arrivals non causally. This can be stated as an optimization problem as follows.\\
+\begin{problem}
+\begin{align}
+&\min_{\{\textbf{p},\textbf{s},N\}}			&& T
+\\
+&\text{subject to} 				&& B(T)=B_0, 
+\label{pb2_constraint_bits}
+\\
+&     										&& U(t)\le \mathcal{E}(t)  		\;\;\;\;\;\; \forall \; t\;\in\;[0,T], \label{pb2_constraint_energy}
+\\
+&    										&& \displaystyle \sum_{i=1}^k \mathcal{S}_i(s_{i+1} - s_i) + \mathcal{S}_i(t - s_{k+1}) \leq \TRx(t) \\ &&&\forall \; t \; in \; [0,T] \; \text{where} \; k = \max\{i| s_{i+1} \leq t\}.
+\label{pb2_constraint_time}
+\end{align}
+\end{problem}
+$\mathcal{S}_i:\mathbb{Z}\rightarrow\{0,1\}$ is a function that takes value $1$ if $p_i>0$ and $0$ otherwise.\\
+Our approach to solve this problem will be to use the previously derived algorithm and try to apply it iteratively. Let $O_i$ be the first time instance such that if the receiver is started for the first time at $O_i$ and kept on continuously, then it will be able to stay on for $\displaystyle \sum_{j=0}^i\TRx_j$ time. Since the reciever uses a constant amount of power, $O_i = r_i - \displaystyle \sum_{j=0}^{i-1}\TRx_j$. This can be visualised in figure \ref{figure_origins}. Now, we prove the following lemma.\\
+\begin{lemma}
+If a policy $\{\bm{p},\bm{s},N\}$ for Problem 2 is optimal, either $s_1 = O_i$ for some $i$, and/or the receiver remains on for exactly $\TRx(r_i)$ time for some $i$.
+\label{lemma_startpoints}
+\end{lemma}
+
+\begin{lemma}
+A solution $\{\bm{p},\bm{s},N\}$, arrived at by passing $O_i$ and $\TRx(r_t)$ into Algorithm 1 can only be optimal if $O_i\leq s_1\leqO_{i+1}$ 
+\label{lemma_startpoints}
+\end{lemma}
+
 \begin{table}
 \begin{minipage}[b]{8cm}
 \caption {Offline algorithm for energy arrival in receiver after time t=0}
