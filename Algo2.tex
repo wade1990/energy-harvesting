@@ -17,14 +17,21 @@ Again, since we are considering the offline case, we assume we have knowledge of
 \end{align}
 \end{problem}
 $\mathcal{S}_i:\mathbb{Z}\rightarrow\{0,1\}$ is a function that takes value $1$ if $p_i>0$ and $0$ otherwise.\\
-Our approach to solve this problem will be to use the previously derived algorithm and try to apply it iteratively. Let $O_i$ be the first time instance such that if the receiver is started for the first time at $O_i$ and kept on continuously, then it will be able to stay on for $\displaystyle \sum_{j=0}^i\TRx_j$ time. Since the reciever uses a constant amount of power, $O_i = r_i - \displaystyle \sum_{j=0}^{i-1}\TRx_j$. This can be visualised in figure \ref{figure_origins}. Now, we prove the following lemma.\\
+Our approach to solve this problem will be to use the previously derived algorithm and try to apply it iteratively. Let $O_i$ be the first time instance such that if the receiver is started for the first time at $O_i$ and kept on continuously, then it will be able to stay on for $\TRx(r_i)$ time. It can be easily shown, (and seen in figure \ref{figure_origin_points}) that the receiver will exhaust all its energy at at least one energy arrival epoch $r_m$ when it transmits from $O_i$ for $\TRx(r_i)$ time. For example, in the figure, when the receiver transmits starting from $O_1$, it exhausts all it's energy at $r_1^-$. Since the reciever uses a constant amount of power, $O_i = r_m - \TRx(r_{m-1})$. This can be visualised in figure \ref{figure_origin_points}. Now, we prove the following lemmas.\\
+
+\begin{figure}
+\centering
+  \centerline{\includegraphics[width=8cm]{origin_points.eps}}
+\caption{Figure showing $O_i$'s which represent the first time instances at which the reciever can be kept on continuously for $\TRx(r_i)$ time. Note that $O_2$ and $O_3$ coincide in this example.}\label{figure_origin_points}
+\end{figure}
+
 \begin{lemma}
 If a policy $\{\bm{p},\bm{s},N\}$ for Problem 2 is optimal, either $s_1 = O_i$ for some $i$, and/or the receiver remains on for exactly $\TRx(r_i)$ time for some $i$.
 \label{lemma_startpoints}
 \end{lemma}
 
 \begin{lemma}
-A solution $\{\bm{p},\bm{s},N\}$, arrived at by passing $O_i$ and $\TRx(r_t)$ into Algorithm 1 can only be optimal if $O_i\leq s_1\leqO_{i+1}$ 
+A solution $\{\bm{p},\bm{s},N\}$, arrived at by passing $O_i$ and $\TRx(r_t)$ into Algorithm 1 can only be optimal if $O_i \leq s_1 \leq O_{i+1}$ 
 \label{lemma_startpoints}
 \end{lemma}
 
