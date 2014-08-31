@@ -1,5 +1,5 @@
 % !TEX root = main.tex
-In an online scenario, we only know the present and past energy arrivals at transmitter or `time' additions at receiver. We have no knowledge of the furure energy arrivals. We use competitive ratio analysis to compare the performance of an online algorithm vs. the optimal offline algorithm.  
+In an online scenario, we only know the present and past energy arrivals at transmitter or `time' additions at receiver. We have no knowledge of the future energy arrivals. We use competitive ratio analysis to compare the performance of an online algorithm vs. the optimal offline algorithm.  
  
 \textit{Notation:} The starting time of transmission is denoted by $T_{\mbox{\scriptsize{start}}}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any Transmitter energy epoch is represented by $B_{\mbox{\scriptsize{rem}}}$ and $E_{\mbox{\scriptsize{rem}}}$ receptively.
 
@@ -8,8 +8,14 @@ The online algorithm that we propose is presented in Algorithm \ref{algo_online}
 T_{\mbox{\scriptsize{start}}}=\min\ t \ s.t.\  \TRx(t)g\Bigg{(} \dfrac{\ETx(t)}{\TRx(t)}\Bigg{)}\ge B_0.\label{online_T_start}
 \end{equation}
 
-To begin with, transmitter equally divides $\ETx(T_{\mbox{\scriptsize{start}}})$ energy among all $B_0$ bits and we know that this transmission is going to finish in less than $\TRx(T_{\mbox{\scriptsize{start}}})$ time. If and when new energy arrives at transmitter, the energy left at that instant, $E_{\mbox{\scriptsize{rem}}}$, is equally divided among the bits left to transmit i.e. $B_{\mbox{\scriptsize{rem}}}$.
+To begin with, the transmitter equally divides $\ETx(T_{\mbox{\scriptsize{start}}})$ energy among all $B_0$ bits i.e. the first transmission power $p_1$ is set such that,
+\begin{align}
+&\frac{\ETx(T_{\mbox{\scriptsize{start}}})}{p_1}g(p_1)=B_0.
+\end{align}
 
+By definition of $T_{\mbox{\scriptsize{start}}}$ in \eqref{online_T_start}, we know that transmission with power $p_1$ is going to finish in less than or equal to  $\TRx(T_{\mbox{\scriptsize{start}}})$ time.
+
+If and when energy arrival occurs at the transmitter, the transmission power is changed. The total unused energy left at such an instant, $E_{\mbox{\scriptsize{rem}}}$, is equally divided among the bits left to transmit i.e. $B_{\mbox{\scriptsize{rem}}}$. Note that we do not change our transmission power when there is a `time' arrival at the receiver after $T_{\mbox{\scriptsize{start}}}$, because there is sufficient receiver time available to finish transmission.
 \begin{algorithm}
 \caption {On-line Algorithm for energy harvesting transmitter and receiver.}
 \footnotesize
@@ -40,7 +46,7 @@ From the definition of the algorithm, the transmit power only changes when there
 
 So, if there is no new energy arrival after $T_{\mbox{\scriptsize{start}}}$, the transmit power is same ($=p_1$) i.e. non decreasing. 
 
-Suppose there are energy arrivals after $T_{\mbox{\scriptsize{start}}}$ and for any energy arrival(say $E_{\mbox{\scriptsize{new}}}$) the power changes from $p_i$ to $p_{i+1}$. Let the energy remaining at start of transmission with power $p_i$ be $E_{\mbox{\scriptsize{rem}}}$ and bits remaining be $B_{\mbox{\scriptsize{rem}}}$. The transmission continues for time $l_i$ with power $p_i$. Now, we need to show that $p_i<p_{i+1}$. From the algorithm we get the following equations.  
+Suppose there are energy arrivals after $T_{\mbox{\scriptsize{start}}}$ and for any energy arrival (say $E_{\mbox{\scriptsize{new}}}$) the power changes from $p_i$ to $p_{i+1}$. Let the energy remaining at start of transmission with power $p_i$ be $E_{\mbox{\scriptsize{rem}}}$ and bits remaining be $B_{\mbox{\scriptsize{rem}}}$. The transmission continues for time $l_i$ with power $p_i$. Now, we need to show that $p_i<p_{i+1}$. From the algorithm we get the following equations.  
 
 \begin{align}
 &\frac{g(p_i)}{p_i}=\frac{B_{\mbox{\scriptsize{rem}}}}{E_{\mbox{\scriptsize{rem}}}} \label{power_increasing_eq1}
@@ -53,31 +59,33 @@ Substituting $g(p_i)$ from (\ref{power_increasing_eq1}) into RHS of (\ref{power_
 The competitive ratio of the online algorithm presented in Algorithm \ref{algo_online} is less than 2.
 \end{theorem}
 \begin{proof}
-This is equivalent to saying that the time taken by the online algorithm can at max be twice the time taken by optimal offline algorithm in the worst case. Let the time taken by the offline version be $T_{\mbox{\scriptsize{off}}}$ and the online version be $E_{\mbox{\scriptsize{online}}}$. 
+This is equivalent to saying that the time taken by the online algorithm can at max be twice the time taken by optimal offline algorithm in the worst case. Let the time taken by the offline policy $\{\bm{p},\bm{s},N\}$  be $T_{\mbox{\scriptsize{off}}}$ and the online version be $E_{\mbox{\scriptsize{online}}}$. Note that $s_{N+1}=T_{\mbox{\scriptsize{off}}}$.
 
 We now show that 
 \begin{align}
 T_{\mbox{\scriptsize{off}}} > T_{\mbox{\scriptsize{start}}}
 \label{online_time}
 \end{align}
-We will prove this by contradiction. Suppose $T_{\mbox{\scriptsize{off}}}\le T_{\mbox{\scriptsize{start}}}$. From \eqref{online_T_start}, either $T_{\mbox{\scriptsize{start}}}=t_i$ for some $i$ and/or $T_{\mbox{\scriptsize{start}}}=r_j$ for some $j$. Let $\{\textbf{p},\textbf{s},N\}$ ($T_{\mbox{\scriptsize{off}}}=s_{N+1}$) be the offline policy.
+We will prove this by contradiction. Suppose $T_{\mbox{\scriptsize{off}}}\le T_{\mbox{\scriptsize{start}}}$. From \eqref{online_T_start}, either $T_{\mbox{\scriptsize{start}}}=t_i$ for some $i$ and/or $T_{\mbox{\scriptsize{start}}}=r_j$ for some $j$.
 
-If $T_{\mbox{\scriptsize{start}}}=t_i$, then as $T_{\mbox{\scriptsize{off}}}\le T_{\mbox{\scriptsize{start}}}$, the maximum energy that can be utilized by the offline algorithm is $\ETx(T_{\mbox{\scriptsize{start}}}^-)=\ETx(T_{\mbox{\scriptsize{start}}})-\ETx_i$. Note that the offline algorithm cannot use energy arrival $\ETx_i$, as using any finite amount of energy for 0 time cannot deliver any bits. If $T_{\mbox{\scriptsize{start}}}=r_j$, then the maximum time for which the receiver can be \textit{on} is $(s_{N+1}-s_1) \le\TRx(T_{\mbox{\scriptsize{start}}}^-)=\TRx(T_{\mbox{\scriptsize{start}}})-\TRx_j$, as the offline policy has to finish at or before $T_{\mbox{\scriptsize{start}}}$. 
+If $T_{\mbox{\scriptsize{start}}}=t_i$, then as $T_{\mbox{\scriptsize{off}}}\le T_{\mbox{\scriptsize{start}}}$, the maximum energy that can be utilized by the offline algorithm is $\ETx(T_{\mbox{\scriptsize{start}}}^-)=\ETx(T_{\mbox{\scriptsize{start}}})-\ETx_i$. Note that the offline algorithm cannot use energy arrival $\ETx_i$, as using any finite amount of energy for 0 time cannot deliver any bits. 
+
+If $T_{\mbox{\scriptsize{start}}}=r_j$, then the maximum time for which the receiver can be \textit{on} in the offline algorithm is $\TRx(T_{\mbox{\scriptsize{start}}}^-)=\TRx(T_{\mbox{\scriptsize{start}}})-\TRx_j$, as the offline policy has to finish at or before $T_{\mbox{\scriptsize{start}}}$. Note that, in the optimal offline policy, time for which the receiver is \textit{on} is given by $\displaystyle \sum_{i:p_i\neq 0}(s_{i+1}-s_i)$. 
 %If $T_{\mbox{\scriptsize{start}}}\neq t_i$ or $T_{\mbox{\scriptsize{start}}}\neq r_j$ then, $\ETx(T_{\mbox{\scriptsize{start}}}^-)=\ETx(T_{\mbox{\scriptsize{start}}})$ or $\TRx(T_{\mbox{\scriptsize{start}}}^-)=\TRx(T_{\mbox{\scriptsize{start}}})$.
-So the number of bits transmitted by the offline policy $\{\textbf{p},\textbf{s},N\}$ is given by,
+
+Now, the number of bits transmitted by the offline policy $\{\bm{p},\bm{s},N\}$ is given by,
 \begin{align}
-&\sum_{i=1}^{i=N} g(p_i)(s_{i+1}-s_{i}),
+&\sum_{{\substack{i=1\\p_i\neq 0}}}^{i=N} g(p_i)(s_{i+1}-s_{i}),
 \\
-&\stackrel{(a)}{\le} g\left(\sum_{i=1}^{i=N}p_i\left(\frac{(s_{i+1}-s_{i})}{\sum_{j=1}^{j=N}(s_{i+1}-s_{i})}\right)\right) \sum_{j=1}^{j=N} (s_{i+1}-s_{i}),\label{online_eq_3}
+&\nonumber \stackrel{(a)}{\le}g\left(\frac{\displaystyle\sum_{i:p_i\neq 0}p_i(s_{i+1}-s_{i})}{\displaystyle\sum_{j:p_j\neq 0}(s_{j+1}-s_{j})}\right)\sum_{j:p_j\neq 0} (s_{j+1}-s_{j}),
 \\
-&=g\left(\frac{\displaystyle\sum_{i=1}^{i=N}p_i(s_{i+1}-s_{i})}{(s_{N+1}-s_{1})}\right)(s_{N+1}-s_{1}),\label{online_eq_4} 
-\\
-&\stackrel{(b)}{\le} g\left(\frac{\displaystyle\sum_{i=1}^{i=N}p_i(s_{i+1}-s_{i})}{\TRx(T_{\mbox{\scriptsize{start}}}^-)}\right)\TRx(T_{\mbox{\scriptsize{start}}}^-), \label{online_eq_1}
+&\nonumber\stackrel{(b)}{\le} g\left( \frac{\displaystyle\sum_{i:p_i\neq 0} p_i(s_{i+1}-s_{i})}{\TRx(T_{\mbox{\scriptsize{start}}}^-)} \right)\TRx(T_{\mbox{\scriptsize{start}}}^-), 
 \\
 &\le g\left(\frac{\ETx(T_{\mbox{\scriptsize{start}}}^-)}{\TRx(T_{\mbox{\scriptsize{start}}}^-)}\right)\TRx(T_{\mbox{\scriptsize{start}}}^-)\stackrel{(c)}{<}B_0.\label{online_eq_2}
 \end{align}
+%%%&\nonumber\stackrel{(a)}{\le} g\left(\sum_{\substack{i\\p_i\neq 0}}p_i\left(\frac{(s_{i+1}-s_{i})}{\displaystyle\sum_{j:p_j\neq 0}(s_{j+1}-s_{j})}\right)\right) \sum_{\substack{j\\p_j\neq 0}} (s_{j+1}-s_{j}),
 
-where $(a)$ follows from concavity of $g(p)$, $(b)$ follows form \eqref{property_decreasing}, $(c)$ follows form \eqref{online_T_start}. Since the number of bits that is transmitted by the off-line policy is less than $B_0$, it amounts to a contradiction. Therefore, $T_{\mbox{\scriptsize{start}}}<T_{\mbox{\scriptsize{off}}}$.
+where $(a)$ follows from application of Jensen's inequality due to concavity of $g(p)$; $(b)$ follows form the fact that $\displaystyle\sum_{j:p_j\neq 0}(s_{j+1}-s_{j})\le\TRx(s_{N+1})\le \TRx(T_{\mbox{\scriptsize{start}}}^-)$ and $g(p)/p$ is monotonically decreasing; $(c)$ follows form \eqref{online_T_start}. \eqref{online_eq_2} implies that the number of bits transmitted by the offline policy is less than $B_0$. Hence, it amounts to a contradiction and therefore, $T_{\mbox{\scriptsize{start}}}<T_{\mbox{\scriptsize{off}}}$.
 
 %
 %If $T_{\mbox{\scriptsize{start}}}=r_j$, then then the maximum time for which the receiver can be \textit{on} is $\TRx(T_{\mbox{\scriptsize{start}}}^-)=\TRx(T_{\mbox{\scriptsize{start}}})-\TRx_j$, as the offline policy has to finish at or before $T_{\mbox{\scriptsize{start}}}$.
@@ -96,14 +104,15 @@ Next we estimate the maximum time taken to complete transmission after $T_{\mbox
 \begin{align}
 &\sum_{i=1}^{i=k}l_ig(p_i)=B_0\implies\sum_{i=1}^{i=k}l_i\le \frac{B_0}{g(p_1)}.\label{bits}
 \end{align}
-Now, from the definition of $p_1$, $\dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{p_1}g(p_1)=B_0 \le \TRx(T_{\mbox{\scriptsize{start}}}) g\left( \dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{\TRx(T_{\mbox{\scriptsize{start}}})} \right)$. Hence by \eqref{property_decreasing}, $\dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{\TRx(T_{\mbox{\scriptsize{start}}})}\le p_1$.\vspace{2pt}
+
+From the definition of $p_1$, $\dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{p_1}g(p_1)=B_0 \le \TRx(T_{\mbox{\scriptsize{start}}}) g\left( \dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{\TRx(T_{\mbox{\scriptsize{start}}})} \right)$. Hence by \eqref{property_decreasing}, $\dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{\TRx(T_{\mbox{\scriptsize{start}}})}\le p_1$.\vspace{2pt}
 So, the RHS of (\ref{bits}) can be reduced to, 
 \begin{align}
 &\frac{B_0}{g(p_1)} = \frac{\ETx(T_{\mbox{\scriptsize{start}}})}{p_1} \le \TRx(T_{\mbox{\scriptsize{start}}})\le T_{\mbox{\scriptsize{start}}}.
 \end{align}
 where the last inequality followed from the definition of $\TRx(T_{\mbox{\scriptsize{start}}})$. So we can calculate the competitive ratio for Algorithm \ref{algo_online} as,
 \begin{align*}
-&r=\displaystyle\max_{\ETx(t),\TRx(t)\hspace{0.5mm} \forall t}\dfrac{T_{\mbox{\scriptsize{online}}}}{T_{\mbox{\scriptsize{off}}}} = \dfrac{T_{\mbox{\scriptsize{start}}}+\displaystyle\sum_{i=1}^{i=k}l_i}{T_{\mbox{\scriptsize{off}}}} \le \dfrac{2 T_{\mbox{\scriptsize{start}}}}{T_{\mbox{\scriptsize{off}}}} < 2
+&r=\displaystyle\max_{\ETx(t),\TRx(t)\hspace{0.5mm} \forall t}\dfrac{T_{\mbox{\scriptsize{online}}}}{T_{\mbox{\scriptsize{off}}}} = \dfrac{T_{\mbox{\scriptsize{start}}}+\displaystyle\sum_{i=1}^{i=k}l_i}{T_{\mbox{\scriptsize{off}}}} \le \dfrac{2 T_{\mbox{\scriptsize{start}}}}{T_{\mbox{\scriptsize{off}}}} < 2.
 \end{align*}
 %where the last inequality followed from \eqref{online_time}.      
 \end{proof}
