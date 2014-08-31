@@ -32,11 +32,16 @@ To begin with, transmitter equally divides $\ETx(T_{\mbox{\scriptsize{start}}})$
 \end{algorithm}
 
 \begin{lemma}
-The transmission power in the online algorithm is non-decreasing with time after $T_{\mbox{\scriptsize{start}}}$.
+The transmission power in the on-line algorithm is non-decreasing with time after $T_{start}$.
 \label{online_power}
 \end{lemma}
 \begin{proof}
-From the definition of the algorithm the transmission power only changes when there is a new energy arrival after $T_{\mbox{\scriptsize{start}}}$. So, if there is no energy arrival, the transmit power is same i.e. non decreasing. Suppose there are energy arrivals after $T_{\mbox{\scriptsize{start}}}$ and for any energy arrival(say $E_{\mbox{\scriptsize{new}}}$) the power changes from $p_i$ to $p_{i+1}$. Let the energy remaining at start of transmission with power $p_i$ be $E_{\mbox{\scriptsize{rem}}}$ and bits remaining be $B_{\mbox{\scriptsize{rem}}}$. The transmission continues for time $l_i$ with power $p_i$. Now, we need to show that $p_i<p_{i+1}$. From the algorithm we get the following equations. 
+From the definition of the algorithm, the transmit power only changes when there is a new energy arrival at the transmitter, after $T_{\mbox{\scriptsize{start}}}$. 
+
+So, if there is no new energy arrival after $T_{\mbox{\scriptsize{start}}}$, the transmit power is same ($=p_1$) i.e. non decreasing. 
+
+Suppose there are energy arrivals after $T_{\mbox{\scriptsize{start}}}$ and for any energy arrival(say $E_{\mbox{\scriptsize{new}}}$) the power changes from $p_i$ to $p_{i+1}$. Let the energy remaining at start of transmission with power $p_i$ be $E_{\mbox{\scriptsize{rem}}}$ and bits remaining be $B_{\mbox{\scriptsize{rem}}}$. The transmission continues for time $l_i$ with power $p_i$. Now, we need to show that $p_i<p_{i+1}$. From the algorithm we get the following equations.  
+
 \begin{align}
 &\frac{g(p_i)}{p_i}=\frac{B_{\mbox{\scriptsize{rem}}}}{E_{\mbox{\scriptsize{rem}}}} \label{power_increasing_eq1}
 \\
@@ -71,7 +76,9 @@ So the number of bits transmitted by the offline policy $\{\textbf{p},\textbf{s}
 \\
 &\le g\left(\frac{\ETx(T_{\mbox{\scriptsize{start}}}^-)}{\TRx(T_{\mbox{\scriptsize{start}}}^-)}\right)\TRx(T_{\mbox{\scriptsize{start}}}^-)\stackrel{(c)}{<}B_0.\label{online_eq_2}
 \end{align}
-where $(a)$ follows from concavity of $g(p)$, $(b)$ follows form \eqref{property_decreasing}, $(c)$ follows form \eqref{online_T_start}. Since the number of bits that is transmitted by the offline policy is less than $B_0$, it amounts to a contradiction.
+
+where $(a)$ follows from concavity of $g(p)$, $(b)$ follows form \eqref{property_decreasing}, $(c)$ follows form \eqref{online_T_start}. Since the number of bits that is transmitted by the off-line policy is less than $B_0$, it amounts to a contradiction. Therefore, $T_{\mbox{\scriptsize{start}}}<T_{\mbox{\scriptsize{off}}}$.
+
 %
 %If $T_{\mbox{\scriptsize{start}}}=r_j$, then then the maximum time for which the receiver can be \textit{on} is $\TRx(T_{\mbox{\scriptsize{start}}}^-)=\TRx(T_{\mbox{\scriptsize{start}}})-\TRx_j$, as the offline policy has to finish at or before $T_{\mbox{\scriptsize{start}}}$.
 %Now, from \eqref{online_eq_4}, the maximum number of bits being transmitted can be bounded by  
