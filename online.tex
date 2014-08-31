@@ -1,7 +1,7 @@
 % !TEX root = main.tex
-In an online scenario, we only know the present and past energy arrivals at transmitter or `time' additions at receiver. We have no knowledge of the future energy arrivals. We use competitive ratio analysis to compare the performance of an online algorithm vs. the optimal offline algorithm.  
+In an online scenario, transmitter and receiver are assumed to have only causal information about energy arrivals i.e. they have no knowledge of future energy harvests. To model a general energy harvesting system, they are further assumed to not have any information about the distribution of future energy arrivals. We propose an algorithm to schedule the transmission of bits in this model. Motivated by \cite{VazeCompetitive}, we use competitive ratio analysis to compare the performance of online algorithm vs. the optimal offline algorithm.  
  
-\textit{Notation:} The starting time of transmission is denoted by $T_{\mbox{\scriptsize{start}}}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any Transmitter energy epoch is represented by $B_{\mbox{\scriptsize{rem}}}$ and $E_{\mbox{\scriptsize{rem}}}$ receptively.
+\textit{Notation:} The starting time of transmission is denoted by $T_{\mbox{\scriptsize{start}}}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any transmitter energy epoch is represented by $B_{\mbox{\scriptsize{rem}}}$ and $E_{\mbox{\scriptsize{rem}}}$ receptively.
 
 The online algorithm that we propose is presented in Algorithm \ref{algo_online}. The Algorithm waits till time $T_{\mbox{\scriptsize{start}}}$ which marks the first energy arrival at transmitter or `time' addition at receiver such that using the energy $\ETx(T_{\mbox{\scriptsize{start}}})$ and time $\TRx(T_{\mbox{\scriptsize{start}}})$, $B_0$ or more bits can be transmitted.
 \begin{equation}
