@@ -1,5 +1,8 @@
 % !TEX root = main.tex
-In an online scenario, transmitter and receiver are assumed to have only causal information about energy arrivals i.e. they have no knowledge of future energy harvests. To model a general energy harvesting system, they are further assumed to not have any information about the distribution of future energy arrivals. We propose an algorithm to schedule the transmission of bits in this model. Motivated by \cite{VazeCompetitive}, we use competitive ratio analysis to compare the performance of online algorithm vs. the optimal offline algorithm.  
+In an online scenario, transmitter and receiver are assumed to have only causal information about energy arrivals i.e. they have no knowledge of future energy harvests. To model a general energy harvesting system, they are further assumed to not have any information about the distribution of future energy arrivals. We propose an algorithm to schedule the transmission of bits in this model. Motivated by \cite{VazeCompetitive}, we use competitive ratio analysis to compare the performance of online algorithm vs. the optimal offline algorithm. In this context, we say that our algorithm is $r$-competitive if for all possible energy arrivals at the transmitter $\ETx(t)$ and all possible `time' arrival $\TRx(t)$ at the receiver, the ratio of time taken by the online algorithm (say $T_{\mbox{\scriptsize{online}}}$) to the optimal offline one (say $T_{\mbox{\scriptsize{off}}}$) is bounded by $r$.
+\begin{align}
+&\displaystyle\max_{\ETx(t),\TRx(t)\hspace{0.5mm} \forall t}\dfrac{T_{\mbox{\scriptsize{online}}}}{T_{\mbox{\scriptsize{off}}}}\le r
+\end{align}
  
 \textit{Notation:} The starting time of transmission is denoted by $T_{\mbox{\scriptsize{start}}}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any transmitter energy epoch is represented by $B_{\mbox{\scriptsize{rem}}}$ and $E_{\mbox{\scriptsize{rem}}}$ receptively.
 
@@ -42,7 +45,7 @@ The transmission power in the on-line algorithm is non-decreasing with time afte
 \label{online_power}
 \end{lemma}
 \begin{proof}
-From the definition of the algorithm, the transmit power only changes when there is a new energy arrival at the transmitter, after $T_{\mbox{\scriptsize{start}}}$. 
+From the definition of the algorithm, the transmission power only changes when there is a new energy arrival at the transmitter, after $T_{\mbox{\scriptsize{start}}}$. 
 
 So, if there is no new energy arrival after $T_{\mbox{\scriptsize{start}}}$, the transmit power is same ($=p_1$) i.e. non decreasing. 
 
@@ -53,7 +56,7 @@ Suppose there are energy arrivals after $T_{\mbox{\scriptsize{start}}}$ and for 
 \\
 &\frac{g(p_{i+1})}{p_{i+1}}=\frac{B_{\mbox{\scriptsize{rem}}}-g(p_i) l_i}{E_{\mbox{\scriptsize{rem}}}+E_{\mbox{\scriptsize{new}}}-p_i l_i}\label{power_increasing_eq2}
 \end{align}
-Substituting $g(p_i)$ from (\ref{power_increasing_eq1}) into RHS of (\ref{power_increasing_eq2}) we can see that $\frac{g(p_i)}{p_i}>\frac{g(p_{i+1})}{p_{i+1}}$. Hence by property $P4$ we know that $p_i<p_{i+1}$.
+Substituting $g(p_i)$ from (\ref{power_increasing_eq1}) into RHS of (\ref{power_increasing_eq2}), we can see that $\frac{g(p_i)}{p_i}>\frac{g(p_{i+1})}{p_{i+1}}$. Hence, by monotonicity of $g(p)/p$ from \eqref{property_decreasing}, we know that $p_i<p_{i+1}$.
 \end{proof}
 \begin{theorem}
 The competitive ratio of the online algorithm presented in Algorithm \ref{algo_online} is less than 2.
@@ -63,7 +66,7 @@ This is equivalent to saying that the time taken by the online algorithm can at 
 
 We now show that 
 \begin{align}
-T_{\mbox{\scriptsize{off}}} > T_{\mbox{\scriptsize{start}}}
+T_{\mbox{\scriptsize{off}}} > T_{\mbox{\scriptsize{start}}}.
 \label{online_time}
 \end{align}
 We will prove this by contradiction. Suppose $T_{\mbox{\scriptsize{off}}}\le T_{\mbox{\scriptsize{start}}}$. From \eqref{online_T_start}, either $T_{\mbox{\scriptsize{start}}}=t_i$ for some $i$ and/or $T_{\mbox{\scriptsize{start}}}=r_j$ for some $j$.
@@ -108,9 +111,9 @@ Next we estimate the maximum time taken to complete transmission after $T_{\mbox
 From the definition of $p_1$, $\dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{p_1}g(p_1)=B_0 \le \TRx(T_{\mbox{\scriptsize{start}}}) g\left( \dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{\TRx(T_{\mbox{\scriptsize{start}}})} \right)$. Hence by \eqref{property_decreasing}, $\dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{\TRx(T_{\mbox{\scriptsize{start}}})}\le p_1$.\vspace{2pt}
 So, the RHS of (\ref{bits}) can be reduced to, 
 \begin{align}
-&\frac{B_0}{g(p_1)} = \frac{\ETx(T_{\mbox{\scriptsize{start}}})}{p_1} \le \TRx(T_{\mbox{\scriptsize{start}}})\le T_{\mbox{\scriptsize{start}}}.
+&\frac{B_0}{g(p_1)} = \frac{\ETx(T_{\mbox{\scriptsize{start}}})}{p_1} \le \TRx(T_{\mbox{\scriptsize{start}}})\le T_{\mbox{\scriptsize{start}}},
 \end{align}
-where the last inequality followed from the definition of $\TRx(T_{\mbox{\scriptsize{start}}})$. So we can calculate the competitive ratio for Algorithm \ref{algo_online} as,
+where the last inequality follows from the definition of $\TRx(T_{\mbox{\scriptsize{start}}})$. So we can calculate the competitive ratio for Algorithm \ref{algo_online} as,
 \begin{align*}
 &r=\displaystyle\max_{\ETx(t),\TRx(t)\hspace{0.5mm} \forall t}\dfrac{T_{\mbox{\scriptsize{online}}}}{T_{\mbox{\scriptsize{off}}}} = \dfrac{T_{\mbox{\scriptsize{start}}}+\displaystyle\sum_{i=1}^{i=k}l_i}{T_{\mbox{\scriptsize{off}}}} \le \dfrac{2 T_{\mbox{\scriptsize{start}}}}{T_{\mbox{\scriptsize{off}}}} < 2.
 \end{align*}
