@@ -14,11 +14,22 @@ T_{\mbox{\scriptsize{start}}}=\min\ t \ s.t.\  \TRx(t)g\Bigg{(} \dfrac{\ETx(t)}{
 To begin with, the transmitter equally divides $\ETx(T_{\mbox{\scriptsize{start}}})$ energy among all $B_0$ bits i.e. the first transmission power $p_1$ is set such that,
 \begin{align}
 &\frac{\ETx(T_{\mbox{\scriptsize{start}}})}{p_1}g(p_1)=B_0.
+\label{eq_online_first_power}
 \end{align}
 
 By definition of $T_{\mbox{\scriptsize{start}}}$ in \eqref{online_T_start}, we know that transmission with power $p_1$ is going to finish in less than or equal to  $\TRx(T_{\mbox{\scriptsize{start}}})$ time.
 
-If and when energy arrival occurs at the transmitter, the transmission power is changed. The total unused energy left at such an instant, $E_{\mbox{\scriptsize{rem}}}$, is equally divided among the bits left to transmit i.e. $B_{\mbox{\scriptsize{rem}}}$. Note that we do not change our transmission power when there is a `time' arrival at the receiver after $T_{\mbox{\scriptsize{start}}}$, because there is sufficient receiver time available to finish transmission.
+If and when energy is harvested at the transmitter, the transmission power is changed. The total unused energy left at such an instant, $E_{\mbox{\scriptsize{rem}}}$, is equally divided among the bits left to transmit i.e. $B_{\mbox{\scriptsize{rem}}}$. Note that we do not change our transmission power when there is a `time' arrival at the receiver after $T_{\mbox{\scriptsize{start}}}$, because there is sufficient receiver time available to finish transmission.
+
+Fig. \ref{figure_online_example} shows output of Algorithm \ref{algo_online} for certain $\ETx(t)$ and $\TRx(t)$. Initially, suppose $B_0$ bits are not possible to be sent with $\ETx_0$ energy  within $\TRx_0$ time i.e. $\TRx(t_0)g\left( \dfrac{\ETx(t_0)}{\TRx(t_0)}\right)<B_0$. Further, $\TRx(r_1)g\left( \dfrac{\ETx(r_1)}{\TRx(r_1)}\right)<B_0$ and $\TRx(t_1)g\left( \dfrac{\ETx(t_1)}{\TRx(t_1)}\right)<B_0$. But, $\TRx(r_2)g\left( \dfrac{\ETx(r_2)}{\TRx(r_2)}\right)>B_0$. So, transmitter starts its transmission at $T_{\mbox{\scriptsize{start}}}=r_2$ with a power $p_1$ such that at rate $g(p_1)$, $B_0$ bits can be sent in $\ETx(r_2)/p_1$ time, as given in \eqref{eq_online_first_power}. At time $t=r_2$, transmitter expects transmission to finish by $r_2+\ETx(r_2)/p_1$ time. But, due to new energy arrival at time $t_2$, it can finish transmission earlier at a higher rate than $p_1$. At $t=t_2$, energy stored at transmitter is $E_{\mbox{\scriptsize{rem}}}=\ETx(r_2)+\ETx_2-(t_2-r_2)p_1$ and bits left to transmit is $B_{\mbox{\scriptsize{rem}}}=B_0-(t_2-r_2)g(p_1)$. Transmission power changes to $p_2$ at time $t_2$ such that $\frac{E_{\mbox{\scriptsize{rem}}}}{p_2}g(p_2)=B_{\mbox{\scriptsize{rem}}}$. Due to no new energy arrival till time $t_2+\frac{E_{\mbox{\scriptsize{rem}}}}{p_2}$, transmission completes at rate $p_2$, sending $B_0$ bits. 
+
+\begin{figure}
+\centering
+  \centerline{\includegraphics[width=8cm]{online.eps}}
+\caption{Example showing execution of online Algorithm \ref{algo_online}.}\label{figure_online_example}
+\end{figure}
+
+
 \begin{algorithm}
 \caption {On-line Algorithm for energy harvesting transmitter and receiver.}
 \footnotesize
