@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 In an online scenario, transmitter and receiver are assumed to have only causal information about energy arrivals i.e. they have no knowledge of future energy harvests. To model a general energy harvesting system, they are further assumed to not have any information about the distribution of future energy arrivals. We propose an algorithm to schedule the transmission of bits in this model. Motivated by \cite{VazeCompetitive}, we use competitive ratio analysis to compare the performance of online policy vs. the optimal offline policy. In this context, we say that our algorithm is $r$-competitive if for all possible energy arrivals at the transmitter $\ETx(t)$ and all possible `time' arrival $\TRx(t)$ at the receiver, the ratio of time taken by the online algorithm (say $T_{\mbox{\scriptsize{online}}}$) to the optimal offline one (say $T_{\mbox{\scriptsize{off}}}$) is bounded by $r$.
 \begin{align}
-&\displaystyle\max_{\ETx(t),\TRx(t)\hspace{0.5mm} \forall t}\dfrac{T_{\mbox{\scriptsize{online}}}}{T_{\mbox{\scriptsize{off}}}}\le r
+&\displaystyle\max_{\ETx(t),\TRx(t)\hspace{0.5mm} \forall t}\dfrac{T_{\mbox{\scriptsize{online}}}}{T_{\mbox{\scriptsize{off}}}}\le r.
 \end{align}
  
 \textit{Notation:} The starting time of transmission is denoted by $T_{\mbox{\scriptsize{start}}}$ and the present time is denoted by $t$. The number of bits and energy remaining to transmit at any transmitter energy epoch is represented by $B_{\mbox{\scriptsize{rem}}}$ and $E_{\mbox{\scriptsize{rem}}}$ receptively. We use the same notation $\{\bm{p},\bm{s},N\}$ to denote an onilne policy as described for offline policies.
@@ -61,19 +61,51 @@ From the definition of the algorithm, the transmission power only changes when t
 So, if there is no new energy arrival after $T_{\mbox{\scriptsize{start}}}$, the transmit power is same ($=p_1$) i.e. non decreasing. 
 
 Suppose there are energy arrivals after $T_{\mbox{\scriptsize{start}}}$ and for any energy arrival (say $E_{\mbox{\scriptsize{new}}}$) the power changes from $p_i$ to $p_{i+1}$. Let the energy remaining at start of transmission with power $p_i$ be $E_{\mbox{\scriptsize{rem}}}$ and bits remaining be $B_{\mbox{\scriptsize{rem}}}$. The transmission continues for time $l_i$ with power $p_i$. Now, we need to show that $p_i<p_{i+1}$. From the algorithm we get the following equations.  
-
 \begin{align}
-&\frac{g(p_i)}{p_i}=\frac{B_{\mbox{\scriptsize{rem}}}}{E_{\mbox{\scriptsize{rem}}}} \label{power_increasing_eq1}
+&\frac{g(p_i)}{p_i}=\frac{B_{\mbox{\scriptsize{rem}}}}{E_{\mbox{\scriptsize{rem}}}} \label{power_increasing_eq1},
 \\
-&\frac{g(p_{i+1})}{p_{i+1}}=\frac{B_{\mbox{\scriptsize{rem}}}-g(p_i) l_i}{E_{\mbox{\scriptsize{rem}}}+E_{\mbox{\scriptsize{new}}}-p_i l_i}\label{power_increasing_eq2}
+&\frac{g(p_{i+1})}{p_{i+1}}=\frac{B_{\mbox{\scriptsize{rem}}}-g(p_i) l_i}{E_{\mbox{\scriptsize{rem}}}+E_{\mbox{\scriptsize{new}}}-p_i l_i}.\label{power_increasing_eq2}
 \end{align}
+
 Substituting $g(p_i)$ from (\ref{power_increasing_eq1}) into RHS of (\ref{power_increasing_eq2}), we can see that $\frac{g(p_i)}{p_i}>\frac{g(p_{i+1})}{p_{i+1}}$. Hence, by monotonicity of $g(p)/p$ from \eqref{property_decreasing}, we know that $p_i<p_{i+1}$.
 \end{proof}
+
+\begin{lemma}
+In the online policy, if the transmission power at time $t$ is $p$, then $\dfrac{g(p)}{p} \le \dfrac{B_0}{\ETx(t)}\;\;\forall\;\; T_{\mbox{\scriptsize{start}}}\le t\le T_{\mbox{\scriptsize{online}}}$ i.e. the rate of transmission per unit power, is always less than the maximum average energy that can be allocated per bit.
+\label{lemma_online_inequality}
+\end{lemma}
+
+
+%\begin{lemma}
+%In the online policy $\{\bm{p},\bm{s},N\}$, $\dfrac{g(p_i)}{p_i}\le \dfrac{B_0}{\ETx(s_i)}$.
+%\label{lemma_online_inequality}
+%\end{lemma}
+
+
+\begin{proof}
+Suppose the online policy is denoted by $\{\bm{p},\bm{s},N\}$. It is then enough to prove that $\frac{g(p_i)}{p_i} \le \frac{B_0}{\ETx(s_i)}$ for $i\in\{1,2,..,N\} $, because both $p_i$ and $\ETx(s_i)$ remains constant in $[s_i,s_{i+1})$. We prove it by induction on $i$ in ordered set $\in \{1,2,..,N\}$. 
+
+With $s_1=T_{\mbox{\scriptsize{start}}}$, the base case follows form equality \eqref{eq_online_first_power}. Now, assume $\frac{g(p_i)}{p_i}\le \frac{B_0}{\ETx(s_i)}$ to be true for $i=k-1$, $2 \le k\le N-1$. Let $E_{\mbox{\scriptsize{rem}}}$ and $B_{\mbox{\scriptsize{rem}}}$ be the residual energy and bits, at time $s_{k-1}$. As $s_k=t_j$ for some $j$, we can write,
+\begin{align*}
+&\frac{p_{k}}{g(p_{k})}=\frac{E_{\mbox{\scriptsize{rem}}}+E_{j}-p_{k-1} (s_k-s_{k-1})}{B_{\mbox{\scriptsize{rem}}}-g(p_{k-1}) (s_k-s_{k-1})},
+\\
+&\stackrel{(a)}{=}\frac{E_{\mbox{\scriptsize{rem}}}+E_{j}-p_{k-1} (s_k-s_{k-1})}{B_{\mbox{\scriptsize{rem}}}\left( 1-\frac{p_{k-1}}{E_{\mbox{\scriptsize{rem}}}} (s_k-s_{k-1})\right) },
+\\
+&\stackrel{(b)}{=}\frac{E_{\mbox{\scriptsize{rem}}}\gamma+E_{j}}{B_{\mbox{\scriptsize{rem}}}\gamma }=\frac{E_{\mbox{\scriptsize{rem}}}}{B_{\mbox{\scriptsize{rem}}}}+\frac{E_{j}}{B_{\mbox{\scriptsize{rem}}}\gamma}=\frac{p_{k-1}}{g(p_{k-1})}+\frac{E_{j}}{B_{\mbox{\scriptsize{rem}}}\gamma},
+\\
+&\stackrel{(c)}{>}\frac{\ETx(s_{k-1})}{B_0}+\frac{E_{j}}{B_0}=\frac{B_0}{{\ETx(s_{k})}}.
+\end{align*}
+
+where $(a)$ follows form $\frac{B_{\mbox{\scriptsize{rem}}}}{E_{\mbox{\scriptsize{rem}}}}=\frac{g(p_{k-1})}{p_{k-1}}$; $(b)$ follows by substituting $\gamma=\left( 1-\frac{p_{k-1}}{E_{\mbox{\scriptsize{rem}}}} (s_k-s_{k-1})\right)< 1$;  $(c)$ uses induction hypothesis along with the inequality $B_{\mbox{\scriptsize{rem}}}\gamma< B_0$.
+\end{proof}
+
+
 
 \begin{lemma}
 The online policy starts atleast by the time the optimal offline policy ends (say $T_{\mbox{\scriptsize{off}}}$) i.e. $T_{\mbox{\scriptsize{start}}} <T_{\mbox{\scriptsize{off}}}$.
 \label{onilne_time}
 \end{lemma}
+
 
 \begin{proof}
 We will prove this by contradiction. Suppose $T_{\mbox{\scriptsize{start}}} \ge T_{\mbox{\scriptsize{off}}}$. From \eqref{online_T_start}, either $T_{\mbox{\scriptsize{start}}}=t_i$ for some $i$ and/or $T_{\mbox{\scriptsize{start}}}=r_j$ for some $j$.
@@ -97,31 +129,7 @@ Now, the number of bits transmitted by the offline policy $\{\bm{p},\bm{s},N\}$ 
 
 where $(a)$ follows from application of Jensen's inequality due to concavity of $g(p)$; $(b)$ follows form the fact that $\displaystyle\sum_{j:p_j\neq 0}(s_{j+1}-s_{j})\le\TRx(s_{N+1})\le \TRx(T_{\mbox{\scriptsize{start}}}^-)$ and $g(p)/p$ is monotonically decreasing; $(c)$ follows form \eqref{online_T_start}. \eqref{online_eq_2} implies that the number of bits transmitted by the offline policy is less than $B_0$. Hence, it amounts to a contradiction and therefore, $T_{\mbox{\scriptsize{start}}}<T_{\mbox{\scriptsize{off}}}$.
 \end{proof}
-\begin{lemma}
-In the optimal online policy $\{\bm{p},\bm{s},N\}$, if $p_i$ is the transmission power at time $t$ then $\dfrac{p_i}{g(p_i)} \ge \dfrac{\ETx(t)}{B_0}\;\;\forall\;\; T_{\mbox{\scriptsize{start}}}\le t\le T_{\mbox{\scriptsize{online}}}$.
-\end{lemma}
-\begin{proof}
-First we shall prove that this result holds for $t\in S$ where $S$ is the ordered set $\{T_{\mbox{\scriptsize{start}}},t_k,t_{k+1},...,t_l\}$ where $t_i's$ are the transmitter energy arrival epochs. $t_k$ is the first energy arrival epoch after $T_{\mbox{\scriptsize{start}}}$ and $t_l$ is the last one before $T_{\mbox{\scriptsize{online}}}$. 
-We will prove our result this by induction. In the base case, when $t = T_{\mbox{\scriptsize{start}}}$, by our allocation algorithm,
-\begin{equation}
-\dfrac{p_i}{g(p_i)} = \dfrac{p_1}{g(p_1)} = \dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{B_0}.
-\end{equation}
-So our result holds true for the base case. Now for the induction step, assume that the result is true for all $t_i<t_m$ in $S$. Note that at any time, $\dfrac{p_i}{g(p_i)} = \dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{B_{\mbox{\scriptsize{start}}}}$. Let $E_{\mbox{\scriptsize{rem}}}$ and $B_{\mbox{\scriptsize{rem}}}$ represent the remaining transmitter energy and bits to transfer at $t_{m-1}$. Let  $E_{\mbox{\scriptsize{rem}}}'$ and $B_{\mbox{\scriptsize{rem}}}'$ be the remaining energy and bits at time $t_m$. 
-\begin{align}
-\dfrac{E_{\mbox{\scriptsize{rem}}}'}{B_{\mbox{\scriptsize{rem}}}'} &= \dfrac{E_{\mbox{\scriptsize{rem}}} + \ETx_m - p_{i-1}(s_i-s_{i-1})}{B_{\mbox{\scriptsize{rem}}} - g(p_{i-1})(s_i-s_{i-1})},
-\\
-&= \dfrac{E_{\mbox{\scriptsize{rem}}} + \ETx_m - p_{i-1}(s_i-s_{i-1})}{B_{\mbox{\scriptsize{rem}}} - (s_i-s_{i-1})p_{i-1}\frac{B_{\mbox{\scriptsize{rem}}}}{E_{\mbox{\scriptsize{rem}}}}},
-\\
-&= \dfrac{E_{\mbox{\scriptsize{rem}}}\left(1 - \dfrac{p_{i-1}(s_i-s_{i-1})}{E_{\mbox{\scriptsize{rem}}}}\right) + \ETx_m}{B_{\mbox{\scriptsize{rem}}}\left(1 - \dfrac{p_{i-1}(s_i-s_{i-1})}{E_{\mbox{\scriptsize{rem}}}}\right)},
-\\
-&\ge \dfrac{E_{\mbox{\scriptsize{rem}}}}{B_{\mbox{\scriptsize{rem}}}} + \dfrac{\ETx_m}{B_0},
-\\
-&\stackrel{(a)}{\ge} \dfrac{\ETx(t_{m-1})}{B_0} + \dfrac{\ETx_m}{B_0},
-\\
-&\ge \dfrac{\ETx(t_m)}{B_0}.
-\end{align}
-Thus, the result is true for all $t\in S$. Now, for an arbitrary $t\in(t_{i-1},t_{i})$, $p_i$ remains constant, which means the left hand side of our result is unchanged. In the right hand side, $E_{\mbox{\scriptsize{rem}}}$ can only change at energy arrival epochs, and so the right hand side also remains constant. Thus the result holds for any arbitrary time instant $t \in [T_{\mbox{\scriptsize{start}}},T_{\mbox{\scriptsize{online}}}]$
-\end{proof}
+
 
 
 \begin{theorem}
@@ -146,7 +154,7 @@ The idea behind the proof is to show that the online policy can conitnue for at 
 
 Consider the transmission power of the online policy just before $T_{\mbox{\scriptsize{off}}}$. Let this be ${p}_l$. As $T_{\mbox{\scriptsize{start}}}<T_{\mbox{\scriptsize{off}}}$ from Lemma \ref{onilne_time}, such a power will always exist and $s_l<T_{\mbox{\scriptsize{off}}}$. Let $E_{\mbox{\scriptsize{rem}}}$ and $B_{\mbox{\scriptsize{rem}}}$ denote the residual energy and bits at time ${s}_{l}$. Note that, either ${s}_{l}=T_{\mbox{\scriptsize{start}}}$ or ${s}_{l}=t_k$ for some $k$. Also, 
 \begin{align}
-&\ETx({s}_{l})=\ETx(T_{\mbox{\scriptsize{off}}}),
+&\ETx({s}_{l})=\ETx(T_{\mbox{\scriptsize{off}}}^-),
 \label{eq_online_time_0}
 \end{align}
 because if $T=t_k$, $t_k$ would be the last energy arrival epoch before $T_{\mbox{\scriptsize{off}}}$ or $T=T_{\mbox{\scriptsize{start}}}$, then $T_{\mbox{\scriptsize{start}}}$ would be greater than the last energy arrival epoch before $T_{\mbox{\scriptsize{off}}}$. 
@@ -158,12 +166,12 @@ Since the number of bits sent by online policy after ${s}_l$ is equal to $B_{\mb
 &({s}_{{N}+1}-{s}_l)\le\frac{B_{\mbox{\scriptsize{rem}}}}{g(p_l)}=\frac{E_{\mbox{\scriptsize{rem}}}}{p_l}\le \frac{\ETx({s}_l)}{p_l}.
 \label{eq_online_time_1}  
 \end{align}
-Applying Lemma \ref{lemma_online_inequality} on $p_l$ and using \eqref{eq_online_time_0},
+Applying Lemma \ref{lemma_online_inequality} at time $T_{\mbox{\scriptsize{off}}}^-$,% and using \eqref{eq_online_time_0},\frac{\ETx({s}_l)}{p_l}g(p_l)
 \begin{align}
-&\frac{\ETx(T_{\mbox{\scriptsize{off}}})}{p_l}g(p_l)=\frac{\ETx({s}_l)}{p_l}g(p_l)\le B_0\stackrel{(a)}{\le}T_{\mbox{\scriptsize{off}}}\; g\left(\frac{\ETx(T_{\mbox{\scriptsize{off}}})}{T_{\mbox{\scriptsize{off}}}}\right)
+&\frac{\ETx(T_{\mbox{\scriptsize{off}}}^-)}{p_l}g(p_l)\le B_0\stackrel{(a)}{\le}T_{\mbox{\scriptsize{off}}}\; g\left(\frac{\ETx(T_{\mbox{\scriptsize{off}}}^-)}{T_{\mbox{\scriptsize{off}}}}\right),
 \label{eq_online_time_2}
 \end{align}
-where $(a)$ holds because the maximum bits sent by the offline policy can be bounded by $T_{\mbox{\scriptsize{off}}}\; g\left(\frac{\ETx(T_{\mbox{\scriptsize{off}}})}{T_{\mbox{\scriptsize{off}}}}\right)$. By monotonicity property of $g(p)/p$ in \eqref{property_decreasing}, we can conclude from \eqref{eq_online_time_2} that, $\frac{\ETx({s}_l)}{p_l}=\frac{\ETx(T_{\mbox{\scriptsize{off}}})}{p_l}\le T_{\mbox{\scriptsize{off}}}$. Combining this with \eqref{eq_online_time_1}, we get,
+where $(a)$ holds because the maximum bits sent by the offline policy can be bounded by $T_{\mbox{\scriptsize{off}}}\; g\left(\frac{\ETx(T_{\mbox{\scriptsize{off}}}^-)}{T_{\mbox{\scriptsize{off}}}}\right)$. By monotonicity property of $g(p)/p$ in \eqref{property_decreasing}, we can conclude from \eqref{eq_online_time_2} that, $\frac{\ETx(T_{\mbox{\scriptsize{off}}}^-)}{p_l}\le T_{\mbox{\scriptsize{off}}}$. Hence, using \eqref{eq_online_time_0}, we get, $\frac{\ETx({s}_l)}{p_l}\le T_{\mbox{\scriptsize{off}}}$. Combining this with \eqref{eq_online_time_1},
 \begin{align}
 &({s}_{{N}+1}-{s}_l)\le T_{\mbox{\scriptsize{off}}}.
 \label{eq_online_time_3}
