@@ -98,7 +98,7 @@ Now, the number of bits transmitted by the offline policy $\{\bm{p},\bm{s},N\}$ 
 where $(a)$ follows from application of Jensen's inequality due to concavity of $g(p)$; $(b)$ follows form the fact that $\displaystyle\sum_{j:p_j\neq 0}(s_{j+1}-s_{j})\le\TRx(s_{N+1})\le \TRx(T_{\mbox{\scriptsize{start}}}^-)$ and $g(p)/p$ is monotonically decreasing; $(c)$ follows form \eqref{online_T_start}. \eqref{online_eq_2} implies that the number of bits transmitted by the offline policy is less than $B_0$. Hence, it amounts to a contradiction and therefore, $T_{\mbox{\scriptsize{start}}}<T_{\mbox{\scriptsize{off}}}$.
 \end{proof}
 \begin{lemma}
-In the optimal online policy $\{\bm{p},\bm{s},N\}$, if $p_i$ is the transmission power at time $t$ then $\dfrac{p_i}{g(p_i)} \ge \dfrac{\ETx(t)}{B_0}\;\;\forall\;\; T_{\mbox{\scriptsize{start}}}\le t\le T_{\mbox{\scriptsize{online}}}$
+In the optimal online policy $\{\bm{p},\bm{s},N\}$, if $p_i$ is the transmission power at time $t$ then $\dfrac{p_i}{g(p_i)} \ge \dfrac{\ETx(t)}{B_0}\;\;\forall\;\; T_{\mbox{\scriptsize{start}}}\le t\le T_{\mbox{\scriptsize{online}}}$.
 \end{lemma}
 \begin{proof}
 First we shall prove that this result holds for $t\in S$ where $S$ is the ordered set $\{T_{\mbox{\scriptsize{start}}},t_k,t_{k+1},...,t_l\}$ where $t_i's$ are the transmitter energy arrival epochs. $t_k$ is the first energy arrival epoch after $T_{\mbox{\scriptsize{start}}}$ and $t_l$ is the last one before $T_{\mbox{\scriptsize{online}}}$. 
@@ -106,11 +106,21 @@ We will prove our result this by induction. In the base case, when $t = T_{\mbox
 \begin{equation}
 \dfrac{p_i}{g(p_i)} = \dfrac{p_1}{g(p_1)} = \dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{B_0}.
 \end{equation}
-So our result holds true. Now for the induction step, assume that the result is true for all $t_i<t_m$ in $S$. Note that at any time, $\dfrac{p_i}{g(p_i)} = \dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{B_{\mbox{\scriptsize{start}}}}$. Let $E_{\mbox{\scriptsize{rem}}}$ and $B_{\mbox{\scriptsize{rem}}}$ represent the remaining transmitter energy and bits to transfer at $t_{m-1}$. Let  $E_{\mbox{\scriptsize{rem}}}'$ and $B_{\mbox{\scriptsize{rem}}}'$ be the remaining energy and bits at time $t_m$. 
+So our result holds true for the base case. Now for the induction step, assume that the result is true for all $t_i<t_m$ in $S$. Note that at any time, $\dfrac{p_i}{g(p_i)} = \dfrac{\ETx(T_{\mbox{\scriptsize{start}}})}{B_{\mbox{\scriptsize{start}}}}$. Let $E_{\mbox{\scriptsize{rem}}}$ and $B_{\mbox{\scriptsize{rem}}}$ represent the remaining transmitter energy and bits to transfer at $t_{m-1}$. Let  $E_{\mbox{\scriptsize{rem}}}'$ and $B_{\mbox{\scriptsize{rem}}}'$ be the remaining energy and bits at time $t_m$. 
 \begin{align}
-&\dfrac{E_{\mbox{\scriptsize{rem}}}'}{B_{\mbox{\scriptsize{rem}}}'} = \dfrac{E_{\mbox{\scriptsize{rem}}} + \ETx_m - p_{i-1}l_{i-1}}{B_{\mbox{\scriptsize{rem}}} - g(p_{i-1}l_{i-1},
-&\dfrac{E_{\mbox{\scriptsize{rem}}}'}{B_{\mbox{\scriptsize{rem}}}'} = \dfrac{E_{\mbox{\scriptsize{rem}}} + \ETx_m - \frac{E_{\mbox{\scriptsize{rem}}}}{B_{\mbox{\scriptsize{rem}}}}}{B_{\mbox{\scriptsize{rem}}} - \frac{E_{\mbox{\scriptsize{rem}}}}{B_{\mbox{\scriptsize{rem}}}}},
+\dfrac{E_{\mbox{\scriptsize{rem}}}'}{B_{\mbox{\scriptsize{rem}}}'} &= \dfrac{E_{\mbox{\scriptsize{rem}}} + \ETx_m - p_{i-1}(s_i-s_{i-1})}{B_{\mbox{\scriptsize{rem}}} - g(p_{i-1})(s_i-s_{i-1})},
+\\
+&= \dfrac{E_{\mbox{\scriptsize{rem}}} + \ETx_m - p_{i-1}(s_i-s_{i-1})}{B_{\mbox{\scriptsize{rem}}} - (s_i-s_{i-1})p_{i-1}\frac{B_{\mbox{\scriptsize{rem}}}}{E_{\mbox{\scriptsize{rem}}}}},
+\\
+&= \dfrac{E_{\mbox{\scriptsize{rem}}}\left(1 - \dfrac{p_{i-1}(s_i-s_{i-1})}{E_{\mbox{\scriptsize{rem}}}}\right) + \ETx_m}{B_{\mbox{\scriptsize{rem}}}\left(1 - \dfrac{p_{i-1}(s_i-s_{i-1})}{E_{\mbox{\scriptsize{rem}}}}\right)},
+\\
+&\ge \dfrac{E_{\mbox{\scriptsize{rem}}}}{B_{\mbox{\scriptsize{rem}}}} + \dfrac{\ETx_m}{B_0},
+\\
+&\stackrel{(a)}{\ge} \dfrac{\ETx(t_{m-1})}{B_0} + \dfrac{\ETx_m}{B_0},
+\\
+&\ge \dfrac{\ETx(t_m)}{B_0}.
 \end{align}
+Thus, the result is true for all $t\in S$. Now, for an arbitrary $t\in(t_{i-1},t_{i})$, $p_i$ remains constant, which means the left hand side of our result is unchanged. In the right hand side, $E_{\mbox{\scriptsize{rem}}}$ can only change at energy arrival epochs, and so the right hand side also remains constant. Thus the result holds for any arbitrary time instant $t \in [T_{\mbox{\scriptsize{start}}},T_{\mbox{\scriptsize{online}}}]$
 \end{proof}
 
 
