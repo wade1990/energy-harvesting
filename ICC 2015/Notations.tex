@@ -1,0 +1,33 @@
+% !TEX root = ICC.tex
+The transmitter energy arrival instants are marked by $t_i$'s with energy $\ETx_i$'s for $i \in \{0,1,..\}$. The transmitter has $\ETx_0$ amount of energy at time $t_0=0$. The total energy harvested at the transmitter till time $t$ is given by $\ETx(t)=\sum\limits_{i:t_i < t}\ETx(t)$. Note that $\ETx(t)$ is a staircase like function.
+ 
+The receiver spends a constant $P_{r}$ amount of power to be in `\textit{on}' state during which it can receive data from the transmitter. When it is in `\textit{off}' state it cannot receive data, and uses no power. Hence each energy arrival (say of amount $E$) at the receiver can be viewed as adding $\TRx_i=\dfrac{E}{P_{r}}$ amount of time for which the receiver can be \textit{on}. The instances of energy arrival (which can also be thought of as `\textit{time}' arrivals) at the receiver are denoted by $r_i$. Note that transmitter can only send bits if and only if receiver is \textit{on}. The maximum amount of time for which the receiver (and hence the transmitter) can be \textit{on} assuming no energy arrives at the receiver after time '$t$' is given by the function $\TRx(t)=\sum\limits_{i:t_i\leq t} \TRx_i$.
+
+The rate at which bits are transmitted with power `$p$' is given by function $g(p)$. The function $g(.)$ is assumed to possess the following properties. 
+\begin{align}
+&P1) &&g(0)=0\text{ and }\lim_{x\rightarrow \infty} g(x)= \infty,\label{property_0_infty}
+\\
+&P2) &&g(x)\text{ is concave in nature with } x,\label{property_concave}
+\\
+&P3) &&g(x)\text{ is monotonically increasing with } x,\label{property_increasing}
+\\ 
+&P4) &&\frac{g(x)}{x} \text{ is convex, monotonically decreasing} \nonumber
+\\
+&    &&\text{ with } x \text{ and } \lim_{x\rightarrow \infty} \frac{g(x)}{x}= 0.\label{property_decreasing}
+\end{align}
+
+%Any policy used for transmission is represented in form of $\{\bm{p},\bm{s},N\}$, where $N\in \mathbb{N}$, $\bm{p}=[p_1\ p_2\ ..\ p_N]$ and $\bm{s}=[s_1\ s_2\ ..\ s_{N+1}]$. The transmitter starts transmitting at time instant $s_1$ with power $p_1$ and continues till time $s_2$. From $s_2$ it transmits with power $p_2$ and so on. The policy ends at time $s_{N+1}$. 
+
+Suppose in a transmission policy, the transmitter starts transmitting at time $s_1$ with power $p_1$ and continues till $s_2$. From $s_2$ it transmits with power $p_2$ and so on. In general, $p_i$ is the power of transmission from $s_i$ to $s_{i+1}$. The last section of transmission begins at time $s_N$ with power $p_N$, where $N\in \mathbb{N}$. The transmission ends at time $s_{N+1}$. The transmitter cannot transmit any bits when the receiver is \textit{off}. Therefore, the receiver is kept \textit{on} when transmitter transmits any bits i.e it is kept \textit{on} during the time $[s_i,s_{i+1}]$ when $p_i > 0$, $\forall \ i=1,2..,N$, and kept \textit{off} when $p_i=0$. Such a policy, sometimes referred to in this paper by the alphabets $X,Y,Z$ or $W$, is represented by the vectors $\bm{p}$, $\bm{s}$ and a number $N$, where $\bm{p}=\{p_1, p_2, .., p_N\}$ and $\bm{s}=\{s_1, s_2, .., s_{N+1}\}$. The total time for which the receiver is \textit{on} is referred to as `transmission time' or `transmission duration' and the time by which the policy get over, is called as the `finish time'. The energy used by this policy at the transmitter upto time `$t$' is given by the function $U(t)$, and the number of bits sent by time $t$ is represented by $B(t)$. Clearly,
+
+%Such a policy is represented by the notation $\{\bm{p},\bm{s},N\}$, where $\bm{p}=\{p_1, p_2, .., p_N\}$ and $\bm{s}=\{s_1, s_2, .., s_{N+1}\}$. The energy used by this policy at the transmitter upto time '$t$' is given by the function $U(t)$ and the bits sent is represented by $B(t)$. Clearly,
+\begin{align}
+&U(t)=\sum_{i=1}^{j} p_i(s_{i+1}-s_i)+p_{j+1}(t-s_j) \text{ and }
+\\
+&B(t)=\sum_{i=1}^{j} g(p_i)(s_{i+1}-s_i)+g(p_{j+1})(t-s_j),
+\\
+&\text{where }j=\argmax_{i} \hspace{2mm}\{(t_i<t)\}.\nonumber
+\end{align}
+The function $\mathcal{P}(a,b)=\dfrac{\mathcal{E}(b^- )-U(a)}{b-a}$,  ($a>b$) denotes the maximum constant power with which transmitter can transmit from time $a$ to $b$, given that $U(a)$ amount of energy is already used upto time $a$. $a^-$ denotes the limiting value which approaches $a$ from the left.
+
+%For convenience of presentation, we also follow the following convention : we use the notation $\stackrel{L1}{=}$ or $\stackrel{(1)}{=}$ or $\stackrel{P1}{=}$ or $\stackrel{T1}{=}$ to indicate that the equality "$=$" follows from Lemma 1 / Equation (1) / Property 1 / Theorem 1 respectively (same for inequalities).

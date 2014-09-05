@@ -1,0 +1,68 @@
+\documentclass[10pt,twocolumn,twoside]{IEEEtran}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{microtype}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{epstopdf}
+\epstopdfsetup{outdir=./}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{problem}{Problem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newcommand{\vv}[1]{\mbox{\boldmath $#1$}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|_2}
+\newcommand{\showuc}[1]{\MakeUppercase{#1}}
+\algrenewcommand\alglinenumber[1]{\scriptsize #1}
+\def \ETx {\mathcal{E}}
+\def \TRx {\Gamma}	
+\makeatletter
+\let\OldStatex\Statex
+\renewcommand{\Statex}[1][3]{%
+  \setlength\@tempdima{\algorithmicindent}%
+  \OldStatex\hskip\dimexpr#1\@tempdima\relax}
+\makeatother
+\algdef{SE}[DOWHILE]{Do}{DoWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}
+\title{}
+
+\author{
+\thanks{}
+}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+\begin{abstract}
+\end{abstract}
+
+
+\begin{IEEEkeywords}
+\end{IEEEkeywords}
+
+\section{Notations}
+\input{Notations}
+
+\section{OPTIMAL OFFLINE ALGORITHM}
+\input{OptimalOfflineICC}
+
+
+
+\section{ONLINE ALGORITHM FOR ENERGY HARVESTING TRANSMITTER AND RECEIVER}
+\input{onlineICC}
+
+\appendices
+\bibliographystyle{IEEEtran}
+\bibliography{refs_TIFR_intern}
+ 
+\end{document}

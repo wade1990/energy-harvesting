@@ -1,0 +1,25 @@
+% !TEX root = main.tex
+
+We prove this by contradiction. Assume that the optimal policy (say $X$), with $\{\bm{p},\bm{s},N\}$ violates the condition stated in Lemma \ref{lemma_increasing_power}. Let $p_i\neq 0$ be the first transmission power such that $\exists k<i:\ p_i<p_k $. Let $j$ be the maximum such index less than $i$ such that $p_i<p_j$. 
+
+%
+%\begin{lemma}
+%The transmission power in every optimal solution to Problem 1 is non-decreasing with time whenever the receiver is \textit{on}.
+%\label{lemma_increasing_power}
+%\end{lemma}
+%\begin{proof}
+%We prove this by contradiction. The following two cases arise depending on whether the receiver is \textit{on} or \textit{off}.
+
+$Case\;1:$ Suppose $j=i-1$. This situation is shown in Fig. \ref{Lemma1} (a). In this case, consider a new transmission policy (say $Y$) which is same as the optimal policy till time $s_{i-1}$. From $s_{i-1}$ to $s_{i+1}$, $Y$ transmits at a constant power $p'=\dfrac{p_i(s_{i+1}-s_{i})+p_{i-1}(s_{i}-s_{i-1})}{s_{i+1}-s_{i-1}}$. Then the number of bits transmitted by policy $Y$ from time $s_{i-1}$ to $s_{i+1}$ is given by $g(p')(s_{i+1}-s_{i-1})$ while the optimal policy transmits $g(p_i)(s_{i+1}-s_{i})+g(p_{i-1})(s_{i}-s_{i-1})$ bits. Due to concavity of $g(p)$,
+\begin{align*}
+&g(p_i)\frac{s_{i+1}-s_{i}}{s_{i+1}-s_{i-1}}+g(p_{i-1})\frac{s_{i}-s_{i-1}}{s_{i+1}-s_{i-1}}
+\\ 
+&\le g\left(\frac{p_i(s_{i}-s_{i-1})+p_{i-1}(s_{i+1}-s_{i})}{s_{i+1}-s_{i-1}}\right),
+\\
+& g(p')(s_{i+1}-s_{i-1})
+\\
+&\ge g(p_i)(s_{i+1}-s_{i})+g(p_{i-1})(s_{i}-s_{i-1}).  
+\end{align*}
+Hence, both $X$ and $Y$ transmit equal number of bits till time $s_{i-1}$, while $Y$ transmits more number of bits than $X$ by time $s_{i+1}$. After time $s_{i+1}$, suppose policy $Y$ follows same transmission powers as $X$ till it transmits $B_0$ bits. Since $Y$ has transmitted more bits than $X$ till time $s_{i+1}$, it finishes transmitting all $B_0$ bits earlier than $X$, contradicting the optimality of $X$.
+
+$Case\;2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{j+1},..,p_{i-1}$ and $p_i<p_{j}$. So, $p_{i-1},..,p_{j+1}<p_j$. If any of $p_{i-1},..,p_{j+1}$ is non zero, then $i$ no longer remains the minimum index violating the condition stated in Lemma \ref{lemma_increasing_power}. Hence, $p_{i-1},..,p_{j+1}=0$. This situation is shown in Fig. \ref{Lemma1}(b). Now, consider a policy $W$ where the transmission power is same as the optimal policy before time $s_j$ and after time $s_{i+1}$. From $s_j$ to $s_j'=s_j+s_{i}-s_{j+1}$, $W$ keeps the receiver \textit{off} (so transmitter does not transmit in this duration) and from $s_j'$ to $s_{i}$ it transmits at power $p_j$. This policy still transmits equal number of bits and ends at the same time as the optimal policy $X$. Now that $W$ matches with the form of $X$ in \textit{Case 1} from time $s_j'$ to $s_{i+1}$, we could proceed to generate another policy form $W$ (like $Y$ in \textit{Case 1}) which would finish earlier than $W$. Hence, this new policy would finish earlier than $X$ as well and we would reach a contradiction. 
