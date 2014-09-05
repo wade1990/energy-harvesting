@@ -7,11 +7,23 @@
 Using the structure of the optimal policy, we next propose an algorithm that is shown to be optimal. 
 ALGORITHM Description.
 
-Step 1 Initial Feasible Soln, 
+\textbf{Initialization}:
 
-Step 2 
+Step 1: Identify the first $t_n$ such that $\TRx_0\left(\dfrac{\ETx(t_n)}{\TRx_0}\right)\ge B_0$. Solve $\widetilfe{\TRx}_0\left(\dfrac{\ETx(t_n)}{\widetilde{\TRx}_0}\right)\ge B_0$ for $\widetilde{\TRx}_0$. Set $p_c = \dfrac{\ETx{t_n}}{\widetilde{\TRx}_0}$ and transmit with $p_c$ from $t = 0$.
 
-dot dot dot
+Step 2: If this policy is feasible, terminate. If not, identify the first time instance $T_{start}$ such that transmission with $p_c$ is feasible. Set $t_q$ as the first $t_n$ where $U(t_q) = \ETx(t_q^-)$ and $T_{stop} = T_{start} + \widetilde{T}_0$. If $U(T_{stop}) = E(T_{stop})$ terminate. Otherwise set $\widetilde{B} = (t_{stop} - t_q)g(p_c)$ and apply Algorithm 1 from \cite{Yang} from time $t_q$ with $\widetilde{B}$ bits to transmit.  
+
+\textbf{Iteration}:
+
+Step 3: Increase $p_r$ till $U(t_r') = \ETx(t_r'^-)$ for some $t_r'$ as shown in Fig. \ref{figure_Algorithm1}(a). If $p_r$ goes to infinity, set $p_r$ to the transmission power at $t_r^-$ and $t_r$ to the last epoch before $t_r$ where $U(t_k) = \ETx(t_k^-)$. Update $T_{stop}$ to where this policy ends. Calculate $p_l'$ such that $B_0$ bits are transmitted between $T_{stop}$ and $T_{start}'$, where $T_{start}'$ is where transmission with $p_l'$ begins.
+
+Step 4: If $p_l'$ is feasible, which is the case shown in Fig. \ref{figure_Algorithm1}(a), set $p_l$ to $p_l'$ and $p_r$ to $p_r'$ (with $t_r$ to $t_r'$). $T_{start}$ is changed to $T_{start}'$. \textbf{GOTO} Step 3. 
+
+Step 5: If $p_l'$ is not feasible, as shown in Fig. \ref{figure_Algorithm1}(b), then $p_l'$ is increased until it becomes feasible. $t_l'$ is set to the first instance where $U(t_l') = \ETx(t_l'^-)$ as shown in Fig. \ref{figure_Algorithm1}(c). Calculate $p_r$ such that the policy transmits $B_0$ bits. Set $t_l = t_l'$. \textbf{GOTO} Step 3.
+
+\textbf{Termination}:
+
+Step 6: If in any iteration at the end of Step 4 or Step 5, $T_{stop} - T_{start} = \TRx_0$ or $T_{start} = 0$, terminate.
 
 %Suppose we are given that the receiver can be \textit{on} for a maximum duration of $\TRx_0$. Our goal is to find a transmission policy so that we can minimize the total time at which the transmission of all $B_0$ bits is completed. To do this, we shall first find a feasible solution i.e. one which satisfies all constraints (\ref{pb1_constraint_bits})-(\ref{pb1_constraint_time}) and keep improving upon it, until we have a solution that follows all structural results in Lemma \ref{lemma_increasing_power}-\ref{transmission_duration} (as shown in Theorem \ref{th_algo1_1} later,  these Lemmas form a sufficient condition as well).
 
