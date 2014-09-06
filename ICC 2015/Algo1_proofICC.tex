@@ -60,35 +60,7 @@
 %\end{algorithm}
 
 
-\begin{theorem}
-A transmission policy $\{\textbf{p},\textbf{s},N\}$ is an optimal solution to Problem 1 if and only if it satisfies the following structure.
-\label{th_algo1_1}
-\begin{align}
-&\sum_{i=1}^{i=N}g(p_i)(s_{i+1}-s_i)=B_0; 								
-\label{claim1}
-\\
-&p_1\le p_2 ..\le p_N;
-\label{claim3}  
-\\
-&\nonumber s_i=t_j \text{ for some } j, i\in \{2,..,N\} \ \text{ and }
-\\
-& U(s_i)=\ETx(s_i^-), \forall i\in \{2,..,N+1\};
-\label{claim4}
-\\
-&\nonumber s_{N+1}-s_1=\mathcal{R}_0, 	 \ \ \ \ 						\text{ if } s_1>0 \text{ or }
-\\
-& s_{N+1}\le \mathcal{R}_0,				\ \ \ \ \ \ \ \ \ \				\text{ if } s_1=0;
-\label{claim2}
-\\
-&\exists s_j:s_j\in \textbf{s} \text{ and } s_j=t_q.
-\label{claim5}
-\end{align}
-%& \nonumber s_{n+1}=\argmin_{t_i: s_n < t_i \le s_{N+1}} \mathcal{P}(s_n,t_i)=\dfrac{\ETx(t_i^-)-U(s_n)}{t_i-s_n} \	\text{ and }
-%\\
-%&p_n=\mathcal{P}(s_{n},s_{n+1});\label{claim3}							
-%\\
-\end{theorem}
-\begin{proof}
+%\begin{proof}
 
 %The proof consists of establishing both necessary and sufficiency conditions. First we work out the necessary part i.e. an optimal policy, say $X$, $\{\textbf{p},\textbf{s},N\}$ must have the given structure. We prove it by contradiction. We establish structure (\ref{claim3}) at first. Assume the optimal policy $X$ satisfies Lemmas \ref{lemma_increasing_power}-\ref{lemma_Q} and does not satisfy structure (\ref{claim3}). Specifically, say the policy abides by the  structure (\ref{claim3}) from time $s_{1}$ to $s_n$, for some $n\in \{1,2,..,N\}$ but transmission power right after $s_n$ is not the minimum feasible constant power, i.e.
 %\begin{align}
@@ -103,65 +75,65 @@ A transmission policy $\{\textbf{p},\textbf{s},N\}$ is an optimal solution to Pr
 %Moving on to other structures, (\ref{claim1}) must be followed by the optimal policy as it is a constraint to the Problem 1, (\ref{claim4}) follows from Lemma \ref{lemma_Q} and \eqref{claim2} follows from Lemma \ref{transmission_duration}.
 
 
-The proof consists of establishing both necessary and sufficiency conditions. First we work out the necessary part i.e. an optimal policy must have the given structure. Observing the structure, (\ref{claim1}) must be followed by the optimal policy as it is a constraint to the Problem 1, \eqref{claim3} follows from Lemma \ref{lemma_increasing_power}, \ref{lemma_nobreaks}, \eqref{claim4} follows from Lemma \ref{lemma_energy_consumed}, \eqref{claim2} follows from Lemma \ref{transmission_duration} and \eqref{claim5} follows from Lemma \ref{lemma_Q}.
-
-
-
-%We are left to prove structure (\ref{claim2}). $s_{N+1}-s_1\le \mathcal{R}_0$ by constraint (\ref{pb1_constraint_time}). If $s_1=0$ then we are done. When $s_1>0$, assume that $s_{N+1}-s_1<\mathcal{R}_0$. Now consider the policy where power vector is given by $\bm{\widetilde{p}}=\{p_1-\alpha,p_2,..,p_{N-1},p_N+\beta \}$ and the corresponding time vector be given by $\bm{\widetilde{s}}=\{s_1-\gamma,s_2,..,s_{N},s_{N+1}-\delta\}$, where $\gamma=\dfrac{\alpha}{p_1-\alpha}(s_2-s_1)$, $\delta =\dfrac{\beta}{p_N+\beta}(s_{N+1}-s_N)$ and $\alpha ,\beta$ are small positive constants. Since $(s_{N+1}-\delta)>s_{N+1}$, this policy finishes before the optimal policy $\{\textbf{p},\textbf{s},N\}$ and hence amounts to a contradiction only if we are able to show that it is feasible. By the definition of $s_i$ in (\ref{claim3}), $s_{2}$ is the first energy arrival which is on the boundary of energy constraint (\ref{pb1_constraint_energy}) i.e. $U(s_2)=\ETx(s_2^-)$ and $s_{N}$ is the last epoch satisfying $U(s_N)=\ETx(s_N^-)$. So we can choose arbitrarily small $\alpha ,\beta$ such that policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ would be feasible with respect energy constraint (\ref{pb1_constraint_energy}). For every $\beta\rightarrow 0^+$ we can find a value of $\alpha$ such that the number of bits transmitted in policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ remains the same as policy $\{\textbf{p},\textbf{s},N\}$ i.e. equal to $B_0$. So, excluding the common parts in the transmission policy $\{\textbf{p},\textbf{s},N\}$ and $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, we can equate
-%\begin{align}
-%&g(p_N)(s_{N+1}-s_N)+g(p_1)(s_2-s_1)\nonumber
-%\\
-%&=g(p_1-\alpha)(s_2-s_1+\gamma)+g(p_N+\beta)(s_{N+1}-s_N-\delta)\nonumber,
-%\\
-%&\implies \delta(p_N+\beta)p_N\frac{1}{\beta}\left(\frac{g(p_N)}{p_N}-\frac{g(p_N+\beta)}{p_N+\beta}\right)\nonumber
-%\\
-%&=\gamma(p_1-\alpha)p_1\frac{1}{\alpha}\left(\frac{g(p_1-\alpha)}{p_1-\alpha}-\frac{g(p_1)}{p_1}\right).\label{bits_equal}
-%\end{align}
-%$\exists$ $p_N':p_N<p_N'<p_{N}+\beta$ and $p_1':p_1-\alpha<p_1'<p_{1}$ such that
-%\begin{align}
-%&\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_N'}=\frac{1}{\beta}\left(\frac{g(p_N+\beta)}{p_N+\beta}-\frac{g(p_N)}{p_N}\right),\label{diff_1}
-%\\
-%&\frac{d}{dp} \frac{g(p)}{p}\bigg{\vert}_{p=p_1'}=-\frac{1}{\alpha}\left(\frac{g(p_1-\alpha)}{p_1-\alpha}-\frac{g(p_1)}{p_1}\right)\label{diff_2}.
-%\end{align}
-%Substituting (\ref{diff_1}) and (\ref{diff_2}) into (\ref{bits_equal}) we get,
-%\begin{align}
-%&\delta(p_N+\beta)p_N\frac{d}{dp} \frac{g(p)}{p}  \bigg{\vert}_{p=p_N'}
-%=\gamma(p_1-\alpha)p_1\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_1'}.\label{bits_equal1}
-%\end{align}
-%It can be verified that $\dfrac{d}{dp} \dfrac{g(p)}{p}$ is decreasing function of $p$. As $p_1'<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence the time for which transmission occurs in the policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $\{\textbf{p},\textbf{s},N\}$ i.e. $(s_{N+1}-s_1)$. As $s_{N+1}-s_1<\TRx_0$, we can choose arbitrarily small positive value of $\beta$ so that $(s_{N+1}-s_1)<(s_{N+1}-s_1+\gamma -\delta)<\TRx_0$ holds. So policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ is feasible with constraints  (\ref{pb1_constraint_bits}), (\ref{pb1_constraint_energy}), (\ref{pb1_constraint_time}) and contradicts the optimality of policy $\{\textbf{p},\textbf{s},N\}$. This concludes that $s_{N+1}-s_1=\TRx_0$ (if $s_1\neq 0$) in optimal policy.
-
-Next, we prove the sufficiency of the structure. Let a policy $X$, $\{\textbf{p},\textbf{s},N\}$ follow  structure \eqref{claim1}-\eqref{claim5}. We need to show that this policy is optimal. We adopt the method of contradiction to prove this. Assume that it is not true. So, there exists another policy $Y$, $\{\textbf{p'},\textbf{s'},N'\}$ which is optimal. $Y$ abides by the Lemma \ref{lemma_increasing_power}-\ref{lemma_Q}, as $Y$ is optimal. Thus, $Y$ also follows structure \eqref{claim1}-\eqref{claim5}. Hence, our problem reduces to show that there cannot exist two different policies $X$ and $Y$ (of which $Y$ is optimal) satisfying structure \eqref{claim1}-\eqref{claim5}\footnote{Note that Lemma \ref{lemma_nobreaks} suggests that optimal solution to Problem 1 may not be unique in general, but Theorem \ref{th_algo1_1} shows that the optimal solution \textit{without breaks} in transmission is indeed unique.}.
-
-%\textit{Case1}: If $s_1'>s_1\ge 0$, then by Lemma \ref{transmission_duration}, $s_{N'+1}'=s_1'+\TRx_0>s_1+\TRx_0\ge s_{N+1}$. So policy $Y$ finishes after time $s_{N+1}$ and hence cannot be optimal. 
-
-\textit{Case1}: If $s_1'>s_1\ge 0$, then by \eqref{claim2}, $s_{N'+1}'=s_1'+\TRx_0>s_1+\TRx_0\ge s_{N+1}$. So policy $Y$ finishes after time $s_{N+1}$ and hence cannot be optimal. 
-
-\textit{Case2}: Suppose $s_1'=s_1$. Let $s_i'$ be the first epoch for which $p_i'\ne p_i$ for some $i \in \{1,2,..,N\}$. 
-%By \eqref{claim3}, since $p_i$ is the minimum possible power among all epochs, $p_i'>p_i$. 
-
-%Suppose $p_i'>p_i$. If, in policy $Y$, transmission continues after $s_{i+1}$ i.e. $s_{N'+1}'>s_{i+1}$, then the amount of energy used by $Y$ in interval $[s_{i},s_{i+1}]$ can be lower bounded by $p_i'(s_{i+1}-s_i)$ from Lemma \ref{lemma_increasing_power}. $p_i'(s_{i+1}-s_i)$ is more than $p_i(s_{i+1}-s_i)$, which is the energy used by policy $X$. But by structure \eqref{claim4}, $X$ uses all energy available by $s_{i+1}$. So $Y$ uses more than available energy in $[s_{i},s_{i+1}]$ and is not feasible with respect to the energy constraint. 
-
-Suppose $p_i'>p_i$. If, in policy $Y$, transmission continues after $s_{i+1}$ i.e. $s_{N'+1}'>s_{i+1}$, then the amount of energy used by $Y$ in interval $[s_{i},s_{i+1}]$ can be lower bounded by $p_i'(s_{i+1}-s_i)$ from \eqref{claim3}. $p_i'(s_{i+1}-s_i)$ is more than $p_i(s_{i+1}-s_i)$, which is the energy used by policy $X$. But by structure \eqref{claim4}, $X$ uses all energy available by $s_{i+1}$. So $Y$ uses more than available energy in $[s_{i},s_{i+1}]$ and is not feasible with respect to the energy constraint. 
-
-If $s_{N'+1}'\le s_{i+1}$, then it can be easily verified by (\ref{property_decreasing}) that $Y$ transmits strictly less number of bits in interval $[s_i,s_{N'+1}]$ than $X$ in interval $[s_{i},s_{i+1}]$. Both policies being same till $s_i$, we conclude that $Y$ transmits less than $B_0$ bits and thus it is not feasible.
-
-When $p_i>p_i'$, symmetrical arguments follow.
-
-\textit{Case3}: This case argues the infeasibility when $s_1'<s_1$. Unlike other cases this case is more laborious. The idea of the proof is to show that if a optimal policy starts its transmission early and finishes earlier than policy $X$, it always takes more transmission time, which is going to violate the time constraint (\ref{pb1_constraint_time}). First, we establish that the $Y$ must be same as policy $X$ from epoch $s_2$ to an epoch $s_j$ such that $s_j=\displaystyle\max_{s_i<s_{N'+1}'} s_i$. Let $s_k'=\displaystyle\max_{s_i'<s_2}s_i'$, and transmission continue with constant power $p_k'$ till $s_{k+1}'$. Clearly $s_{k+1}'\ge s_2$. 
-
-If $s_{k+1}'>s_2$, transmission with a constant power $\dfrac{\ETx(s_{k+1}'^-)}{(s_{k+1}'-s_1)} $ from $s_1$ to $s_{k+1}'$ is feasible (as $p_k'$ is feasible) and $\dfrac{\ETx(s_{k+1}'^-)}{(s_{k+1}'-s_1)}<\dfrac{\ETx(s_2^-)}{(s_2-s_1)}=p_1$. 
-%This contradicts ($\ref{claim3}$), as $p_1$, no longer remains the minimum power. So, $s_{k+1}'=s_2$. Now, let $p_{k+1}'\neq p_2$ and $s_j>s_3$. From definition of $p_2$, $p_{k+1}>p_2$. Then the amount of energy used by policy $Y$ between $s_2$ and $s_3$ is more than what is harvested. So $p_{k+1}'=p_2$ ($s'_{k+2}=s_3$) and similarly, we can show that $p'_{k+2}=p_3$.. ($ s'_{k+3}=s_4$..) till epoch $s_j$. By structure (\ref{claim5}) and Lemma \ref{lemma_Q} we can be sure that there exists atleast one epoch $s_i=t_q$ which belongs to $\textbf{s}$ as well as $\textbf{s'}$, respectively, i.e. $j\ge 2$.
-Since $s_{N+1}=s_1+\TRx_0>s_1'+\TRx_0\ge s'_{N'+1}\ge s'_{k+1}$, $X$ exists in interval $[s_1,s'_{k+1}]$. $X$ uses atleast $p_1(s'_{k+1}-s_2)$ energy in this interval by \eqref{claim3}. But $\dfrac{\ETx(s_{k+1}'^-)}{(s_{k+1}'-s_1)}<p_1$. Hence $X$ uses more than available energy in $[s_1,s'_{k+1}]$. So, $s_{k+1}'=s_2$. Now, let $p_{k+1}'\neq p_2$ and $s_j>s_3$. From definition of $p_2$, $p_{k+1}>p_2$. Then the amount of energy used by policy $Y$ between $s_2$ and $s_3$ is more than what is harvested. So $p_{k+1}'=p_2$ ($s'_{k+2}=s_3$) and similarly, we can show that $p'_{k+2}=p_3$.. ($ s'_{k+3}=s_4$..) till epoch $s_j$. By structure (\ref{claim5}) we can be sure that there exists atleast one epoch $s_i=t_q$ which belongs to $\textbf{s}$ as well as $\textbf{s'}$, respectively, i.e. $j\ge 2$.
-
-\begin{figure}[htb]
-\centering
-\centerline{\includegraphics[width=8cm]{Theorem1_sufficient.pdf}}
-\caption{Energy curves at Transmitter explaining \textit{Case3} in proof of Theorem \ref{th_algo1_1}}
-\label{Theorem1_figure}
-\end{figure}
-
-Now, consider the following process which creates feasible policies from policy $\{\textbf{p'},\textbf{s'},N'\}$ as shown in Fig. \ref{Theorem1_figure}. We define two pivots $l$ and $r$. Initially we set $l=s_2'$ and $r=s_{N'}'$. The transmission power right before $l$ is $u$ ($u=p_1'$ initially) and right after $r$ is $v$ ($v=p_{N'}'$ initially). Keeping the policy same from $l$ to $r$ we increase $u$ by a small amount to $u+du$ and decrease $v$ by a small amount to $v-dv$ such that the number of bits transmitted (i.e. $B_0$) remains same under this transformation. Let $s_1'$ change to $s_1'+x$ and $s_{N'+1}'$ change to $s_{N'+1}'+y$ for some $x,y>0$ (Note that $y$ is dependent on $x$). We denote such a policy by vectors $\{\textbf{p'(x)},\textbf{s'(x)},N'(x)\}$. Following Lemma \ref{lemma_increase_time}, we can conclude that $(s_{N'(x)+1}'(x)-s_1'(x))<(s_{N'+1}'-s_1')$. We continue increasing $x$ till either $u=p_2$ (in which case we change $l=s_2$) or $v=p_{N'-1}'$ (where we change $r=s_{N'-1}'$) or $s_{N'(x)+1}'(x)$ hits an epoch, say $t_j$ ($r=t_j$, $v\rightarrow\infty$ in this case). After this, we again start increasing $x$ with changed definitions. We continue this process till $x=s_1-s_1'$  or $u$ becomes equal to $v$. Note that the former stopping criteria will be met at a smaller $x$ than the later one since policy $\{\textbf{p'(x)},\textbf{s'(x)},N'(x)\}$ shares at least one epoch with policy $X$, by arguments of previous paragraph. By maintaining these rules we ensure that policy $\{\textbf{p'(x)},\textbf{s'(x)},N'(x)\}$ abides by structure \eqref{claim1}, \eqref{claim3}-\eqref{claim5} and is feasible with energy constraint. Since $\left( s_{N'(x)+1}'(x)-s_1'(x)\right)$ is decreasing with $x$, the policy is also feasible with time constraint. As this is continuous on $x$, at $x=s_1-s_1'$ we reach a policy such that $s_1'(x)=s_1$. For $x=s_1-s_1'$, if $s_{N'(x)+1}'(x)\ge s_{N+1}$ then $s_{N'+1}'-s_1'>s_{N'(x)+1}'(x)-s_1'(x)\ge s_{N+1}-s_1=\TRx_0$ and policy $Y$ is infeasible with time constraint. If $s_{N'(x)+1}'(x)< s_{N+1}$ then we can follow the arguments in \textit{Case2} to show that policy $\{\textbf{p'(x)},\textbf{s'(x)},N'(x)\}$ is infeasible, which in turn accounts for the infeasibility of policy $Y$.
-\end{proof}
+%The proof consists of establishing both necessary and sufficiency conditions. First we work out the necessary part i.e. an optimal policy must have the given structure. Observing the structure, (\ref{claim1}) must be followed by the optimal policy as it is a constraint to the Problem 1, \eqref{claim3} follows from Lemma \ref{lemma_increasing_power}, \ref{lemma_nobreaks}, \eqref{claim4} follows from Lemma \ref{lemma_energy_consumed}, \eqref{claim2} follows from Lemma \ref{transmission_duration} and \eqref{claim5} follows from Lemma \ref{lemma_Q}.
+%
+%
+%
+%%We are left to prove structure (\ref{claim2}). $s_{N+1}-s_1\le \mathcal{R}_0$ by constraint (\ref{pb1_constraint_time}). If $s_1=0$ then we are done. When $s_1>0$, assume that $s_{N+1}-s_1<\mathcal{R}_0$. Now consider the policy where power vector is given by $\bm{\widetilde{p}}=\{p_1-\alpha,p_2,..,p_{N-1},p_N+\beta \}$ and the corresponding time vector be given by $\bm{\widetilde{s}}=\{s_1-\gamma,s_2,..,s_{N},s_{N+1}-\delta\}$, where $\gamma=\dfrac{\alpha}{p_1-\alpha}(s_2-s_1)$, $\delta =\dfrac{\beta}{p_N+\beta}(s_{N+1}-s_N)$ and $\alpha ,\beta$ are small positive constants. Since $(s_{N+1}-\delta)>s_{N+1}$, this policy finishes before the optimal policy $\{\textbf{p},\textbf{s},N\}$ and hence amounts to a contradiction only if we are able to show that it is feasible. By the definition of $s_i$ in (\ref{claim3}), $s_{2}$ is the first energy arrival which is on the boundary of energy constraint (\ref{pb1_constraint_energy}) i.e. $U(s_2)=\ETx(s_2^-)$ and $s_{N}$ is the last epoch satisfying $U(s_N)=\ETx(s_N^-)$. So we can choose arbitrarily small $\alpha ,\beta$ such that policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ would be feasible with respect energy constraint (\ref{pb1_constraint_energy}). For every $\beta\rightarrow 0^+$ we can find a value of $\alpha$ such that the number of bits transmitted in policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ remains the same as policy $\{\textbf{p},\textbf{s},N\}$ i.e. equal to $B_0$. So, excluding the common parts in the transmission policy $\{\textbf{p},\textbf{s},N\}$ and $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, we can equate
+%%\begin{align}
+%%&g(p_N)(s_{N+1}-s_N)+g(p_1)(s_2-s_1)\nonumber
+%%\\
+%%&=g(p_1-\alpha)(s_2-s_1+\gamma)+g(p_N+\beta)(s_{N+1}-s_N-\delta)\nonumber,
+%%\\
+%%&\implies \delta(p_N+\beta)p_N\frac{1}{\beta}\left(\frac{g(p_N)}{p_N}-\frac{g(p_N+\beta)}{p_N+\beta}\right)\nonumber
+%%\\
+%%&=\gamma(p_1-\alpha)p_1\frac{1}{\alpha}\left(\frac{g(p_1-\alpha)}{p_1-\alpha}-\frac{g(p_1)}{p_1}\right).\label{bits_equal}
+%%\end{align}
+%%$\exists$ $p_N':p_N<p_N'<p_{N}+\beta$ and $p_1':p_1-\alpha<p_1'<p_{1}$ such that
+%%\begin{align}
+%%&\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_N'}=\frac{1}{\beta}\left(\frac{g(p_N+\beta)}{p_N+\beta}-\frac{g(p_N)}{p_N}\right),\label{diff_1}
+%%\\
+%%&\frac{d}{dp} \frac{g(p)}{p}\bigg{\vert}_{p=p_1'}=-\frac{1}{\alpha}\left(\frac{g(p_1-\alpha)}{p_1-\alpha}-\frac{g(p_1)}{p_1}\right)\label{diff_2}.
+%%\end{align}
+%%Substituting (\ref{diff_1}) and (\ref{diff_2}) into (\ref{bits_equal}) we get,
+%%\begin{align}
+%%&\delta(p_N+\beta)p_N\frac{d}{dp} \frac{g(p)}{p}  \bigg{\vert}_{p=p_N'}
+%%=\gamma(p_1-\alpha)p_1\frac{d}{dp} \frac{g(p)}{p} \bigg{\vert}_{p=p_1'}.\label{bits_equal1}
+%%\end{align}
+%%It can be verified that $\dfrac{d}{dp} \dfrac{g(p)}{p}$ is decreasing function of $p$. As $p_1'<p_N'$, equation (\ref{bits_equal1}) implies $\gamma >\delta$. Hence the time for which transmission occurs in the policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$, $\left( s_{N+1}-s_1+\gamma-\delta\right)$, is greater than transmission time in policy $\{\textbf{p},\textbf{s},N\}$ i.e. $(s_{N+1}-s_1)$. As $s_{N+1}-s_1<\TRx_0$, we can choose arbitrarily small positive value of $\beta$ so that $(s_{N+1}-s_1)<(s_{N+1}-s_1+\gamma -\delta)<\TRx_0$ holds. So policy $\{\bm{\widetilde{p}},\bm{\widetilde{s}},N\}$ is feasible with constraints  (\ref{pb1_constraint_bits}), (\ref{pb1_constraint_energy}), (\ref{pb1_constraint_time}) and contradicts the optimality of policy $\{\textbf{p},\textbf{s},N\}$. This concludes that $s_{N+1}-s_1=\TRx_0$ (if $s_1\neq 0$) in optimal policy.
+%
+%Next, we prove the sufficiency of the structure. Let a policy $X$, $\{\textbf{p},\textbf{s},N\}$ follow  structure \eqref{claim1}-\eqref{claim5}. We need to show that this policy is optimal. We adopt the method of contradiction to prove this. Assume that it is not true. So, there exists another policy $Y$, $\{\textbf{p'},\textbf{s'},N'\}$ which is optimal. $Y$ abides by the Lemma \ref{lemma_increasing_power}-\ref{lemma_Q}, as $Y$ is optimal. Thus, $Y$ also follows structure \eqref{claim1}-\eqref{claim5}. Hence, our problem reduces to show that there cannot exist two different policies $X$ and $Y$ (of which $Y$ is optimal) satisfying structure \eqref{claim1}-\eqref{claim5}\footnote{Note that Lemma \ref{lemma_nobreaks} suggests that optimal solution to Problem 1 may not be unique in general, but Theorem \ref{th_algo1_1} shows that the optimal solution \textit{without breaks} in transmission is indeed unique.}.
+%
+%%\textit{Case1}: If $s_1'>s_1\ge 0$, then by Lemma \ref{transmission_duration}, $s_{N'+1}'=s_1'+\TRx_0>s_1+\TRx_0\ge s_{N+1}$. So policy $Y$ finishes after time $s_{N+1}$ and hence cannot be optimal. 
+%
+%\textit{Case1}: If $s_1'>s_1\ge 0$, then by \eqref{claim2}, $s_{N'+1}'=s_1'+\TRx_0>s_1+\TRx_0\ge s_{N+1}$. So policy $Y$ finishes after time $s_{N+1}$ and hence cannot be optimal. 
+%
+%\textit{Case2}: Suppose $s_1'=s_1$. Let $s_i'$ be the first epoch for which $p_i'\ne p_i$ for some $i \in \{1,2,..,N\}$. 
+%%By \eqref{claim3}, since $p_i$ is the minimum possible power among all epochs, $p_i'>p_i$. 
+%
+%%Suppose $p_i'>p_i$. If, in policy $Y$, transmission continues after $s_{i+1}$ i.e. $s_{N'+1}'>s_{i+1}$, then the amount of energy used by $Y$ in interval $[s_{i},s_{i+1}]$ can be lower bounded by $p_i'(s_{i+1}-s_i)$ from Lemma \ref{lemma_increasing_power}. $p_i'(s_{i+1}-s_i)$ is more than $p_i(s_{i+1}-s_i)$, which is the energy used by policy $X$. But by structure \eqref{claim4}, $X$ uses all energy available by $s_{i+1}$. So $Y$ uses more than available energy in $[s_{i},s_{i+1}]$ and is not feasible with respect to the energy constraint. 
+%
+%Suppose $p_i'>p_i$. If, in policy $Y$, transmission continues after $s_{i+1}$ i.e. $s_{N'+1}'>s_{i+1}$, then the amount of energy used by $Y$ in interval $[s_{i},s_{i+1}]$ can be lower bounded by $p_i'(s_{i+1}-s_i)$ from \eqref{claim3}. $p_i'(s_{i+1}-s_i)$ is more than $p_i(s_{i+1}-s_i)$, which is the energy used by policy $X$. But by structure \eqref{claim4}, $X$ uses all energy available by $s_{i+1}$. So $Y$ uses more than available energy in $[s_{i},s_{i+1}]$ and is not feasible with respect to the energy constraint. 
+%
+%If $s_{N'+1}'\le s_{i+1}$, then it can be easily verified by (\ref{property_decreasing}) that $Y$ transmits strictly less number of bits in interval $[s_i,s_{N'+1}]$ than $X$ in interval $[s_{i},s_{i+1}]$. Both policies being same till $s_i$, we conclude that $Y$ transmits less than $B_0$ bits and thus it is not feasible.
+%
+%When $p_i>p_i'$, symmetrical arguments follow.
+%
+%\textit{Case3}: This case argues the infeasibility when $s_1'<s_1$. Unlike other cases this case is more laborious. The idea of the proof is to show that if a optimal policy starts its transmission early and finishes earlier than policy $X$, it always takes more transmission time, which is going to violate the time constraint (\ref{pb1_constraint_time}). First, we establish that the $Y$ must be same as policy $X$ from epoch $s_2$ to an epoch $s_j$ such that $s_j=\displaystyle\max_{s_i<s_{N'+1}'} s_i$. Let $s_k'=\displaystyle\max_{s_i'<s_2}s_i'$, and transmission continue with constant power $p_k'$ till $s_{k+1}'$. Clearly $s_{k+1}'\ge s_2$. 
+%
+%If $s_{k+1}'>s_2$, transmission with a constant power $\dfrac{\ETx(s_{k+1}'^-)}{(s_{k+1}'-s_1)} $ from $s_1$ to $s_{k+1}'$ is feasible (as $p_k'$ is feasible) and $\dfrac{\ETx(s_{k+1}'^-)}{(s_{k+1}'-s_1)}<\dfrac{\ETx(s_2^-)}{(s_2-s_1)}=p_1$. 
+%%This contradicts ($\ref{claim3}$), as $p_1$, no longer remains the minimum power. So, $s_{k+1}'=s_2$. Now, let $p_{k+1}'\neq p_2$ and $s_j>s_3$. From definition of $p_2$, $p_{k+1}>p_2$. Then the amount of energy used by policy $Y$ between $s_2$ and $s_3$ is more than what is harvested. So $p_{k+1}'=p_2$ ($s'_{k+2}=s_3$) and similarly, we can show that $p'_{k+2}=p_3$.. ($ s'_{k+3}=s_4$..) till epoch $s_j$. By structure (\ref{claim5}) and Lemma \ref{lemma_Q} we can be sure that there exists atleast one epoch $s_i=t_q$ which belongs to $\textbf{s}$ as well as $\textbf{s'}$, respectively, i.e. $j\ge 2$.
+%Since $s_{N+1}=s_1+\TRx_0>s_1'+\TRx_0\ge s'_{N'+1}\ge s'_{k+1}$, $X$ exists in interval $[s_1,s'_{k+1}]$. $X$ uses atleast $p_1(s'_{k+1}-s_2)$ energy in this interval by \eqref{claim3}. But $\dfrac{\ETx(s_{k+1}'^-)}{(s_{k+1}'-s_1)}<p_1$. Hence $X$ uses more than available energy in $[s_1,s'_{k+1}]$. So, $s_{k+1}'=s_2$. Now, let $p_{k+1}'\neq p_2$ and $s_j>s_3$. From definition of $p_2$, $p_{k+1}>p_2$. Then the amount of energy used by policy $Y$ between $s_2$ and $s_3$ is more than what is harvested. So $p_{k+1}'=p_2$ ($s'_{k+2}=s_3$) and similarly, we can show that $p'_{k+2}=p_3$.. ($ s'_{k+3}=s_4$..) till epoch $s_j$. By structure (\ref{claim5}) we can be sure that there exists atleast one epoch $s_i=t_q$ which belongs to $\textbf{s}$ as well as $\textbf{s'}$, respectively, i.e. $j\ge 2$.
+%
+%\begin{figure}[htb]
+%\centering
+%\centerline{\includegraphics[width=8cm]{Theorem1_sufficient.pdf}}
+%\caption{Energy curves at Transmitter explaining \textit{Case3} in proof of Theorem \ref{th_algo1_1}}
+%\label{Theorem1_figure}
+%\end{figure}
+%
+%Now, consider the following process which creates feasible policies from policy $\{\textbf{p'},\textbf{s'},N'\}$ as shown in Fig. \ref{Theorem1_figure}. We define two pivots $l$ and $r$. Initially we set $l=s_2'$ and $r=s_{N'}'$. The transmission power right before $l$ is $u$ ($u=p_1'$ initially) and right after $r$ is $v$ ($v=p_{N'}'$ initially). Keeping the policy same from $l$ to $r$ we increase $u$ by a small amount to $u+du$ and decrease $v$ by a small amount to $v-dv$ such that the number of bits transmitted (i.e. $B_0$) remains same under this transformation. Let $s_1'$ change to $s_1'+x$ and $s_{N'+1}'$ change to $s_{N'+1}'+y$ for some $x,y>0$ (Note that $y$ is dependent on $x$). We denote such a policy by vectors $\{\textbf{p'(x)},\textbf{s'(x)},N'(x)\}$. Following Lemma \ref{lemma_increase_time}, we can conclude that $(s_{N'(x)+1}'(x)-s_1'(x))<(s_{N'+1}'-s_1')$. We continue increasing $x$ till either $u=p_2$ (in which case we change $l=s_2$) or $v=p_{N'-1}'$ (where we change $r=s_{N'-1}'$) or $s_{N'(x)+1}'(x)$ hits an epoch, say $t_j$ ($r=t_j$, $v\rightarrow\infty$ in this case). After this, we again start increasing $x$ with changed definitions. We continue this process till $x=s_1-s_1'$  or $u$ becomes equal to $v$. Note that the former stopping criteria will be met at a smaller $x$ than the later one since policy $\{\textbf{p'(x)},\textbf{s'(x)},N'(x)\}$ shares at least one epoch with policy $X$, by arguments of previous paragraph. By maintaining these rules we ensure that policy $\{\textbf{p'(x)},\textbf{s'(x)},N'(x)\}$ abides by structure \eqref{claim1}, \eqref{claim3}-\eqref{claim5} and is feasible with energy constraint. Since $\left( s_{N'(x)+1}'(x)-s_1'(x)\right)$ is decreasing with $x$, the policy is also feasible with time constraint. As this is continuous on $x$, at $x=s_1-s_1'$ we reach a policy such that $s_1'(x)=s_1$. For $x=s_1-s_1'$, if $s_{N'(x)+1}'(x)\ge s_{N+1}$ then $s_{N'+1}'-s_1'>s_{N'(x)+1}'(x)-s_1'(x)\ge s_{N+1}-s_1=\TRx_0$ and policy $Y$ is infeasible with time constraint. If $s_{N'(x)+1}'(x)< s_{N+1}$ then we can follow the arguments in \textit{Case2} to show that policy $\{\textbf{p'(x)},\textbf{s'(x)},N'(x)\}$ is infeasible, which in turn accounts for the infeasibility of policy $Y$.
+%\end{proof}
 
 
 
