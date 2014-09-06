@@ -4,52 +4,74 @@
 %
 %Now that we have gained some knowledge regarding the structure of the optimal policy, we consider an example to approach Problem 1. 
 
-Using the structure of the optimal policy, we next propose an algorithm that is shown to be optimal. 
+We next propose a procedure which gives a feasible solution satisfying most\footnote{The initial feasible solution, satisfies all structures, except the one in Lemma \ref{transmission_duration}.} of the necessary structures of the optimal policy.
 
 \textbf{INIT\_POLICY, Initial Feasible solution}:
 
-\textit{Step 1}: Identify the first energy arrival instant $t_n$, so that using $\ETx(t_n)$ energy and $\TRx_0$ time, $B_0$ or more bits can be transmitted with a constant power (say $p_c$). Solve for $\widetilde{\TRx}_0$ below.
+\textit{Step1:} Identify the first energy arrival instant $t_n$, so that using $\ETx(t_n)$ energy and $\TRx_0$ time, $B_0$ or more bits can be transmitted with a constant power (say $p_c$). Solve for $\widetilde{\TRx}_0$ below.
 \begin{align}
-&\TRx_0\left(\dfrac{\ETx(t_n)}{\TRx_0}\right)\ge B_0, \widetilde{\TRx}_0\left(\dfrac{\ETx(t_n)}{\widetilde{\TRx}_0}\right)= B_0, p_c = \dfrac{\ETx({t_n})}{\widetilde{\TRx}_0}
+&\TRx_0\left(\dfrac{\ETx(t_n)}{\TRx_0}\right)\ge B_0, \widetilde{\TRx}_0\left(\dfrac{\ETx(t_n)}{\widetilde{\TRx}_0}\right)= B_0, p_c = \dfrac{\ETx({t_n})}{\widetilde{\TRx}_0}.
 \label{INIT_POLICY_time}
 \end{align}
+ 
+\textit{Step2:} Identify the first time instance, say $T_{start}$, such that transmission with $p_c$ for $\widetilde{\TRx}_0$ time, starting from $T_{start}$ is feasible with energy constraint \eqref{pb1_constraint_energy}. Set $T_{stop} = T_{start} + \widetilde{T}_0$. This transmission policy $p_c$, will encounter atleast one energy arrival epoch (call it $t_q$), where $U(t_q) = \ETx(t_q^-)$ (See Fig. \ref{straight}). If $U(T_{stop}) = \ETx(T_{stop}^-)$ as shown in Fig. \ref{straight}(a), then terminate with $p_c$. Otherwise, set $\widetilde{B} = (T_{stop} - t_q)g(p_c)$, which denotes the number of bits to be sent after time $t_q$. Then apply Algorithm 1 from \cite{Yang} from time $t_q$ with $\widetilde{B}$ bits to transmit (shown in Fig. \ref{straight} (b)). Update $T_{stop}$, where this policy ends. Note that, by property of Algorithm 1 from \cite{Yang}, $U(T_{stop}) = \ETx(T_{stop}^-)$.
 
-\textit{Step 2}: Identify the first time instance, say $T_{start}$, such that transmission with $p_c$ for $\widetilde{\TRx}_0$ time, starting from $T_{start}$ is feasible with energy constraint \eqref{pb1_constraint_energy}. Set $T_{stop} = T_{start} + \widetilde{T}_0$. This transmission policy $p_c$, will encounter atleast one energy arrival epoch (call it $t_q$), where $U(t_q) = \ETx(t_q^-)$ (See Fig. \ref{straight}). If $U(T_{stop}) = \ETx(T_{stop}^-)$ as shown in Fig. \ref{straight}(a), then terminate with $p_c$. Otherwise, set $\widetilde{B} = (T_{stop} - t_q)g(p_c)$, which denotes the number of bits to be sent after time $t_q$. Then apply Algorithm 1 from \cite{Yang} from time $t_q$ with $\widetilde{B}$ bits to transmit (shown in Fig. \ref{straight} (b)). Update $T_{stop}$, where this policy ends. Note that, by property of Algorithm 1 from \cite{Yang}, $U(T_{stop}) = \ETx(T_{stop}^-)$.
-
-\textbf{Algorithm 1}:
-
-Step 3: Increase $p_r$ till $U(t_r') = \ETx(t_r'^-)$ for some $t_r'$ as shown in Fig. \ref{figure_Algorithm1}(a). If $p_r$ goes to infinity, set $p_r$ to the transmission power at $t_r^-$ and $t_r$ to the last epoch before $t_r$ where $U(t_k) = \ETx(t_k^-)$. Update $T_{stop}$ to where this policy ends. Calculate $p_l'$ such that $B_0$ bits are transmitted between $T_{stop}$ and $T_{start}'$, where $T_{start}'$ is where transmission with $p_l'$ begins.
-
-Step 4: If $p_l'$ is feasible, which is the case shown in Fig. \ref{figure_Algorithm1}(a), set $p_l$ to $p_l'$ and $p_r$ to $p_r'$ (with $t_r$ to $t_r'$). $T_{start}$ is changed to $T_{start}'$. \textbf{GOTO} Step 3. 
-
-Step 5: If $p_l'$ is not feasible, as shown in Fig. \ref{figure_Algorithm1}(b), then $p_l'$ is increased until it becomes feasible. $t_l'$ is set to the first instance where $U(t_l') = \ETx(t_l'^-)$ as shown in Fig. \ref{figure_Algorithm1}(c). Calculate $p_r$ such that the policy transmits $B_0$ bits. Set $t_l = t_l'$. \textbf{GOTO} Step 3.
-
-\textbf{Termination}:
-
-Step 6: If in any iteration at the end of Step 4 or Step 5, $T_{stop} - T_{start} = \TRx_0$ or $T_{start} = 0$, terminate.
-
-%Suppose we are given that the receiver can be \textit{on} for a maximum duration of $\TRx_0$. Our goal is to find a transmission policy so that we can minimize the total time at which the transmission of all $B_0$ bits is completed. To do this, we shall first find a feasible solution i.e. one which satisfies all constraints (\ref{pb1_constraint_bits})-(\ref{pb1_constraint_time}) and keep improving upon it, until we have a solution that follows all structural results in Lemma \ref{lemma_increasing_power}-\ref{transmission_duration} (as shown in Theorem \ref{th_algo1_1} later,  these Lemmas form a sufficient condition as well).
-
-We need an initial feasible solution to begin with. For this, we find the minimum energy required by the transmitter so that the transmission can be completed in duration $\TRx_0$ with a constant power. That is, the first $\ETx(t_n)$ such that
-\begin{equation}
-\TRx_0 g\left(\frac{\ETx(t_n)}{\TRx_0}\right)\geq B_0.
-\end{equation}
-Let $\widetilde{\TRx}_0\le \TRx_0$ be the time duration such that
-\begin{equation}
-\widetilde{\TRx}_0 g\left(\frac{\ETx(t_n)}{\widetilde{\TRx}_0}\right)=B_0.
-\end{equation}
-Let $p_c=\frac{\ETx(t_n)}{\widetilde{\TRx}_0}$. We try to transmit with $p_c$ power starting at time $t=0$. If it does not violate the energy constraint (\ref{pb1_constraint_energy}), we are done with the optimal solution and our transmission is completed in $\widetilde{\TRx}_0<\TRx_0$ time.
-
-If not, we start the transmission at the earliest possible time, such that the transmission with $p_c$ for $\widetilde{\TRx}_0$ time is feasible with respect to (\ref{pb1_constraint_energy}). This transmission policy, will encounter atleast one epoch where total energy consumed till that epoch is equal to the total energy harvested upto it. Let time $t_q$ be the first point where this happens. Let $R$ and $S$ denote the starting and ending time, respectively, of transmission with power $p_c$. Clearly, $S-R=\widetilde{\TRx}_0$. This is shown in Fig. \ref{straight} (a).  Till now we have not argued why we chose such a policy to start with. In fact, Lemma \ref{lemma_Q} shows that this starting solution is a `good' estimate of policy at and before time $t_q$, as both the optimal policy and the above policy run out of all their energy at epoch $t_q$. 
-
-Now, according to Lemma \ref{lemma_energy_consumed}, the optimal policy must finish all available energy when it stops transmission. If transmitting with $p_c$ power does use up all the energy (Fig. \ref{straight} (a)), then we accept the constant power transmission with $p_c$ as our initial policy (line number \ref{init_policy_CP} in Algorithm \ref{init_policy}). If it does not finish up all of $\ETx(t_n)$ with $p_c$ till the end of transmission (shown in Fig. \ref{straight} (b)), we choose a better policy after time $t_q$. Let $\widetilde{B}$ bits be transmitted with power $p_c$ until $S$, which is calculated in line number \ref{init_policy_bits_t_q} of procedure INIT\_POLICY in Algorithm \ref{init_policy}. Now, we require our transmission policy to send $\widetilde{B}$ bits after time $t_q$, in as little time as possible (and of course, before $S$), keeping in mind that the policy should use all $\ETx(t_n)$ amount of energy till it finishes. Algorithm 1 in \cite{Yang} does the job for us. Hence in this case, we choose transmission with $p_c$ till $t_q$ and then the solution of Algorithm 1 in \cite{Yang} after time $t_q$. 
-
+Now, we describe the algorithm in steps. In any iteration, let $t_{l}$ and $t_{r}$ be the first and last energy arrival epochs where the power of transmission changes. $p_l$ and $p_r$ are the transmission power before $t_l$ and after $t_r$ respectively. $T_{start}$ and $T_{stop}$ are the start and finish time of policy, found in any iteration. $t_l, t_r, p_l, p_r, T_{start}, T_{stop}$ get updated to $t_l', t_r', p_l', p_r', T'_{start}, T'_{stop}$ over a iteration. The policy found by the Algorithm in-between time $t_l$ and $t_r$ is stored in array \textbf{p} and \textbf{s}. The possible cases that can happen in an iteration of the Algorithm are shown in Fig. \ref{figure_Algorithm1}.
 \begin{figure}
 \centering
   \centerline{\includegraphics[width=8cm]{straight.eps}}
 \caption{Figure showing point $t_q$.}\label{straight}
 \end{figure}
 
+
+
+
+\textbf{Algorithm 1}:
+
+\textit{Step3:} Increase $p_r$ till it hits the boundary of energy constraint \eqref{pb1_constraint_energy} as shown in Fig. \ref{figure_Algorithm1}(a). Make this power $p_r'$ and the epoch where it hits \eqref{pb1_constraint_energy} as $t_r'$. So, $U(t_r') = \ETx(t_r'^-)$. Set $T_{stop}'$ to where this policy ends. Calculate $p_l'$ such that decrease in bits transmission from $p_r$ to $p_r'$ is compensated by $p_l'$.
+\begin{align}
+&\nonumber g(p_r)(T_{stop}-t_r)-g(p_r')(T_{stop}'-t_r')\\
+&=g(p_l')\frac{\ETx(t_l'^-)}{p_l'}-g(p_l)(t_l-T_{start}).
+\label{eq_example1}
+\end{align}
+
+\textit{Step 4}: If $p_l'$ is feasible, which is the case shown in Fig. \ref{figure_Algorithm1}(a), set $T_{start}'=t_l-\frac{\ETx(t_l'^-)}{p_l'}$. Iterate to \textit{Step3}. 
+
+If $p_l'$ is not feasible, as shown in Fig. \ref{figure_Algorithm1}(b), then $p_l'$ is increased until it becomes feasible. $t_l'$ is set to the first instance where $U(t_l') = \ETx(t_l'^-)$ as shown in Fig. \ref{figure_Algorithm1}(c). Similar to \textit{Step 3}, calculate $p_r'$ such that the policy transmits $B_0$ bits and update $t_r',p_r',T_{stop}'$ accordingly. Iterate to \textit{Step3}.
+
+
+
+
+\textit{Step5:} Going back to \textit{Step 3}, suppose $p_r$ could be increased till infinity without violating \eqref{pb1_constraint_energy}. This happens when there in no energy arrival between $t_r$ and $T_{stop}$, as shown in Fig. \ref{figure_Algorithm1}(d). In this case, set $p_r'$ to the transmission power at $t_r^-$, $t_r$ to epoch where $p_r'$ starts and $T_{stop}'=t_r$. Similar to \textit{Step3}, calculate $p_l'$ from \eqref{eq_example1} and proceed to \textit{Step4}. 
+
+\textit{Termination}: If in any iteration at the end of \textit{Step4}, $T_{stop}' - T_{start}' \ge \TRx_0$ or $T_{start}' = 0$, then terminate. If $T_{start}' = 0$, then output with the policy found along the Algorithm. If not, calculate $T_{start}'$ and $T_{stop}'$, according to the equations,
+\begin{align}
+&\nonumber (t_l-T_{start}')\frac{\ETx(t_l^-)}{t_l-T_{start}}+(T_{stop}'-t_r)\frac{\ETx(T_{stop}^-)}{T_{stop}'-t_r}\\
+&=g(p_l)(t_l-T_{start})+g(p_r)(T_{stop}-t_r)\\
+&T_{stop}'-T_{start}'=\TRx_0.
+\end{align}
+Update $p_l'=\frac{\ETx(t_l^-)}{t_l-T_{start}}$, $p_r'=\frac{\ETx(T_{stop}^-)}{T_{stop}'-t_r}$. Output with this policy. 
+
+Next Lemma shows that point $t_q$ selected by INIT\_POLICY is a 'good' starting solution.
+\begin{lemma}
+In every optimal solution, at energy arrival epoch $t_q$, $U(t_q)=\ETx(t_q^-)$.
+\label{lemma_Q}
+\end{lemma}
+%Suppose we are given that the receiver can be \textit{on} for a maximum duration of $\TRx_0$. Our goal is to find a transmission policy so that we can minimize the total time at which the transmission of all $B_0$ bits is completed. To do this, we shall first find a feasible solution i.e. one which satisfies all constraints (\ref{pb1_constraint_bits})-(\ref{pb1_constraint_time}) and keep improving upon it, until we have a solution that follows all structural results in Lemma \ref{lemma_increasing_power}-\ref{transmission_duration} (as shown in Theorem \ref{th_algo1_1} later,  these Lemmas form a sufficient condition as well).
+
+%We need an initial feasible solution to begin with. For this, we find the minimum energy required by the transmitter so that the transmission can be completed in duration $\TRx_0$ with a constant power. That is, the first $\ETx(t_n)$ such that
+%\begin{equation}
+%\TRx_0 g\left(\frac{\ETx(t_n)}{\TRx_0}\right)\geq B_0.
+%\end{equation}
+%Let $\widetilde{\TRx}_0\le \TRx_0$ be the time duration such that
+%\begin{equation}
+%\widetilde{\TRx}_0 g\left(\frac{\ETx(t_n)}{\widetilde{\TRx}_0}\right)=B_0.
+%\end{equation}
+%Let $p_c=\frac{\ETx(t_n)}{\widetilde{\TRx}_0}$. We try to transmit with $p_c$ power starting at time $t=0$. If it does not violate the energy constraint (\ref{pb1_constraint_energy}), we are done with the optimal solution and our transmission is completed in $\widetilde{\TRx}_0<\TRx_0$ time.
+%
+%If not, we start the transmission at the earliest possible time, such that the transmission with $p_c$ for $\widetilde{\TRx}_0$ time is feasible with respect to (\ref{pb1_constraint_energy}). This transmission policy, will encounter atleast one epoch where total energy consumed till that epoch is equal to the total energy harvested upto it. Let time $t_q$ be the first point where this happens. Let $R$ and $S$ denote the starting and ending time, respectively, of transmission with power $p_c$. Clearly, $S-R=\widetilde{\TRx}_0$. This is shown in Fig. \ref{straight} (a).  Till now we have not argued why we chose such a policy to start with. In fact, Lemma \ref{lemma_Q} shows that this starting solution is a `good' estimate of policy at and before time $t_q$, as both the optimal policy and the above policy run out of all their energy at epoch $t_q$. 
+%
+%Now, according to Lemma \ref{lemma_energy_consumed}, the optimal policy must finish all available energy when it stops transmission. If transmitting with $p_c$ power does use up all the energy (Fig. \ref{straight} (a)), then we accept the constant power transmission with $p_c$ as our initial policy (line number \ref{init_policy_CP} in Algorithm \ref{init_policy}). If it does not finish up all of $\ETx(t_n)$ with $p_c$ till the end of transmission (shown in Fig. \ref{straight} (b)), we choose a better policy after time $t_q$. Let $\widetilde{B}$ bits be transmitted with power $p_c$ until $S$, which is calculated in line number \ref{init_policy_bits_t_q} of procedure INIT\_POLICY in Algorithm \ref{init_policy}. Now, we require our transmission policy to send $\widetilde{B}$ bits after time $t_q$, in as little time as possible (and of course, before $S$), keeping in mind that the policy should use all $\ETx(t_n)$ amount of energy till it finishes. Algorithm 1 in \cite{Yang} does the job for us. Hence in this case, we choose transmission with $p_c$ till $t_q$ and then the solution of Algorithm 1 in \cite{Yang} after time $t_q$. 
 %\begin{algorithm}
 %%\algsetup{linenosize=\tiny}
 %%\alglinenumber{linenosize=\scriptsize}
@@ -89,11 +111,6 @@ Now, according to Lemma \ref{lemma_energy_consumed}, the optimal policy must fin
 %\end{algorithm}
 
 
-
-\begin{lemma}
-In every optimal solution, at energy arrival epoch $t_q$, $U(t_q)=\ETx(t_q^-)$.
-\label{lemma_Q}
-\end{lemma}
 %\begin{proof}
 %We shall prove this by contradiction. First, we make the following claims:
 %
@@ -132,35 +149,35 @@ In every optimal solution, at energy arrival epoch $t_q$, $U(t_q)=\ETx(t_q^-)$.
 %%If the optimal policy does have a power higher than $p_c$ at $t_q$, then it must have the same power of transmission either from some epoch, say $t_k$, or from the beginning of transmission. If $t_k>R$, we can show that $p_c$ becomes infeasible with respect to energy constraint (\ref{pb1_constraint_energy}) at $t_k$. If $t_k<R$, $p$ becomes infeasible with energy constraint \eqref{pb1_constraint_energy} at time $R$. Now, only thing left is the optimal policy begins transmission with power $p$. If so, then it has to begin transmission after time $R$ which follows from equation (\ref{eqlemmaQ2}). This violates \textit{Claim 1}. Therefore every optimal transmission policy must use all energy till epoch $t_q$.
 %\end{proof}
 
-Now that we have an initial feasible solution, we shall proceed to improve upon this policy as follows. The formal algorithm is presented as Algorithm \ref{Algorithm1}. We explain the procedure by an example. Assume that the starting feasible solution is given by the constant power policy, as shown by dotted line in Fig. \ref{figure_example_Algorithm1} (a), where $t_q=t_2$. We first assign the following initial values for the initial feasible policy - transmission power left of $t_2$ as $p_l=p_c$, power right of $t_2$ as $p_r=p_c$, start time $T_{start}=R$, stop time $T_{stop}=S$, epoch at which $p_l$ ends as $t_l=t_2$, epoch at which $p_r$ starts as $t_r=t_2$. Now, we increase $p_r$, keeping $t_r$ fixed, till it reaches $p_r'$ which hits epoch $t_3$, as shown by the solid line in Fig \ref{figure_example_Algorithm1} (a). As in total we need to transmit $B_0$ bits, the decrease in bits transferred by $p_r$ to $p_r'$ (RHS of \eqref{eq_example1}) is compensated by calculating appropriate $p_l'$ according to the following equation, where LHS represents the increase in bits transmitted from $p_l$ to $p_l'$.
-\begin{align}
-&g(p_l')\frac{\ETx(t_l^-)}{p_l'}-g(p_l)(t_l-T_{start})=-g(p_r)(T_{stop}-t_r)\nonumber\\
-&+g(p_r')(\mathcal{P}(t_r,t_3))\frac{\ETx(T_{stop}^-)-ETx(t_r^-)}{\mathcal{P}(t_r,t_3)}.
-\label{eq_example1}
-\end{align}   
-Having got a feasible $p_l'$, as shown in Fig. \ref{figure_example_Algorithm1} (a), we assign $T_{start}'$ with the point where $p_l'$ starts, $T_{stop}'$ with the point where $p_r'$ ends. $t_r'$ gets the value $t_3$ and $t_l'$ remains same as $t_l=t_2$. Note that parameters $\{T_{start}',T_{stop}',t_l',t_r',p_l',p_r'\}$ define the policy at the end of first iteration. 
-
-In the next iteration, the portion of transmission between $t_l'=t_2$ to $t_r'=t_3$ is not updated. In this iteration, we try to increase $p_r'$ about $t_r'$ till it hits the feasibility equation \eqref{pb1_constraint_energy} of energy. $p_r'$ could virtually be increased to infinity. But transmission with infinite power for 0 time does not transmit any bits. So we assign $t_r''=t_2$ and $p_r''=\mathcal{P}(t_2,t_3)$. With this change in $p_r'$ to $p_r''$, we again calculate $p_l''$ which compensates the decrease in bits transferred after $t_r'$. But the calculated $p_l''$ becomes infeasible at $t_1$ as shown in Fig. \ref{figure_example_Algorithm1} (b). Hence, we set $p_l''$ to the maximum feasible power $\mathcal{P}(t_1,t_2)$ as shown in Fig. \ref{figure_example_Algorithm1} (c). With this $p_l''$, we re-calculate $p_r''$, so as to transmit $B_0$ bits in total. $t_l''$ is assigned to $t_1$, $t_r''$ remains $t_3$. $T_{start}''$ and $T_{stop}''$ as calculated to values marked in Fig. \ref{figure_example_Algorithm1} (c). The final policy at the end of second iteration is shown by solid line in Fig. \ref{figure_example_Algorithm1} (c). Like this, we continue to the third iteration, by improving the policy (to finish earlier) before $t_l''$ and after $t_r''$ and so on.
-
-
-\begin{figure}
-\centering
-  \centerline{\includegraphics[width=8cm]{example_algo1.eps}}
-\caption{Figures showing (a) first  and (c) second iteration of the Algorithm \ref{Algorithm1} through an example. (b) representes an intermidiate step in second iteration. In any diagram, the dashed line represent previous iteration policy and solid line is the present iteration policy.}\label{figure_example_Algorithm1}
-\end{figure}
-
-
-Now we describe the algorithm in steps. In any iteration, let $t_{l}$ and $t_{r}$ be the first and last energy arrival epochs where the power of transmission changes. $p_l$ and $p_r$ are the transmission power before $t_l$ and after $t_r$ respectively. $T_{start}$ and $T_{stop}$ are the start and finish time of the policy, found in any iteration. The policy found by the Algorithm in-between time $t_l$ and $t_r$ is stored in array \textbf{p} and \textbf{s}. The possible cases that can happen in an iteration of the Algorithm are shown in Fig. \ref{figure_Algorithm1}. 
-
-Step1: The Algorithm tries to increase $p_r$ as much as possible till it hits the boundary of energy constraint \eqref{pb1_constraint_energy} as shown in Fig. \ref{figure_Algorithm1}(a). Then the Algorithm calculates the possible power $p_l'$ such that it transmits same number of bits in total with the previous iteration policy, i.e. $B_0$, as shown in line number \ref{algo_bits_left_1} and \ref{algo_bits_left_2} of Algorithm \ref{Algorithm1}. 
-
-Step2: If $p_l'$ is feasible, which is the case shown in Fig. \ref{figure_Algorithm1}(a), the policy changes $p_l$ to $p_l'$ and $p_r$ to $p_r'$ (with $t_r$ to $t_r'$). $T_{start}$ and $T_{stop}$ are changed accordingly to start and end points of $p_l'$  and $p_r'$. 
-
-Step3: If $p_l'$ is not feasible, as shown in Fig. \ref{figure_Algorithm1}(b), then $p_l'$ is set to be the maximum possible feasible power from $t_l$, as shown in Fig. \ref{figure_Algorithm1}(c). Now, $p_r'$ is calculated so as to settle the transmission of equal number of bits as the previous iteration. 
-%We can be sure that $p_r'$ calculated now, would not be infeasible. 
-In this case $t_l$ gets updated to $t_l'$.  
-
-Going back to the first step of the algorithm where we were increasing $p_r$, it could happen, as shown in Fig. \ref{figure_Algorithm1}(d), that $p_r$ can increase to infinity without violating the energy constraint \eqref{pb1_constraint_energy}. This happens when there is no energy epoch between $t_r$ and $T_{stop}$. In this scenario, transmission is stopped at $t_r$,i.e. $T_{stop}$ gets updated to $t_r$ and both $t_r$ and $p_r$ are set to the last values in array \textbf{s},\textbf{p} receptively. This is shown in Fig. \ref{figure_Algorithm1}(d). Now, the Algorithm proceeds to calculate $p_l'$ as done in Step1, and continues as before to check whether $p_l'$ is feasible and decides according to Step2 or Step3.
+%Now that we have an initial feasible solution, we shall proceed to improve upon this policy as follows. The formal algorithm is presented as Algorithm \ref{Algorithm1}. We explain the procedure by an example. Assume that the starting feasible solution is given by the constant power policy, as shown by dotted line in Fig. \ref{figure_example_Algorithm1} (a), where $t_q=t_2$. We first assign the following initial values for the initial feasible policy - transmission power left of $t_2$ as $p_l=p_c$, power right of $t_2$ as $p_r=p_c$, start time $T_{start}=R$, stop time $T_{stop}=S$, epoch at which $p_l$ ends as $t_l=t_2$, epoch at which $p_r$ starts as $t_r=t_2$. Now, we increase $p_r$, keeping $t_r$ fixed, till it reaches $p_r'$ which hits epoch $t_3$, as shown by the solid line in Fig \ref{figure_example_Algorithm1} (a). As in total we need to transmit $B_0$ bits, the decrease in bits transferred by $p_r$ to $p_r'$ (RHS of \eqref{eq_example1}) is compensated by calculating appropriate $p_l'$ according to the following equation, where LHS represents the increase in bits transmitted from $p_l$ to $p_l'$.
+%\begin{align}
+%&g(p_l')\frac{\ETx(t_l^-)}{p_l'}-g(p_l)(t_l-T_{start})=-g(p_r)(T_{stop}-t_r)\nonumber\\
+%&+g(p_r')(\mathcal{P}(t_r,t_3))\frac{\ETx(T_{stop}^-)-ETx(t_r^-)}{\mathcal{P}(t_r,t_3)}.
+%\label{eq_example1}
+%\end{align}   
+%Having got a feasible $p_l'$, as shown in Fig. \ref{figure_example_Algorithm1} (a), we assign $T_{start}'$ with the point where $p_l'$ starts, $T_{stop}'$ with the point where $p_r'$ ends. $t_r'$ gets the value $t_3$ and $t_l'$ remains same as $t_l=t_2$. Note that parameters $\{T_{start}',T_{stop}',t_l',t_r',p_l',p_r'\}$ define the policy at the end of first iteration. 
+%
+%In the next iteration, the portion of transmission between $t_l'=t_2$ to $t_r'=t_3$ is not updated. In this iteration, we try to increase $p_r'$ about $t_r'$ till it hits the feasibility equation \eqref{pb1_constraint_energy} of energy. $p_r'$ could virtually be increased to infinity. But transmission with infinite power for 0 time does not transmit any bits. So we assign $t_r''=t_2$ and $p_r''=\mathcal{P}(t_2,t_3)$. With this change in $p_r'$ to $p_r''$, we again calculate $p_l''$ which compensates the decrease in bits transferred after $t_r'$. But the calculated $p_l''$ becomes infeasible at $t_1$ as shown in Fig. \ref{figure_example_Algorithm1} (b). Hence, we set $p_l''$ to the maximum feasible power $\mathcal{P}(t_1,t_2)$ as shown in Fig. \ref{figure_example_Algorithm1} (c). With this $p_l''$, we re-calculate $p_r''$, so as to transmit $B_0$ bits in total. $t_l''$ is assigned to $t_1$, $t_r''$ remains $t_3$. $T_{start}''$ and $T_{stop}''$ as calculated to values marked in Fig. \ref{figure_example_Algorithm1} (c). The final policy at the end of second iteration is shown by solid line in Fig. \ref{figure_example_Algorithm1} (c). Like this, we continue to the third iteration, by improving the policy (to finish earlier) before $t_l''$ and after $t_r''$ and so on.
+%
+%
+%\begin{figure}
+%\centering
+%  \centerline{\includegraphics[width=8cm]{example_algo1.eps}}
+%\caption{Figures showing (a) first  and (c) second iteration of the Algorithm \ref{Algorithm1} through an example. (b) representes an intermidiate step in second iteration. In any diagram, the dashed line represent previous iteration policy and solid line is the present iteration policy.}\label{figure_example_Algorithm1}
+%\end{figure}
+%
+%
+%Now we describe the algorithm in steps. In any iteration, let $t_{l}$ and $t_{r}$ be the first and last energy arrival epochs where the power of transmission changes. $p_l$ and $p_r$ are the transmission power before $t_l$ and after $t_r$ respectively. $T_{start}$ and $T_{stop}$ are the start and finish time of the policy, found in any iteration. The policy found by the Algorithm in-between time $t_l$ and $t_r$ is stored in array \textbf{p} and \textbf{s}. The possible cases that can happen in an iteration of the Algorithm are shown in Fig. \ref{figure_Algorithm1}. 
+%
+%Step1: The Algorithm tries to increase $p_r$ as much as possible till it hits the boundary of energy constraint \eqref{pb1_constraint_energy} as shown in Fig. \ref{figure_Algorithm1}(a). Then the Algorithm calculates the possible power $p_l'$ such that it transmits same number of bits in total with the previous iteration policy, i.e. $B_0$, as shown in line number \ref{algo_bits_left_1} and \ref{algo_bits_left_2} of Algorithm \ref{Algorithm1}. 
+%
+%Step2: If $p_l'$ is feasible, which is the case shown in Fig. \ref{figure_Algorithm1}(a), the policy changes $p_l$ to $p_l'$ and $p_r$ to $p_r'$ (with $t_r$ to $t_r'$). $T_{start}$ and $T_{stop}$ are changed accordingly to start and end points of $p_l'$  and $p_r'$. 
+%
+%Step3: If $p_l'$ is not feasible, as shown in Fig. \ref{figure_Algorithm1}(b), then $p_l'$ is set to be the maximum possible feasible power from $t_l$, as shown in Fig. \ref{figure_Algorithm1}(c). Now, $p_r'$ is calculated so as to settle the transmission of equal number of bits as the previous iteration. 
+%%We can be sure that $p_r'$ calculated now, would not be infeasible. 
+%In this case $t_l$ gets updated to $t_l'$.  
+%
+%Going back to the first step of the algorithm where we were increasing $p_r$, it could happen, as shown in Fig. \ref{figure_Algorithm1}(d), that $p_r$ can increase to infinity without violating the energy constraint \eqref{pb1_constraint_energy}. This happens when there is no energy epoch between $t_r$ and $T_{stop}$. In this scenario, transmission is stopped at $t_r$,i.e. $T_{stop}$ gets updated to $t_r$ and both $t_r$ and $p_r$ are set to the last values in array \textbf{s},\textbf{p} receptively. This is shown in Fig. \ref{figure_Algorithm1}(d). Now, the Algorithm proceeds to calculate $p_l'$ as done in Step1, and continues as before to check whether $p_l'$ is feasible and decides according to Step2 or Step3.
 
 \begin{figure}
 \centering
