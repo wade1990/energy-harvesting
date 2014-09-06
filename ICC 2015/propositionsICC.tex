@@ -8,20 +8,20 @@ In an optimal solution $\{\bm{p},\bm{s},N\}$ of Problem 1, if $p_i\neq 0$, $p_i\
 \end{lemma}
  
 \begin{proof}
-
-We prove this by contradiction. Assume that the optimal policy (say $X$), with $\{\bm{p},\bm{s},N\}$ violates the condition stated in Lemma \ref{lemma_increasing_power}. Let $p_i\neq 0$ be the first transmission power such that $\exists k<i:\ p_i<p_k $. Let $j$ be the maximum such index less than $i$ such that $p_i<p_j$. 
-
+The essentially follows from concavity of $g(p)$.
+%We prove this by contradiction. Assume that the optimal policy (say $X$), with $\{\bm{p},\bm{s},N\}$ violates the condition stated in Lemma \ref{lemma_increasing_power}. Let $p_i\neq 0$ be the first transmission power such that $\exists k<i:\ p_i<p_k $. Let $j$ be the maximum such index less than $i$ such that $p_i<p_j$. 
 %
-%\begin{lemma}
-%The transmission power in every optimal solution to Problem 1 is non-decreasing with time whenever the receiver is \textit{on}.
-%\label{lemma_increasing_power}
-%\end{lemma}
-%\begin{proof}
-%We prove this by contradiction. The following two cases arise depending on whether the receiver is \textit{on} or \textit{off}.
-
-$Case\;1:$ When $j=i-1$, the proof follows similar to Lemma 1 in \cite{Yang}.
-
-$Case\;2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{j+1},..,p_{i-1}$ and $p_i<p_{j}$. So, $p_{i-1},..,p_{j+1}<p_j$. Since $i$ is the  minimum index violating the condition stated in Lemma \ref{lemma_increasing_power}, $p_{i-1},..,p_{j+1}=0$. Now, consider a policy $W$ where the transmission power is same as the optimal policy before time $s_j$ and after time $s_{i+1}$. From $s_j$ to $s_j'=s_j+s_{i}-s_{j+1}$, $W$ keeps the receiver \textit{off} (so transmitter does not transmit in this duration) and from $s_j'$ to $s_{i}$ it transmits at power $p_j$. This policy still transmits equal number of bits and ends at the same time as the optimal policy $X$. Now that $W$ reduces to the structure of $X$ in \textit{Case 1} from time $s_j'$ to $s_{i+1}$ and the proof would follow similarly.
+%%
+%%\begin{lemma}
+%%The transmission power in every optimal solution to Problem 1 is non-decreasing with time whenever the receiver is \textit{on}.
+%%\label{lemma_increasing_power}
+%%\end{lemma}
+%%\begin{proof}
+%%We prove this by contradiction. The following two cases arise depending on whether the receiver is \textit{on} or \textit{off}.
+%
+%$Case\;1:$ When $j=i-1$, the proof follows similar to Lemma 1 in \cite{Yang}.
+%
+%$Case\;2:$ When $j<i-1$, by our assumption on choosing $j$, $p_i>p_{j+1},..,p_{i-1}$ and $p_i<p_{j}$. So, $p_{i-1},..,p_{j+1}<p_j$. Since $i$ is the  minimum index violating the condition stated in Lemma \ref{lemma_increasing_power}, $p_{i-1},..,p_{j+1}=0$. Now, consider a policy $W$ where the transmission power is same as the optimal policy before time $s_j$ and after time $s_{i+1}$. From $s_j$ to $s_j'=s_j+s_{i}-s_{j+1}$, $W$ keeps the receiver \textit{off} (so transmitter does not transmit in this duration) and from $s_j'$ to $s_{i}$ it transmits at power $p_j$. This policy still transmits equal number of bits and ends at the same time as the optimal policy $X$. Now that $W$ reduces to the structure of $X$ in \textit{Case 1} from time $s_j'$ to $s_{i+1}$ and the proof would follow similarly.
 
 
 
