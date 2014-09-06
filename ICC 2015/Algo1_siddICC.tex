@@ -186,16 +186,7 @@ In every optimal solution, at energy arrival epoch $t_q$, $U(t_q)=\ETx(t_q^-)$.
   \centerline{\includegraphics[width=8cm]{Algorithm1.eps}}
 \caption{Figures showing any iteration of the Algorithm \ref{Algorithm1}. The solid line represents the transmission policy in the previous iteration. The dash dotted lines in (a), (b), (c), (d) represent the possible configurations of policy in the current iteration.}\label{figure_Algorithm1}
 \end{figure}
-
-This is how the algorithm proceeds to generate a new transmission policy in every iteration, which begins and ends earlier than the policy given by the previous iteration, until a point is reached where either $T_{stop}-T_{start}>\TRx_0$ or $T_{start}=0$. Suppose the Algorithm terminates with $T_{start}=0$ and $T_{start}-T_{stop}\le\TRx_0$, then the policy at this iteration is the optimal policy, as will be proved in Theorem \ref{th_algo1_2}. 
-
-
-For the case where the algorithm terminates with $T_{stop}-T_{start}>\TRx_0$, let $\{T_{start}',T_{stop}',p_l',p_r',t_l',t_r'\}$ be the values in the termination iteration and $\{T_{start},T_{stop},p_l,p_r,t_l,t_r$ be the values in the previous iteration. Then, the possible valid configurations can be one of the three shown in Fig. \ref{figure_Algorithm1} (a) (c) (d). Note that $\ETx(T_{stop}^-)=\ETx(T_{stop}'^-)$ in all the cases. (In case Fig. \ref{figure_Algorithm1} (d) we can assume that $T_{stop}'=t_r^+$ and transmission exists after $t_r$, but with infinite power. Since transmitting with infinite power for $0$ time does not transmit any bits, we would transmit the same number of bits, as we did prior to this modification). Thus, by Lemma \ref{lemma_increase_time}, we can verify that $(T_{stop}'-T_{start}')>(T_{stop}-T_{start})$. Since $(T_{stop}'-T_{start}')>\TRx_0>(T_{stop}-T_{start})$, there must exist a solution to equation presented in line number \ref{algo_solve_eqn} of Algorithm \ref{Algorithm1}. Let the policy obtained from the solution start and end at $T_{start}''$ and $T_{stop}''$. Then $T_{stop}''$ and $T_{start}''$ would lie in-between $T_{stop}$,$T_{stop}'$ and $T_{start}$,$T_{start}'$ respectively. Also, $T_{stop}''-T_{start}''=\TRx_0$.
-
-
-
-
-So we can conclude by stating that, the solution to Algorithm \ref{Algorithm1} satisfies Lemma \ref{transmission_duration}. Now, according to the definition of $t_n$ and $t_q$ in line number \ref{init_policy_Etn} and \ref{init_policy_t_q} of INIT\_POLICY, $t_q\le t_n$ and $\ETx(t_q)<\ETx(t_n)$. Since $t_n$ is defined as the first energy arrival epoch by which $B_0$ bits can be transmitted in $\TRx_0$ time, any transmission policy which ends at or before $t_n$ should take more than $\TRx_0$ time to transmit all of $B_0$ bits. As $t_q\le t_n$, we are guaranteed that no transmission policy can finish at or before $t_q$. Hence in the iterations of the algorithm $t_r$ can never decrease beyond $t_q$. As $t_q$ is present in the initial solution, $t_q$ always exists in the final solution to Algorithm \ref{Algorithm1}.   
+ 
 \begin{theorem}
 A transmission policy $\{\textbf{p},\textbf{s},N\}$ is an optimal solution to Problem 1 if and only if it satisfies the following structure.
 \label{th_algo1_1}
@@ -211,9 +202,9 @@ A transmission policy $\{\textbf{p},\textbf{s},N\}$ is an optimal solution to Pr
 & U(s_i)=\ETx(s_i^-), \forall i\in \{2,..,N+1\};
 \label{claim4}
 \\
-&\nonumber s_{N+1}-s_1=\mathcal{R}_0, 	 \ \ \ \ 						\text{ if } s_1>0 \text{ or }
+&\nonumber s_{N+1}-s_1=\TRx_0, 	 \ \ \ \ 						\text{ if } s_1>0 \text{ or }
 \\
-& s_{N+1}\le \mathcal{R}_0,				\ \ \ \ \ \ \ \ \ \				\text{ if } s_1=0;
+& s_{N+1}\le \TRx_0,				\ \ \ \ \ \ \ \ \ \				\text{ if } s_1=0;
 \label{claim2}
 \\
 &\exists s_j:s_j\in \textbf{s} \text{ and } s_j=t_q.
@@ -232,25 +223,25 @@ The proposed transmission policy is an optimal solution to Problem 1.
 \begin{proof}
 To prove that the policy (say $\{\textbf{p},\textbf{s},N\}$) given by Algorithm \ref{Algorithm1} is optimal, it is sufficient to show that it abides by the structure presented in Theorem \ref{th_algo1_1}.
 
-To begin with, we prove that the power allocations in Algorithm \ref{Algorithm1} are non-decreasing. We prove this by induction. The base case constitutes of showing that, the initial feasible solution has non-decreasing powers. If INIT\_POLICY returns the constant power policy from time $R$ to $S$ with power $p_c=\frac{\ETx(t_n)}{S-R}=\frac{\ETx(t_n)-\ETx(t_q^-)}{S-t_q}$, then our claim holds. 
+To begin with, we prove that the power allocations in Algorithm \ref{Algorithm1} are non-decreasing. We prove this by induction. The base case constitutes of showing that, the initial feasible solution has non-decreasing powers. If INIT\_POLICY returns the constant power policy from time $T_{start}$ to $T_{stop}$ with power $p_c=\frac{\ETx(t_n)}{T_{stop}-T_{start}}=\frac{\ETx(t_n)-\ETx(t_q^-)}{T_{stop}-t_q}$, then our claim holds. 
 
-Suppose INIT\_POLICY does not return the constant power policy, but applies Algorithm 1 from \cite{Yang} with $\widetilde{B}$ bits to transmit after time $t_q$, then the transmission power after time $t_q$ is always non-decreasing. Now, we need to prove that transmission power $p_c$ between time $R$ and $t_q$ is less than or equal to the transmission power just after time $t_q$ (say $p_i$). Let transmission with $p_i$ end at epoch $t_i$. We prove it by contradiction. Assume that $p_i<p_c$. Following two cases arise.
+Suppose INIT\_POLICY does not return the constant power policy, but applies Algorithm 1 from \cite{Yang} with $\widetilde{B}$ bits to transmit after time $t_q$, then by the properties satisfied by optimal policy presented in \cite{Yang}, we know that the transmission powers would be non-decreasing after time $t_q$.% Now, we need to prove that transmission power $p_c$ between time $T_{start}$ and $t_q$ is less than or equal to the transmission power just after time $t_q$ (say $p_i$). We prove it by contradiction. Assume that $p_i<p_c$. Let transmission with $p_i$ end at epoch $t_i$ and let the transmission with constant power policy $p_c$ end at epoch $T_{stop}'$. Following two cases arise.
 
-\textit{Case1:} If $t_i<S$, energy consumed by $p_c$ between time $t_q$ to $t_i$ is 
+\textit{Case1:} If $t_i<T_{stop}'$, energy consumed by $p_c$ between time $t_q$ to $t_i$ is 
 \begin{align}
 &p_c(t_i-t_q)>p_i(t_i-t_q)=(\ETx(t_i^-)-\ETx(t_q^-))\label{eq_1_algo1_modified}
 \end{align}
-Since, constant power policy with $p_c$ uses all the available energy by $t_q$, the maximum amount of energy available for transmission between $t_q$ and $t_i$ is $\left(\ETx(t_i^-)-\ETx(t_q^-)\right)$. But by \eqref{eq_1_algo1_modified}, $p_c$ is infeasible between time $t_q$ and $t_i$. As transmitting with power $p_c$ was feasible between $t_q$ and $S$ (and therefore between $t_q$ and $t_i$) in constant power policy, we reach a contradiction.        
+Since, constant power policy with $p_c$ uses all the available energy by $t_q$, the maximum amount of energy available for transmission between $t_q$ and $t_i$ is $\left(\ETx(t_i^-)-\ETx(t_q^-)\right)$. But by \eqref{eq_1_algo1_modified}, $p_c$ is infeasible between time $t_q$ and $t_i$. As transmitting with power $p_c$ was feasible between $t_q$ and $T_{stop}'$ (and therefore between $t_q$ and $t_i$) in constant power policy, we reach a contradiction.        
 
-\textit{Case2:} If $t_i>S$, then $\ETx(t_i^-)>\ETx(S)=\ETx(t_n)$. So, 
+\textit{Case2:} If $t_i>T_{stop}'$, then $\ETx(t_i^-)>\ETx(T_{stop}')=\ETx(t_n)$. So, 
 \begin{align}
 g(p_i)(t_i-t_q)&=g\left(\frac{\ETx(t_i^-)-\ETx(t_q^-)}{t_i-t_q}\right)(t_i-t_q)
 \\
 &>g\left(\frac{\ETx(t_n)-\ETx(t_q^-)}{t_i-t_q}\right)(t_i-t_q)
 \\
-&\stackrel{(a)}{>}g\left(\frac{\ETx(t_n)-\ETx(t_q^-)}{S-t_q}\right)(S-t_q)\label{eq_2_algo1_modified}
+&\stackrel{(a)}{>}g\left(\frac{\ETx(t_n)-\ETx(t_q^-)}{T_{stop}'-t_q}\right)(T_{stop}'-t_q)\label{eq_2_algo1_modified}
 \\
-&=g(p_c)(S-t_q)=\widetilde{B}.
+&=g(p_c)(T_{stop}'-t_q)=\widetilde{B}.
 \end{align}
 where %\eqref{eq_2_algo1_modified} 
 $(a)$ follows from \eqref{property_decreasing}. So transmission with $p_i$ from $t_q$ to $t_i$ sends more than $\widetilde{B}$ bits. This is inconsistent with the assumption that the solution we get from Algorithm 1 in \cite{Yang} exactly transmits $\widetilde{B}$ bits after $t_q$. 
@@ -261,13 +252,17 @@ If $t_l$ updates and $t_r$ remains same, then we are certain that $p_{r}'>p_r$ b
 
 %Now, we show that transmission powers follow structure \eqref{claim3}. Assume it does not. Specifically, say $p_1$ does not follow structure \eqref{claim3}. The proof for $p_2,p_3..$ can be done likewise. So, $p_1$ has to be more than the minimum possible power i.e. $p_1>\mathcal{P}(s_1,\tilde{s})$, where $\tilde{s}=\displaystyle\argmin_{t_i: s_n < t_i \le s_{N+1}} \mathcal{P}(t_i,s_n)$. Then the amount of energy used by $p_1,p_2,..$ till epoch $\tilde{s}$ can be lower bounded by $p_1(\tilde{s}-s_1)$, as $p_1>p_2..$ . But the maximum power available till time $\tilde{s}$ is $\ETx(\tilde{s})=\mathcal{P}(s_1,\tilde{s})(\tilde{s}-s_1)>p_1(\tilde{s}-s_1)$, which is more than what is spent by $p_1$. Hence we reach a contradiction and therefore $p_1=\mathcal{P}(s_1,\tilde{s})$.
 
-Next, we show that Algorithm \ref{Algorithm1} always terminates to a policy i.e it cannot continue indefinitely. If the policy output by INIT\_POLICY, is the constant power policy $p_c$, then initially $T_{stop}-T_{start}=\widetilde{\TRx}_0$, where $\widetilde{\TRx}_0$ is defined in line \ref{init_policy_CP_time}. From line \ref{init_policy_Etn} and \ref{init_policy_CP_time} of Algorithm \ref{init_policy}, 
-\begin{align}
-& \widetilde{\TRx}_0g\left(\dfrac{\ETx(t_n)}{\widetilde{\TRx}_0}\right) = B_0, \TRx_0g\left(\dfrac{\ETx(t_n)}{\TRx_0}\right) \ge B_0.
-\end{align}    
-So $\widetilde{\TRx}_0\le \TRx_0$ by \eqref{property_decreasing}. Hence $T_{stop}-T_{start}$ is initially less or equal than $\TRx_0$.
+Next, we show that Algorithm \ref{Algorithm1} always terminates to a policy i.e it cannot continue indefinitely. If the policy output by INIT\_POLICY, is the constant power policy $p_c$, then initially $T_{stop}-T_{start}=\widetilde{\TRx}_0$, where $\widetilde{\TRx}_0$ is defined in \eqref{INIT_POLICY_time}. So, $\widetilde{\TRx}_0\le \TRx_0$ by monotonicity of $g(p)/p$ in \eqref{property_decreasing}. Hence $T_{stop}-T_{start}$ is initially less or equal than $\TRx_0$.
 
-If Algorithm \ref{init_policy} returns policy from line \ref{init_policy_Yang}, then by the properties satisfied by optimal policy presented in \cite{Yang}, we know that the transmission powers would be non-decreasing after time $t_q$. The policy returned by line \ref{init_policy_Yang} is same as policy in line \ref{init_policy_CP} till time $t_q$. As transmission with power $p_c$ after $t_q$ finishes transmission of $B_0$ bits till time $S$, the policy form line \ref{init_policy_Yang}, transmitting with atleast $p_c$ or more power after $t_q$, would definitely finish before time $S$. So $T_{stop}-T_{start}$ in the initial iteration of Algorithm \ref{Algorithm1} must be less than or equal to $(R-S)=\TRx_0$. So, with policy returned by INIT\_POLICY, Algorithm \ref{Algorithm1} always enters the \textbf{while} loop in line number \ref{algo_while_loop}. From the arguments presented while proving non-decreasing powers of Algorithm \ref{Algorithm1}, we can also conclude that $T_{start}$ and $T_{stop}$ always decrease across the iterations. In all the cases of Algorithm \ref{Algorithm1}, described in Fig. \ref{figure_Algorithm1} (a) (b) (d), we can show, using Lemma \ref{lemma_increase_time}, that $T_{stop}-T_{start}$ always increases across the iterations in finite steps. So after some finite number of iterations, $T_{stop}-T_{start}$ will increase beyond $\TRx_0$, or $T_{start}$ would reach 0 and Algorithm \ref{Algorithm1} would terminate from the \textbf{while} loop in line number \ref{algo_while_loop}. Hence Algorithm \ref{Algorithm1} converges.
+Suppose Algorithm \ref{init_policy} returns policy with power $p_c$ till $t_q$ and then policy from Algorithm 1 in  \cite{Yang}. As transmission with power $p_c$ after $t_q$ finishes transmission of $B_0$ bits till time $T_{start}+\widetilde{\TRx}_0$, transmission with power $p_c$ or more after $t_q$, would definitely finish at or before $T_{start}+\widetilde{\TRx}_0$. So $T_{stop}-T_{start}\le \TRx_0$ in the initial iteration of Algorithm \ref{Algorithm1}. 
+
+Hence, with policy returned by INIT\_POLICY, Algorithm \ref{Algorithm1} executes atleast one iteration. From the arguments presented while proving non-decreasing powers of Algorithm \ref{Algorithm1}, we can also conclude that $T_{start}$ and $T_{stop}$ always decrease across the iterations. In all the cases of Algorithm \ref{Algorithm1}, described in Fig. \ref{figure_Algorithm1} (a) (b) (d), we can show, using Lemma \ref{lemma_increase_time}, that $T_{stop}-T_{start}$ always increases across the iterations in finite steps. So after some finite number of iterations, $T_{stop}-T_{start}$ will increase beyond $\TRx_0$, or $T_{start}$ would reach 0 and Algorithm \ref{Algorithm1} would terminate.
+
+We argue the satisfaction of structure \eqref{claim2} next. Suppose the Algorithm terminates with $T_{start}=0$ and $T_{start}-T_{stop}\le\TRx_0$, then the policy at this iteration satisfies \eqref{claim2}. 
+
+For the case where the algorithm terminates with $T_{stop}-T_{start}>\TRx_0$, let $\{T_{start}',T_{stop}',p_l',p_r',t_l',t_r'\}$ be the values in the termination iteration and $\{T_{start},T_{stop},p_l,p_r,t_l,t_r\}$ be the values in the previous iteration. Then, the possible valid configurations can be one of the three shown in Fig. \ref{figure_Algorithm1} (a) (c) (d). Note that $\ETx(T_{stop}^-)=\ETx(T_{stop}'^-)$ in all the cases. (In case Fig. \ref{figure_Algorithm1} (d) we can assume that $T_{stop}'=t_r^+$ and transmission exists after $t_r$, but with infinite power. Since transmitting with infinite power for $0$ time does not transmit any bits, we would transmit the same number of bits, as we did prior to this modification). Thus, by Lemma \ref{lemma_increase_time}, we can verify that $(T_{stop}'-T_{start}')>(T_{stop}-T_{start})$. Since $(T_{stop}'-T_{start}')>\TRx_0>(T_{stop}-T_{start})$, there must exist a solution to equation presented in line number \ref{algo_solve_eqn} of Algorithm \ref{Algorithm1}. Let the policy obtained from the solution start and end at $T_{start}''$ and $T_{stop}''$. Then $T_{stop}''$ and $T_{start}''$ would lie in-between $T_{stop}$,$T_{stop}'$ and $T_{start}$,$T_{start}'$ respectively. Also, $T_{stop}''-T_{start}''=\TRx_0$.
+
+So we can conclude by stating that, the solution to Algorithm \ref{Algorithm1} satisfies Lemma \ref{transmission_duration}. Now, according to the definition of $t_n$ and $t_q$ in line number \ref{init_policy_Etn} and \ref{init_policy_t_q} of INIT\_POLICY, $t_q\le t_n$ and $\ETx(t_q)<\ETx(t_n)$. Since $t_n$ is defined as the first energy arrival epoch by which $B_0$ bits can be transmitted in $\TRx_0$ time, any transmission policy which ends at or before $t_n$ should take more than $\TRx_0$ time to transmit all of $B_0$ bits. As $t_q\le t_n$, we are guaranteed that no transmission policy can finish at or before $t_q$. Hence in the iterations of the algorithm $t_r$ can never decrease beyond $t_q$. As $t_q$ is present in the initial solution, $t_q$ always exists in the final solution to Algorithm \ref{Algorithm1}.  
  
-From the arguments presented before Theorem \ref{th_algo1_1}, we know that the policy being output by Algorithm \ref{Algorithm1} follows Lemma \ref{transmission_duration} and Lemma \ref{lemma_Q}, which imply structure \eqref{claim2} and \eqref{claim5}, respectively. To conclude, all structural results \eqref{claim1}-\eqref{claim5} are satisfied by the policy output by Algorithm \ref{Algorithm1}. Therefore,  by Theorem \ref{th_algo1_1}, Algorithm \ref{Algorithm1} results in an optimal solution.
+To conclude, all structural results \eqref{claim1}-\eqref{claim5} are satisfied by the policy output by Algorithm \ref{Algorithm1}. Therefore,  by Theorem \ref{th_algo1_1}, Algorithm \ref{Algorithm1} results in an optimal solution.
 \end{proof}
