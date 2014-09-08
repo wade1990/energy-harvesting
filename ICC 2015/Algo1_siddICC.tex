@@ -3,6 +3,7 @@
 %Summarising the results of Lemmas \ref{lemma_increasing_power}-\ref{transmission_duration}, the optimal policy $\{\textbf{p},\textbf{s},N\}$ may change transmission powers only at energy arrival epochs i.e. $\forall 1<i<N+1,\ s_i=t_j$ for some $j$. At these epochs, it exhausts the total energy available i.e. $U(s_i)=\ETx(s_i^-)$. The transmission powers are also non-decreasing with time and the optimal policy exhausts the total `receiver time' time allowed, if it does not start transmitting from origin.
 %
 %Now that we have gained some knowledge regarding the structure of the optimal policy, we consider an example to approach Problem 1. 
+\textbf{Algorithm OPTOFF}
 
 We next propose a procedure which gives a feasible solution satisfying most\footnote{The initial feasible solution, satisfies all structures, except the one in Lemma \ref{transmission_duration}.} of the necessary structures of the optimal policy.
 
@@ -28,7 +29,7 @@ The possible cases that can happen in an iteration of the Algorithm are shown in
 
 
 
-\textbf{Algorithm 1}:
+\textbf{PULL\_BACK}:
 
 \textit{Step3:} Increase $p_r$ till it hits the boundary of energy constraint \eqref{pb1_constraint_energy} as shown in Fig. \ref{figure_Algorithm1}(a). Make this power $p_r'$ and the epoch where it hits \eqref{pb1_constraint_energy} as $t_r'$. So, $U(t_r') = \ETx(t_r'^-)$. Set $T_{stop}'$ to where this policy ends. Calculate $p_l'$ such that decrease in bits transmission from $p_r$ to $p_r'$ is compensated by $p_l'$.
 \begin{align}
@@ -46,7 +47,7 @@ If $p_l'$ is not feasible, as shown in Fig. \ref{figure_Algorithm1}(b), then $p_
 
 \textit{Step5:} Going back to \textit{Step3}, suppose $p_r$ could be increased till infinity without violating \eqref{pb1_constraint_energy}. This happens when there in no energy arrival between $t_r$ and $T_{stop}$, as shown in Fig. \ref{figure_Algorithm1}(d). In this case, set $p_r'$ to the transmission power at $t_r^-$, $t_r'$ to epoch where $p_r'$ starts and $T_{stop}'=t_r$. Similar to \textit{Step3}, calculate $p_l'$ and proceed to \textit{Step4}. 
 
-\textit{Termination}: If in any iteration, at the end of \textit{Step4}, $T_{stop}' - T_{start}' \ge \TRx_0$ or $T_{start}' = 0$, then terminate. If $T_{start}' = 0$, then output with the policy found along the Algorithm. If not, calculate $T_{start}'$ and $T_{stop}'$, according to the equations,
+\textbf{Termination}: If in any iteration, at the end of \textit{Step4}, $T_{stop}' - T_{start}' \ge \TRx_0$ or $T_{start}' = 0$, then terminate. If $T_{start}' = 0$, then output with the policy found along the Algorithm. If not, calculate $T_{start}'$ and $T_{stop}'$, according to the equations,
 \begin{align}
 &\nonumber (t_l-T_{start}')\frac{\ETx(t_l^-)}{t_l-T_{start}'}+(T_{stop}'-t_r)\frac{\ETx(T_{stop}^-)}{T_{stop}'-t_r}\\
 &=g(p_l)(t_l-T_{start})+g(p_r)(T_{stop}-t_r)\\
@@ -185,7 +186,7 @@ In every optimal solution, at energy arrival epoch $t_q$, $U(t_q)=\ETx(t_q^-)$.
 \begin{figure}
 \centering
   \centerline{\includegraphics[width=8cm]{Algorithm1.eps}}
-\caption{Figures showing any iteration of the Algorithm \ref{Algorithm1}. The solid line represents the transmission policy in the previous iteration. The dash dotted lines in (a), (b), (c), (d) represent the possible configurations of policy in the current iteration.}\label{figure_Algorithm1}
+\caption{Figures showing any iteration of the PULL\_BACK. The solid line represents the transmission policy in the previous iteration. The dash dotted lines in (a), (b), (c), (d) represent the possible configurations of policy in the current iteration.}\label{figure_Algorithm1}
 \end{figure}
  
 \begin{theorem}
@@ -222,9 +223,9 @@ The proposed transmission policy is an optimal solution to Problem 1.
 \label{th_algo1_2}
 \end{theorem}
 \begin{proof}
-To prove that the policy (say $\{\textbf{p},\textbf{s},N\}$) given by Algorithm \ref{Algorithm1} is optimal, it is sufficient to show that it abides by the structure presented in Theorem \ref{th_algo1_1}.
+To prove that the policy (say $\{\textbf{p},\textbf{s},N\}$) given by Algorithm OPTOFF is optimal, it is sufficient to show that it abides by the structure presented in Theorem \ref{th_algo1_1}.
 
-To begin with, we prove that the power allocations in Algorithm \ref{Algorithm1} are non-decreasing. We prove this by induction. The base case constitutes of showing that, the initial feasible solution has non-decreasing powers. If INIT\_POLICY returns the constant power policy $p_c$ from time $T_{start}$ to $T_{stop}$, then our claim holds. 
+To begin with, we prove that the power allocations in PULL\_BACK are non-decreasing. We prove this by induction. The base case constitutes of showing that, the initial feasible solution has non-decreasing powers. If INIT\_POLICY returns the constant power policy $p_c$ from time $T_{start}$ to $T_{stop}$, then our claim holds. 
 
 Suppose INIT\_POLICY does not return the constant power policy, but applies Algorithm 1 from \cite{Yang} with $\widetilde{B}=B_0-g(p_c)(t_q-T_{start})$ bits to transmit after time $t_q$, then by the properties satisfied by optimal policy presented in \cite{Yang}, we know that the transmission powers would be non-decreasing after time $t_q$. Also, since it is optimal and power $p_c$ transmits $\widetilde{B}$ bits by time $(T_{start}+\widetilde{\TRx}_0)$,  $T_{stop}\le (T_{start}+\widetilde{\TRx}_0)$. Now, we need to prove that transmission power $p_c$ between time $T_{start}$ and $t_q$ is less than or equal to the transmission power just after time $t_q$ (say $p_i$). We prove it by contradiction. Assume that $p_i<p_c$.
 
@@ -247,25 +248,25 @@ Since, constant power policy with $p_c$ uses all the available energy by $t_q$, 
 %where %\eqref{eq_2_algo1_modified} 
 %$(a)$ follows from \eqref{property_decreasing}. So transmission with $p_i$ from $t_q$ to $t_i$ sends more than $\widetilde{B}$ bits. This is inconsistent with the assumption that the solution we get from Algorithm 1 in \cite{Yang} exactly transmits $\widetilde{B}$ bits after $t_q$. 
 
-Now that we have proved the base case, we assume that transmission powers from Algorithm \ref{Algorithm1} are non-decreasing till its $n^{th}$ iteration. The transmission powers between $t_l$ and $t_r$ do not change from the $n^{th}$ to the $(n+1)^{th}$ iteration, as illustrated in Fig. \ref{figure_Algorithm1}. So, we only need to prove that the transmission power before time $t_l$ is less than the transmission power after $t_l$ and the same for time $t_r$. In the $(n+1)^{th}$ iteration, by the definition of the algorithm either $t_l$ updates or $t_{r}$ updates. Assume $t_l$ gets updated to $t_{l}'$, $p_l$ to $p_l'$, $p_r$ to $p_r'$ and $t_r$ remains same. The proof for $t_r$ getting updated can be done with similar arguments and hence we only show proof of this case. If we show that $p_l<p_l'$ and $p_r>p_r'$, then we are done by induction hypothesis.
+Now that we have proved the base case, we assume that transmission powers from PULL\_BACK are non-decreasing till its $n^{th}$ iteration. The transmission powers between $t_l$ and $t_r$ do not change from the $n^{th}$ to the $(n+1)^{th}$ iteration, as illustrated in Fig. \ref{figure_Algorithm1}. So, we only need to prove that the transmission power before time $t_l$ is less than the transmission power after $t_l$ and the same for time $t_r$. In the $(n+1)^{th}$ iteration, by the definition of the algorithm either $t_l$ updates or $t_{r}$ updates. Assume $t_l$ gets updated to $t_{l}'$, $p_l$ to $p_l'$, $p_r$ to $p_r'$ and $t_r$ remains same. The proof for $t_r$ getting updated can be done with similar arguments and hence we only show proof of this case. If we show that $p_l<p_l'$ and $p_r>p_r'$, then we are done by induction hypothesis.
 
 If $t_l$ updates and $t_r$ remains same, then we are certain that $p_{r}'>p_r$ by algorithm definition. Now, from $n^{th}$ step to $(n+1)^{th}$ step, the number of bits transmitted after $t_r$ should decrease as $p_{r}'>p_r$ and both $p_r,p_r'$ use same amount of energy by the time they end. So, the number of bits transmitted before $t_l$ must be increasing from $n^{th}$ to $(n+1)^{th}$ iteration. This implies that $p_l'$ must also be less than $p_l$.
 
-In the case where $p_r$ is increased till infinity, and $t_r$ and $p_r$ are updated to their previous values, the powers must remain increasing, since $p'_l <p_l$ and the remaining powers are increasing, by the induction hypothesis. Hence we have proved that the transmission powers are always non-deceasing in the policy being output by Algorithm \ref{Algorithm1}. So it follows structure \eqref{claim3}, \eqref{claim4}.
+In the case where $p_r$ is increased till infinity, and $t_r$ and $p_r$ are updated to their previous values, the powers must remain increasing, since $p'_l <p_l$ and the remaining powers are increasing, by the induction hypothesis. Hence we have proved that the transmission powers are always non-deceasing in the policy being output by Algorithm OPTOFF. So it follows structure \eqref{claim3}, \eqref{claim4}.
 
 %Now, we show that transmission powers follow structure \eqref{claim3}. Assume it does not. Specifically, say $p_1$ does not follow structure \eqref{claim3}. The proof for $p_2,p_3..$ can be done likewise. So, $p_1$ has to be more than the minimum possible power i.e. $p_1>\mathcal{P}(s_1,\tilde{s})$, where $\tilde{s}=\displaystyle\argmin_{t_i: s_n < t_i \le s_{N+1}} \mathcal{P}(t_i,s_n)$. Then the amount of energy used by $p_1,p_2,..$ till epoch $\tilde{s}$ can be lower bounded by $p_1(\tilde{s}-s_1)$, as $p_1>p_2..$ . But the maximum power available till time $\tilde{s}$ is $\ETx(\tilde{s})=\mathcal{P}(s_1,\tilde{s})(\tilde{s}-s_1)>p_1(\tilde{s}-s_1)$, which is more than what is spent by $p_1$. Hence we reach a contradiction and therefore $p_1=\mathcal{P}(s_1,\tilde{s})$.
 
-Next, we show that Algorithm \ref{Algorithm1} always terminates to a policy i.e it cannot continue indefinitely. If the policy output by INIT\_POLICY, is the constant power policy $p_c$, then initially $(T_{stop}-T_{start})=\widetilde{\TRx}_0$, where $\widetilde{\TRx}_0$ is defined in \eqref{INIT_POLICY_time}. Also, $\widetilde{\TRx}_0\le \TRx_0$ by monotonicity of $g(p)/p$ in \eqref{property_decreasing}.
+Next, we show that Algorithm OPTOFF always terminates to a policy i.e it cannot continue indefinitely. If the policy output by INIT\_POLICY, is the constant power policy $p_c$, then initially $(T_{stop}-T_{start})=\widetilde{\TRx}_0$, where $\widetilde{\TRx}_0$ is defined in \eqref{INIT_POLICY_time}. Also, $\widetilde{\TRx}_0\le \TRx_0$ by monotonicity of $g(p)/p$ in \eqref{property_decreasing}.
 
 Suppose Algorithm \ref{init_policy} returns policy with power $p_c$ till $t_q$ and then policy from Algorithm 1 in  \cite{Yang}, then $T_{stop}\le (T_{start}+ \TRx_0)$. 
 
-From the arguments presented while proving non-decreasing powers of Algorithm \ref{Algorithm1}, we can also conclude that $T_{start}$ and $T_{stop}$ always decrease across the iterations. Further, in all the cases of Algorithm \ref{Algorithm1}, described in Fig. \ref{figure_Algorithm1} (a) (b) (d), we can show, using Lemma \ref{lemma_increase_time}, that $(T_{stop}-T_{start})$ always increases across the iterations in finite steps. As, in initial iteration $(T_{stop}-T_{start})\le \TRx_0$ and $T_{start}\ge 0$, after some finite number of iterations, $(T_{stop}-T_{start})$ will increase beyond $\TRx_0$, or $T_{start}$ would reach 0 and Algorithm \ref{Algorithm1} would terminate.
+From the arguments presented while proving non-decreasing powers of Algorithm OPTOFF, we can also conclude that $T_{start}$ and $T_{stop}$ always decrease across the iterations. Further, in all the cases of PULL\_BACK, described in Fig. \ref{figure_Algorithm1} (a) (b) (d), we can show, using Lemma \ref{lemma_increase_time}, that $(T_{stop}-T_{start})$ always increases across the iterations in finite steps. As, in initial iteration $(T_{stop}-T_{start})\le \TRx_0$ and $T_{start}\ge 0$, after some finite number of iterations, $(T_{stop}-T_{start})$ will increase beyond $\TRx_0$, or $T_{start}$ would reach 0 and OPTOFF would terminate.
 
 We argue the satisfaction of structure \eqref{claim2} next. Let $\{T_{start}',T_{stop}',p_l',p_r',t_l',t_r'\}$ be the parameters of Algorithm in the termination iteration and $\{T_{start},T_{stop},p_l,p_r,t_l,t_r\}$ be the values in the previous iteration. For the case where algorithm terminates with $T_{start}'=0$ and $T_{start}'-T_{stop}'\le\TRx_0$, the policy being output satisfies \eqref{claim2}. 
 
 Suppose, the algorithm terminates with $(T_{stop}'-T_{start}')>\TRx_0$. The possible valid configurations can be one of the three shown in Fig. \ref{figure_Algorithm1} (a), (c), (d). Note that $\ETx(T_{stop}^-)=\ETx(T_{stop}'^-)$ in all the cases. (In case Fig. \ref{figure_Algorithm1} (d) we can assume that $T_{stop}'=t_r^+$ and transmission exists after $t_r$, but with infinite power. Since transmitting with infinite power for $0$ time does not transmit any bits, we would transmit the same number of bits, as we did prior to this modification). Thus, the termination policy and the one in previous iteration satisfy the conditions of Lemma \ref{lemma_increase_time}. So, $(T_{stop}'-T_{start}')>(T_{stop}-T_{start})$. Since $(T_{stop}'-T_{start}')>\TRx_0>(T_{stop}-T_{start})$, there must exist a solution to \eqref{eq_termination}. Let the policy obtained from the solution start and end at $T_{start}''$ and $T_{stop}''$. Then $T_{stop}''$ and $T_{start}''$ would lie in-between $T_{stop}$,$T_{stop}'$ and $T_{start}$,$T_{start}'$ respectively. Also, $T_{stop}''-T_{start}''=\TRx_0$. So, structure \eqref{claim2} is satisfied.
 
-Now, according to the definition of $t_n$ and $t_q$ in INIT\_POLICY, $t_q\le t_n$ and $\ETx(t_q^-)<\ETx(t_n)$. Since $t_n$ is defined as the first energy arrival epoch with which $B_0$ bits can be transmitted in $\TRx_0$ time, any transmission policy which ends at or before $t_n$ should take more than $\TRx_0$ time to transmit all of $B_0$ bits. As $t_q\le t_n$, we are guaranteed that no transmission policy can finish at or before $t_q$. Hence in the iterations of the Algorithm \ref{Algorithm1}, $t_r$ can never decrease beyond $t_q$. As $t_q$ is present in the initial solution, $t_q$ always exists in the final solution to Algorithm \ref{Algorithm1}. This verifies structure \eqref{claim5}.  
+Now, according to the definition of $t_n$ and $t_q$ in INIT\_POLICY, $t_q\le t_n$ and $\ETx(t_q^-)<\ETx(t_n)$. Since $t_n$ is defined as the first energy arrival epoch with which $B_0$ bits can be transmitted in $\TRx_0$ time, any transmission policy which ends at or before $t_n$ should take more than $\TRx_0$ time to transmit all of $B_0$ bits. As $t_q\le t_n$, we are guaranteed that no transmission policy can finish at or before $t_q$. Hence in the iterations of the PULL\_BACK, $t_r$ can never decrease beyond $t_q$. As $t_q$ is present in the initial solution, $t_q$ always exists in the final solution to OPTOFF. This verifies structure \eqref{claim5}.  
  
-To conclude, all structural results \eqref{claim1}-\eqref{claim5} are satisfied by the policy output by Algorithm \ref{Algorithm1}. Therefore,  by Theorem \ref{th_algo1_1}, Algorithm \ref{Algorithm1} results in an optimal solution.
+To conclude, all structural results \eqref{claim1}-\eqref{claim5} are satisfied by the policy output by OPTOFF. Therefore,  by Theorem \ref{th_algo1_1}, OPTOFF results in an optimal solution.
 \end{proof}
