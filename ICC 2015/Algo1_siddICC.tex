@@ -153,6 +153,45 @@ In every optimal solution, at energy arrival epoch $t_q$, $U(t_q)=\ETx(t_q^-)$.
 %%If the optimal policy does have a power higher than $p_c$ at $t_q$, then it must have the same power of transmission either from some epoch, say $t_k$, or from the beginning of transmission. If $t_k>R$, we can show that $p_c$ becomes infeasible with respect to energy constraint (\ref{pb1_constraint_energy}) at $t_k$. If $t_k<R$, $p$ becomes infeasible with energy constraint \eqref{pb1_constraint_energy} at time $R$. Now, only thing left is the optimal policy begins transmission with power $p$. If so, then it has to begin transmission after time $R$ which follows from equation (\ref{eqlemmaQ2}). This violates \textit{Claim 1}. Therefore every optimal transmission policy must use all energy till epoch $t_q$.
 %\end{proof}
 
+%\begin{proof}
+%We shall prove this by contradiction. First, we make the following claims:
+%
+%\textbf{Claim 1:} Every optimal transmission policy begins transmission at or before time $R$.
+%
+%Since, $S-R=\widetilde{\TRx}_0\le \TRx_0$, by Lemma \ref{transmission_duration}, if a transmission policy has to finish before $S$, it has to start before time $\max(S-\TRx_0,0) \le \max(R,0)=R$. 
+%
+%%Since we are transmitting all the bits at the maximum possible power, no policy that starts after $R$ can finish before $S$. Therefore, any policy that starts after $R$ cannot be optimal.
+%
+%\textbf{Claim 2:} Every optimal transmission policy ends transmission at or before time $S$.
+%%This follows immediately from the fact that the policy is optimal.
+%
+%If it does not, then constant power policy $p_c$ finishing at $S$ will contradict its optimality.
+%%Let $t_q$ equal to time $t_i$ for some $i\in\mathbb{N}$. 
+%
+%Suppose we have an optimal transmission policy, say $X$,$\{\bm{p},\bm{s},N\}$, that does not exhaust all its energy at time $t_q$ i.e. $U(t_q)<\ETx(t_q^-)$. Then, by Lemma \ref{lemma_energy_consumed}, it does not change its transmission power at $t_q$. Let the transmission power of $X$ be $p_{j-1}$ at $t_q$ and $p_{j-1}$ starts from $s_{j-1}$ and goes till $s_j$. Now, $s_j<S$ by \textit{Claim 2}. Further, power $p_c$ exhausts all energy by $t_q$. So,
+%\begin{align}
+%&p_c(t_q-R)=\ETx(t_q^-)\label{eqlemmaQ1}.
+%\end{align}
+%But, by constraint (\ref{pb1_constraint_energy}),
+%\begin{align}
+%&p_c(t_q-R)+p_c(s_j-t_q)\le \ETx(s_j^-),
+%\\
+%& p_c(s_j-t_q)\stackrel{(\ref{eqlemmaQ1})}{\le} \ETx(s_j^-)-\ETx(t_q^-),
+%\\
+%& p_c(s_j-t_q)< \ETx(s_j^-)-U(t_q)=p_{j-1}(s_j-t_q),
+%\\
+%& p_c<p_{j-1} .\label{eqlemmaQ2}
+%\end{align}
+%If ${j-1}= 1$, then power at $t_q$ is the first transmission power $p_1$. But then by \eqref{eqlemmaQ2}, $p_1 > p_c$. By the definition of $p_c$, we must have $s_{1} > R$, but this will contradict \textit{Claim 1}.
+%
+%So ${j-1}\ge 2$, which means that the power of transmission must change at least once between $R$ and $t_q$. By Lemma \ref{lemma_energy_consumed}, $X$ has used all energy by $s_{j-1}$ and $s_{j}$ as well. So, $p_{j}(\ETx(s_{j}^-)-\ETx(s_{j-1}^-))$ is the maximum energy available between time $s_{j-1}$ and $s_{j}$. If $R<s_{j-1}$, then $p_c$ (by \eqref{eqlemmaQ2}) uses more energy, than available between $s_{j-1}$ and $s_{j}$, which is not possible. If $s_{j-1}\le R$ then $p_{j-1}$ uses more than maximum energy available (given by $p_c(t_q-R)=\ETx(t_q^-)$ ) between time $R$ and $t_q$, violating energy constraint \eqref{pb1_constraint_energy}. 
+%
+%Therefore, every optimal transmission policy must use all energy till epoch $t_q$. 
+%
+%%If the optimal policy does have a power higher than $p_c$ at $t_q$, then it must have the same power of transmission either from some epoch, say $t_k$, or from the beginning of transmission. If $t_k>R$, we can show that $p_c$ becomes infeasible with respect to energy constraint (\ref{pb1_constraint_energy}) at $t_k$. If $t_k<R$, $p$ becomes infeasible with energy constraint \eqref{pb1_constraint_energy} at time $R$. Now, only thing left is the optimal policy begins transmission with power $p$. If so, then it has to begin transmission after time $R$ which follows from equation (\ref{eqlemmaQ2}). This violates \textit{Claim 1}. Therefore every optimal transmission policy must use all energy till epoch $t_q$.
+%\end{proof}
+
+
 %Now that we have an initial feasible solution, we shall proceed to improve upon this policy as follows. The formal algorithm is presented as Algorithm \ref{Algorithm1}. We explain the procedure by an example. Assume that the starting feasible solution is given by the constant power policy, as shown by dotted line in Fig. \ref{figure_example_Algorithm1} (a), where $t_q=t_2$. We first assign the following initial values for the initial feasible policy - transmission power left of $t_2$ as $p_l=p_c$, power right of $t_2$ as $p_r=p_c$, start time $T_{start}=R$, stop time $T_{stop}=S$, epoch at which $p_l$ ends as $t_l=t_2$, epoch at which $p_r$ starts as $t_r=t_2$. Now, we increase $p_r$, keeping $t_r$ fixed, till it reaches $p_r'$ which hits epoch $t_3$, as shown by the solid line in Fig \ref{figure_example_Algorithm1} (a). As in total we need to transmit $B_0$ bits, the decrease in bits transferred by $p_r$ to $p_r'$ (RHS of \eqref{eq_example1}) is compensated by calculating appropriate $p_l'$ according to the following equation, where LHS represents the increase in bits transmitted from $p_l$ to $p_l'$.
 %\begin{align}
 %&g(p_l')\frac{\ETx(t_l^-)}{p_l'}-g(p_l)(t_l-T_{start})=-g(p_r)(T_{stop}-t_r)\nonumber\\
