@@ -27,14 +27,22 @@ Our approach to solve this problem will be to use the previously derived algorit
 
 \begin{lemma}
 If a policy $\{\bm{p},\bm{s},N\}$ for Problem 2 is optimal, either $s_1 = O_i$ for some $i$, and/or the receiver remains on for exactly $\TRx(r_i)$ time for some $i$.
-\label{lemma_startpoints}
+\label{lemma_origins}
 \end{lemma}
+\begin{proof}
+We shall prove this by contradiction. Suppose a policy $X$ given by $\{\bm{p},\bm{s},N\}$, is optimal and does not satisfy the conditions given in the lemma statement. Then $\TRx(r_{i})<s_{N+1}-s_1<\TRx(r_{i+1})$ for some $i$. Thus, $s_1>O_i$, by definition of $O_i$. Which means that when this policy ends, there will be unspent receiver time remaining. Applying similar arguments as in Lemma \ref{lemma_increase_time} and Lemma \ref{transmission_duration}, we can create a new policy that satisfies all the feasibility constraints and ends before policy $X$.
+\end{proof}
+
+Lemma \ref{lemma_origins} gives us an idea about how we can proceed to solve Problem 2. If we shift the origin on both the transmitter and reciever energy arrival energy profiles to time $O_i$, assuming of course that all the transmitter energy and receiver `time' that has arrived before $O_i$ is available starting from $O_i$, and solve this problem using Algorithm 1 (Assuming $\TRx(r_i)$ time is available at the receiver with no additional `time' arrivals), we shall get a policy that either begins transmission at $O_i$ or uses exactly $\TRx(r_i)$ time. This policy abides by the conditions stsated in Lemma \ref{lemma_origins}. We shall refer to this technique as passing an origin $O_i$ and a time $\TRx(r_i)$ into Algorithm 1. Also, the end time of this policy gives us an upper bound to when the optimal policy begins (or ends). We can thus, iterate, over all points $O_i$ in this manner and keep updating our upper bound until we cross the upper bound, and return the most optimal policy that we have attained so far. We now have a preliminary algorithm that terminates in finite time and gives us the optimal policy for Problem 2. We shall prove the optimality of the policy returned in theorem \textbf{?}. First, we make a few more observations about the policies returned by this method. 
 
 \begin{lemma}
-A solution $\{\bm{p},\bm{s},N\}$, arrived at by passing $O_i$ and $\TRx(r_t)$ into Algorithm 1 can only be optimal if $O_i\leq s_1\leq O_{i+1}$.
-\label{lemma_startpoints}
+A solution $\{\bm{p},\bm{s},N\}$, arrived at by passing $O_i$ and $\TRx(r_i)$ into Algorithm 1 is optimal if and only if $O_i\leq s_1\leq O_{i+1}$.
+\label{lemma_startpoint}
 \end{lemma}
-
+\begin{proof}
+First we prove that a policy attained by passing $O_i$ and $\TRx(r_i)$ into Algorithm 1 can be optimal only if $O_i\leq s_1\leq O_{i+1}$. Consider a case where $O_i \neq O_{i+1}$ (The result is trivially true for the case where $O_i = O_{i+1}$). Suppose a policy $X$, returned by Algorithm 1 and given by $\{\bm{p},\bm{s},N\}$, is optimal and $s_1 \ge O_{i+1}$. Let $Y$, given by $\{\bm{p'},\bm{s'},N'\}$ be the policy returned when $O_{i+1}$ and $\TRx(r_{i+1})$ are passed into Algorithm 1. Firstly, we note that $X$ is a possible policy returned in the scenario where $O_{i+1}$ and $\TRx(r_{i+1})$ are psased into Algorithm 1. Therefore, $Y$ must be the same as, or `better' than $X$. Now since $s_1 \neq O_{i+1}$ and $s_{N+1} - s_{N} = \TRx(r_i)$, $X$ cannot be the policy returned by Algorithm 1 when $O_{i+1}$ and $\TRx(r_{i+1})$ are passed (Since such a policy would have to take $\TRx(r_{i+1})$ time). Therefore, policy $Y$ ends strictly before $X$, which proves our result. 
+\end{proof}
+From Lemma \ref{lemma_startpoint}, we have a better method to know when to stop executing our algorithm. We now need only to iterate through the points $O_i$, passing them into Algorithm 1, until we get a policy that starts before $O_{i+1}$. We are assured by Lemma \ref{lemma_startpoint} that such a policy will be optimal.
 \begin{table}
 \begin{minipage}[b]{8cm}
 \caption {Offline algorithm for energy arrival in receiver after time t=0}
