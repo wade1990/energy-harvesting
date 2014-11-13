@@ -1,0 +1,23 @@
+We now consider the case when we know the distribution of the quantity of energy arriving at each arrival at the transmitter. The transmitter can store a finite amount of energy $B$ and there is no energy harvesting at the receiver end. We model our system as follows:\\
+\textit{System Model:} We assume that energy arrives at the transmitter after equal intervals of `$w$' time. That is, we divide our timeline into slots of time $w$. This can be thought of as an arrangement where there is a second battery at the transmitter that releases energy after $w$ interval of time. Energy is assumed to arrive at the beggining of each slot. Let the energy arriving at the $i$th slot be given by a random variable $X_i$ which takes values between $0$ and $B$ according to some known distribution. For a general random variable, since any amount of energy more that $B$ is going to be rejected, we can represent its distribution as a distribution that takes values between $0$ and $B$. The model has been illustrated in Figure \ref{figure_slots}.
+We propose an online algorithm for transmission and prove that it has a finite competitive ratio with respect to the optimal offline algorithm. 
+\\
+\textit{Algorithm:} Our transmission policy will be to wait until $\dfrac{B}{c}$ amount of energy has accumulated at the transmitter, rejecting any additional energy, and use all $\dfrac{B}{c}$ energy to transmit in one one slot. So we transmit $wg\left(\dfrac{B/c}{w}\right)$ bits every time $\dfrac{B}{c}$ energy accumulates at the transmitter. The constant $c$ is chosen based on the distribution of the $X_i$s as is shown at the end of this section in an example.
+Let $N$ be the number of slots for the total amount of energy accumulated to cross $\dfrac{B}{c}$. That is,
+\begin{equation}
+ \displaystyle \sum_{i=1}^{N} X_i \ge \dfrac{B}{c} \;\;\text{and}\; \displaystyle \sum_{i=1}^{N-1} X_i > \dfrac{B}{c}
+\end{equation}
+Clearly, $N$ is a random variable, taking natural number values. $E[N]<\infty$ and can be shown by the following arguments.\\\\
+Since $X_i$ take values between $0$ and $B$, for all $i$.
+\begin{equation}
+\label{eq_expect_rv}
+E[X_i]<\infty
+\end{equation}
+
+Let $S=\displaystyle \sum_{i=1}^{N} X_i$ From equations \eqref{} and \eqref{eq_expect_rv} and by applying Wald's equation, we have,
+\begin{align}
+ E[S] = E[N]E[X_i]
+\end{align}
+
+
+
